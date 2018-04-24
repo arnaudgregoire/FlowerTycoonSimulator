@@ -7,6 +7,14 @@ var ctx = canvas.getContext("2d");
 document.getElementById('buttonPlanter').addEventListener("click", planter);
 
 function planter() {
-    ctx.fillRect(20,20,150,100); 
+    fetch("http://localhost:8080/").then(function(response){
+        if(response.ok) {
+            response.json().then(function(json) {
+                if(json.reponse == 1){
+                    ctx.fillRect(20,20,150,100); 
+                }
+            });
+        }} 
+    )
 }
 
