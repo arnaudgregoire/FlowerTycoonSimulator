@@ -1,0 +1,28 @@
+{
+  "name": "flowertycoonsimulator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mainserver.js",
+  "scripts": {
+    "start": "node mainserver.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arnaudgregoire/FlowerTycoonSimulator.git"
+  },
+  "keywords": [
+    "flower",
+    "game"
+  ],
+  "author": "@arnaudgregoire",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arnaudgregoire/FlowerTycoonSimulator/issues"
+  },
+  "homepage": "https://github.com/arnaudgregoire/FlowerTycoonSimulator#readme",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.3"
+  }
+}
