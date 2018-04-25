@@ -4,6 +4,7 @@ canvas.width = (window.innerWidth || document.documentElement.clientWidth || doc
 canvas.height = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) /2;
 var ctx = canvas.getContext("2d");
 
+
 document.getElementById('buttonPlanter').addEventListener("click", planter);
 
 
@@ -35,7 +36,27 @@ class Terrain{
     }
 }
 
-let test = new Terrain(10,10);
+class Player{
+    constructor(){
+        this.mouseX = 0;
+        this.mouseY = 0;
+    }
+    update(e){
+        let pos = getMousePos(canvas, e);
+        this.mouseX = pos.x;
+        this.mouseY = pos.y;
+        console.log(this.mouseX);
+        console.log(this.mouseY);
+    }
+}
+
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top
+    };
+}
 
 function send(data) {
     return fetch("http://localhost:8080/",{
@@ -69,3 +90,6 @@ function planter(x,y) {
     )
 }
 
+let terrain = new Terrain(10,10);
+let player = new Player();
+document.getElementById("canvas").addEventListener("click",player.update);
