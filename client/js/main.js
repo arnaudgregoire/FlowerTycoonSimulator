@@ -1,7 +1,7 @@
 
 var canvas = document.getElementById('canvas');
-canvas.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-canvas.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+canvas.width = (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth) /2;
+canvas.height = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) /2;
 var ctx = canvas.getContext("2d");
 
 document.getElementById('buttonPlanter').addEventListener("click", planter);
