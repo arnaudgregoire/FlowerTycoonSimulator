@@ -22,6 +22,13 @@ class Terrain{
             ctx.stroke();
             ctx.closePath();
         }
+        for (let y = 0; y < this.nbLargeur; y++) {
+            ctx.beginPath();
+            ctx.moveTo(0,y*canvas.height/this.nbLargeur);
+            ctx.lineTo(canvas.width,y*canvas.height/this.nbLargeur);
+            ctx.stroke();
+            ctx.closePath();
+        }
     }
     update(){
 
