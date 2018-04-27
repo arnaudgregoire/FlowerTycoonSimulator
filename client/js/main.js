@@ -58,8 +58,8 @@ function getMousePos(canvas, evt) {
     };
 }
 
-function send(data) {
-    return fetch("http://localhost:8080/",{
+function send(task,data) {
+    return fetch("http://localhost:8080/"+task,{
         method: "POST",
         headers: {
             'Accept': 'application/json, text/plain, */*',
@@ -70,7 +70,7 @@ function send(data) {
 }
 
 function planter(x,y) {
-    send(JSON.stringify(
+    send("planter",JSON.stringify(
         {
             "fonction": "planter",
             "param": {
