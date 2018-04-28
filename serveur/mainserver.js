@@ -30,27 +30,50 @@ class CaseServer{
     this.GrowthStep = -1;
     this.HarvestPossible = false;
   }
+
+  //methode pour acheter une case
+  //conditions : la case doit etre libre
   BuyFirstTime(buyer){
-    if (IsFree == true){
+    if (IsFree != true){
+      console.log('BuyFirstTime : '+'case (' + this.CoordX + ','+ this.CoordY + ') already belonged to someone')
+    } else {
       this.Owner = buyer;
       this.IsFree = false;
       console.log('BuyFirstTime : '+'case (' + this.CoordX + ','+ this.CoordY + ') bought successfully')
-    } else {
-      console.log('BuyFirstTime : '+'case (' + this.CoordX + ','+ this.CoordY + ') already belonged to someone')
     }
   }
-  Plant(SeedType){
-    if(this.Owner != null){
+
+  // methode pour planter une graine 
+  // conditions : la case doit etre vendue et rien ne doit etre planté dessus
+  Plant(SeedType){ 
+    if(this.Owner = null){
+      console.log('Plant : ' + 'case (' + this.CoordX + ','+ this.CoordY + ') has no owner')
+    } else {
       if(this.IsPLanted = false){
+        console.log('Plant : ' + 'case (' + this.CoordX + ','+ this.CoordY + ') has already something planted')
+      } else {
         this.PlantType = SeedType;
         this.IsPLanted = true;
         this.GrowthStep = 0;
-      } else {
-        console.log('Plant : ' + 'case (' + this.CoordX + ','+ this.CoordY + ') has already something planted')
+        console.log('Plant : ' + 'case (' + this.CoordX + ','+ this.CoordY + ') sucessfully planted')
       }
-    } else {
-      console.log('Plant : ' + 'case (' + this.CoordX + ','+ this.CoordY + ') has no owner')
     }
   }
   
+}
+
+
+class Seed{
+  constructor(seedType,timeToGrow){
+    this.SeedType = seedType; //type de graine
+    this.TimeToGrow = timeToGrow; //temps qu'il faut pour que ca pousse ( ca dépend du type je suppose )
+    //Peut etre ajouter d'autres attributs
+  }
+  //TODO methode pour faire pousser les graines ( ou alors le faire dans la classe CASE )
+}
+
+class Player{
+  constructor(){
+    //TODO
+  }
 }
