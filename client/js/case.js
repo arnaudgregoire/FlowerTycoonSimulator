@@ -4,9 +4,6 @@ class Case{
         this.x = x;
         this.y = y;
     }
-    plante(){
-        this.dom.style.background = "brown";
-    }
     
     actionsPossibles(){
         let actions = document.getElementById("actions");
@@ -27,7 +24,10 @@ class EmptyCase extends Case{
 
     actionsPossibles(){
         super.actionsPossibles();
-        document.getElementById("actions").appendChild(boutonPlanter);
+        document.getElementById("actions").appendChild(boutonAcheter);
     }
     
+    achat(){
+        this.dom.style.background = "brown";
+    }
 }

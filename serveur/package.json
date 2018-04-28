@@ -4,8 +4,7 @@
   "description": "",
   "main": "mainserver.js",
   "scripts": {
-    "start": "node mainserver.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon mainserver.js"
   },
   "repository": {
     "type": "git",
@@ -15,7 +14,7 @@
     "flower",
     "game"
   ],
-  "author": "@arnaudgregoire",
+  "author": "@arnaudgregoire @thomasSinno",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/arnaudgregoire/FlowerTycoonSimulator/issues"
@@ -25,6 +24,7 @@
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.3",
-    "jasmine-node": "^1.14.5"
+    "jasmine-node": "^1.14.5",
+    "nodemon": "^1.17.3"
   }
 }

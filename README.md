@@ -29,6 +29,8 @@ Une partie dure un temps déterminé (possiblement 1 jour)
 Le but est d'engranger un maximum de points en réalisant des bouquets de fleurs.
 Chaque bouquet de fleurs est constitué de fleurs aléatoires.
 Pour faire pousser des fleurs, le joueur dispose de parcelles de terrains sur lesquelles il peut faire pousser des fleurs. Chaque fleur grandit avec le temps.
+Mais attention, il y a un nombre limité de places sur le terrain.
+Faites du commerce avec vos adversaires, rachetez les graines à bas prix, obtenez le monopole de la tulipe, utilisez les pesticides pour accélérer la croissance de vos plantes. Mais attention aux effets aléatoires, vous pourriez bien subir une vague de sauterelles ou un ouragan.
 
 ## Stratégie
 

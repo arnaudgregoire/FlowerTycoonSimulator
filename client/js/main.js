@@ -18,7 +18,6 @@ let boutonPlanter = document.createElement("button");
 boutonPlanter.classList.add("button");
 boutonPlanter.id = "buttonPlanter";
 boutonPlanter.appendChild(document.createTextNode("Planter"));
-boutonPlanter.addEventListener("click", function(){player.planter(player)})
 
 let boutonRecolter = document.createElement("button");
 boutonRecolter.classList.add("button");
@@ -29,6 +28,7 @@ let boutonAcheter = document.createElement("button");
 boutonAcheter.classList.add("button");
 boutonAcheter.id = "buttonAcheter";
 boutonAcheter.appendChild(document.createTextNode("Acheter"));
+boutonAcheter.addEventListener("click", function(){player.acheter(player)})
 
 let boutonFertiliser = document.createElement("button");
 boutonFertiliser.classList.add("button");

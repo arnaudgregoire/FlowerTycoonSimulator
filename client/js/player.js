@@ -17,17 +17,16 @@ class Player{
         this.selectedCase = parcelle;
     }
     /**
-     * Méthode appelé pour demander au serveur s'il est possible de planter. Si le serveur renvoie une réponse affirmative, on peut alors 
-     * déclencher la méthode plante de la case.
+     * Méthode appelé pour demander au serveur s'il est possible de acheter. Si le serveur renvoie une réponse affirmative, on peut alors 
+     * déclencher la méthode achat de la case.
      * self représenté l'objet lui même car en JS le this change selon la portée (YOUHOU)
-     * //TODO passer en argument de la méthode planter une graine spécifique
+     * //TODO faire les autres actions
      */
-    planter(self) {
+    acheter(self) {
         
-        console.log(self);
-        send("planter",JSON.stringify(
+        send("acheter",JSON.stringify(
             {
-                "fonction": "planter",
+                "fonction": "acheter",
                 "param": {
                     "x": self.selectedCase.x,
                     "y": self.selectedCase.y
@@ -36,10 +35,8 @@ class Player{
         )).then(function(response){
             if(response.ok) {
                 response.json().then(function(json) {
-                    console.log(json);
                     if(json.reponse == 1){
-                        console.log(self.selectedCase.x,self.selectedCase.y);
-                        terrain.cases[self.selectedCase.x][self.selectedCase.y].plante();
+                        terrain.cases[self.selectedCase.x][self.selectedCase.y].achat();
                     }
                 });
             }} 
