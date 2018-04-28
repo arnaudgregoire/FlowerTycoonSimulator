@@ -32,6 +32,7 @@ html, body{
     border-color: black;
     border-style: solid;
     border-spacing: 0px;
+    background-image: url(../img/grass.jpg);
 }
 
 #map tr td {
