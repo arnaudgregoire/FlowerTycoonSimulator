@@ -25,7 +25,7 @@ class Terrain{
         for (let i = 0; i < this.nbHauteur; i++) {
             let ligne = document.createElement("tr");
             for (let j = 0; j < this.nbLargeur; j++) {
-                this.cases[i][j] = new Case(i,j);
+                this.cases[i][j] = new EmptyCase(i,j);
                 ligne.appendChild(this.cases[i][j].dom);
             }
         document.getElementById("map").appendChild(ligne);
