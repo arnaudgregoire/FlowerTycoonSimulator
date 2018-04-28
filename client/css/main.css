@@ -8,7 +8,7 @@ html, body{
     background-color: #4CAF50;
     border: none;
     color: white;
-    padding: 3% 3%;
+    padding: 4% 4%;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -35,6 +35,8 @@ html, body{
 
 #map tr td {
     border: 1px solid black;
+    padding:0px;
+    margin:0px;
 }
 #map tr td:hover{
     background: lightgreen;
