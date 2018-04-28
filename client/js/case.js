@@ -4,9 +4,9 @@ class Case{
         this.x = x;
         this.y = y;
         this.dom.addEventListener("click",function(){
-            player.update(x,y);
-            this.style.background = "green";
-        });
+            player.update(this);
+            this.dom.style.background = "green";
+        }.bind(this));
     }
     plante(){
         this.dom.style.background = "brown";

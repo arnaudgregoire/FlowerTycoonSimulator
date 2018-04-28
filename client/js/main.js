@@ -13,6 +13,6 @@ function send(task,data) {
 
 let terrain = new Terrain(5,10);
 let player = new Player();
-document.getElementById('buttonPlanter').addEventListener("click", player.planter);
+document.getElementById('buttonPlanter').addEventListener("click", function(){player.planter(player)});
 
 
