@@ -25,6 +25,8 @@ Il s'agit de créer un jeu multijoueur de stratégie par navigateur type Ogmae/F
 
 ## But 
 
+![design](design/preview.jpg)
+
 Une partie dure un temps déterminé (possiblement 1 jour)
 Le but est d'engranger un maximum de points en réalisant des bouquets de fleurs.
 Chaque bouquet de fleurs est constitué de fleurs aléatoires.
