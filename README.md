@@ -5,6 +5,16 @@ Un super jeu de navigateur qui supplantera (PLANTE LOL) bientot Ogame FarmVille 
 
 Il y a même un Trello : https://trello.com/b/VOPO9G3D/flowertycoonsimulator
 
+## Dev Get started
+
+Prérequis : avoir node/npm
+
+ - cloner le dépot
+ - npm install dans le dossier serveur
+ - npm start 
+
+ Le serveur tourne sur le port 8081.
+
 ## Principe
 
 Le design était le suivant :
@@ -30,6 +40,6 @@ Le joueur peut décider de :
  - Acheter une parcelle
  - utiliser les fleurs/graines dans son inventaire pour faire des trucs
 
- 
+
 
 
