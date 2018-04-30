@@ -7,11 +7,16 @@ class Case{
         this.x = x;
         this.y = y;
         this.dom.addEventListener("click",function(){
+            if(player.selectedCase != 0){
+                player.selectedCase.dom.style.border = "";
+            }
             player.update(this);
+            this.dom.style.border = "1px solid red";
             this.actionsPossibles();
         }.bind(this));
     }
     
+
     actionsPossibles(){
         let actions = document.getElementById("actions");
         while (actions.firstChild) {

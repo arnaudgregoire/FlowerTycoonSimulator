@@ -10,7 +10,7 @@ function send(task,data) {
 }
 
 
-
+let login = new LoginManager();
 let terrain = new Terrain(5,10);
 let player = new Player();
 
@@ -34,4 +34,6 @@ let boutonFertiliser = document.createElement("button");
 boutonFertiliser.classList.add("button");
 boutonFertiliser.id = "buttonFertiliser";
 boutonFertiliser.appendChild(document.createTextNode("Acheter"));
+
+
 
