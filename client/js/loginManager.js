@@ -2,21 +2,21 @@
 class LoginManager{
     constructor(){
         this.login = document.getElementById('login');
-        this.form = document.createElement('form');
         this.input = document.createElement("input");
         this.input.type = "text";
         this.submit = document.createElement("button");
         this.submit.appendChild(document.createTextNode("Login"));
         let self = this;
         this.submit.addEventListener("click",function(){self.tryLogin()});
-        this.form.appendChild(this.input);
-        this.form.appendChild(this.submit);
-        this.login.appendChild(this.form);
+        this.login.appendChild(this.input);
+        this.login.appendChild(this.submit);
+        this.name = '';
     }
 
     tryLogin(){
-        let name = this.input.value;
-        console.log(name);
+        let self = this;
+        this.name = this.input.value;
+        console.log(this.name);
         send("login",JSON.stringify(
             {
                 "fonction": "login",
@@ -28,11 +28,19 @@ class LoginManager{
             if(response.ok) {
                 response.json().then(function(json) {
                     if(json.reponse == 1){
-                        console.log("JS");
+                        self.correctLogin();
                     }
                 });
             }} 
         )
     }
 
+    correctLogin(){
+        while (this.login.firstChild) {
+            this.login.removeChild(this.login.firstChild);
+        }
+        let nomHTML = document.createElement("h3");
+        nomHTML.appendChild(document.createTextNode("Identifiant : " + this.name));
+        this.login.appendChild(nomHTML);
+    }
 }
