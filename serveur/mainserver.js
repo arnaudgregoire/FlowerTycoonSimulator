@@ -28,6 +28,15 @@ app.post('/login', function (req, res) {
   res.json({"reponse": 1})
 })
 
+app.post('/getPlayers', function (req, res) {
+  console.log(req.body);
+  let fonction = req.body.fonction;
+  console.log(fonction);
+  res.json({"players": [
+    {name : "Amaury", color : "blue"},
+    {name : "Ogus", color : "red"}
+  ]})
+})
 
 app.listen(8081, function () {
   console.log('listening on port 8081!');

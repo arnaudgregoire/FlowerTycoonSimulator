@@ -11,6 +11,7 @@ function send(task,data) {
 
 
 let login = new LoginManager();
+let playerManager = new PlayerManager();
 let terrain = new Terrain(5,10);
 let player = new Player();
 

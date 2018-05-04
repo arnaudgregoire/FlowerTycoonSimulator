@@ -16,12 +16,12 @@ class LoginManager{
     tryLogin(){
         let self = this;
         this.name = this.input.value;
-        console.log(this.name);
+        //console.log(this.name);
         send("login",JSON.stringify(
             {
                 "fonction": "login",
                 "param": {
-                    "login": name
+                    "login": this.name
                 }
             }
         )).then(function(response){
