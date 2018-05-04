@@ -38,6 +38,17 @@ app.post('/getPlayers', function (req, res) {
   ]})
 })
 
+app.post('/getInventory', function (req, res) {
+  console.log(req.body);
+  let fonction = req.body.fonction;
+  console.log(fonction);
+  res.json({"inventory": [
+    {type : "seed", name : "Graine de tulipe"},
+    {type : "flower", name : "Fleur de tournesol"}
+  ]})
+})
+
+
 app.listen(8081, function () {
   console.log('listening on port 8081!');
 })

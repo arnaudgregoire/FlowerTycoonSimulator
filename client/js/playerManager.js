@@ -26,6 +26,11 @@ class PlayerManager{
     }
 
     showPlayers(){
+        // on retire tous les enfants
+        while (this.listPlayersHTML.firstChild) {
+            this.listPlayersHTML.removeChild(this.listPlayersHTML.firstChild);
+        }
+        // pour rajouter les nouveaux
         for (let i = 0; i < this.listPlayers.length; i++) {
             this.listPlayersHTML.appendChild(this.listPlayers[i].representation);
         }

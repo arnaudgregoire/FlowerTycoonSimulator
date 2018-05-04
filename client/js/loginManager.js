@@ -11,6 +11,7 @@ class LoginManager{
         this.login.appendChild(this.input);
         this.login.appendChild(this.submit);
         this.name = '';
+
     }
 
     tryLogin(){
@@ -42,5 +43,6 @@ class LoginManager{
         let nomHTML = document.createElement("h3");
         nomHTML.appendChild(document.createTextNode("Identifiant : " + this.name));
         this.login.appendChild(nomHTML);
+        inventoryManager.getInventory();
     }
 }
