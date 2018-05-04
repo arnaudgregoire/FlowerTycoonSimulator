@@ -9,7 +9,6 @@ function send(task,data) {
     })
 }
 
-
 let loginManager = new LoginManager();
 let inventoryManager = new InventoryManager();
 let playerManager = new PlayerManager();
