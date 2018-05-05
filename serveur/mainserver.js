@@ -2,8 +2,9 @@ const express = require('express')
 var cors = require('cors')
 const bodyParser = require("body-parser");
 var Terrain = require('./terrain.js');
+var Game = require('./game.js');
 
-let terrain = new Terrain();
+var game;
 
 const app = express()
 
@@ -51,7 +52,18 @@ app.post('/getInventory', function (req, res) {
   ]})
 })
 
+app.post('/getTerrain', function (req, res) {
+  console.log(req.body);
+  let fonction = req.body.fonction;
+  console.log(fonction);
+  res.json(game.terrain.toJSON());
+})
 
 app.listen(8081, function () {
+  start();
   console.log('listening on port 8081!');
 })
+
+function start() {
+    game = new Game(24,10,5);
+}

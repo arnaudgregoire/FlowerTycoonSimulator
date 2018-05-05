@@ -32,6 +32,16 @@ class Terrain{
         }
     }
     update(){
-
+        send("getTerrain",JSON.stringify(
+            {
+                "fonction": "getTerrain"
+            }
+        )).then(function(response){
+            if(response.ok) {
+                response.json().then(function(json) {
+                    console.log(json);
+                });
+            }} 
+        )
     }
 }
