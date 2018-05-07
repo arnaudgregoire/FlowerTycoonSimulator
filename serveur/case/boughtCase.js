@@ -10,7 +10,8 @@ class BoughtCase extends Case{
     }
 
     toJSON(){
-        super.toJSON();
+        let json = Object.assign({}, this);
+        return json;
     }
 }
 

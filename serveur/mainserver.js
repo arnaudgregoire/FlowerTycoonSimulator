@@ -65,5 +65,5 @@ app.listen(8081, function () {
 })
 
 function start() {
-    game = new Game(24,10,5);
+    game = new Game(24,5,10);
 }

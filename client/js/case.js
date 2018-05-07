@@ -63,3 +63,24 @@ class BoughtCase extends Case{
 
     }
 }
+
+class CaseFactory{
+    static createCase(JSONCase){
+        let type = JSONCase.type;
+        let x = JSONCase.x;
+        let y = JSONCase.y;
+        let object;
+        //console.log(type);
+
+        switch(type) {
+        case 'empty':
+            object = new EmptyCase(x,y);
+            break;
+        case 'bought':
+            object = new BoughtCase(x,y);
+            break;
+        }
+        //console.log(object);
+        return object;
+    }
+}

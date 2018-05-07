@@ -5,16 +5,12 @@ var Case = require("./case.js");
 class EmptyCase extends Case{
     constructor(x,y){
         super(x,y);
+        this.type = 'empty';
     }
 
     toJSON(){
-        return {
-            "type" : "EmptyCase",
-            "attributs" : {
-                "x" : this.x,
-                "y" : this.y
-            }
-        }
+        let json = Object.assign({}, this);
+        return json;
     }
 }
 

@@ -7,31 +7,28 @@ class Terrain{
      * @param {int} nbHauteur 
      * @param {int} nbLargeur 
      */
-    constructor(nbHauteur, nbLargeur){
-        this.nbHauteur = nbHauteur;
-        this.nbLargeur = nbLargeur;
-        this.cases = new Array(nbHauteur);
-        // Initialisation de la matrice contenant les cases
-        for (var i = 0; i < nbHauteur; i++) {
-            this.cases[i] = new Array(nbLargeur);
-        }
-        this.createTable();
-        this.update();
+    constructor(){
+        this.nbHauteur = 0;
+        this.nbLargeur = 0;
+        this.getTerrain();
     }
     /**
      * Créé la 2d-aarray de case vide ainsi qu'une représentation graphique du terrain
      */
-    createTable(){
-        for (let i = 0; i < this.nbHauteur; i++) {
+    displayTerrain(){
+        this.cleanTerrain();
+        
+        for (let i = 0; i < this.nbLargeur; i++) {
             let ligne = document.createElement("tr");
-            for (let j = 0; j < this.nbLargeur; j++) {
-                this.cases[i][j] = new EmptyCase(i,j);
+            for (let j = 0; j < this.nbHauteur; j++) {
                 ligne.appendChild(this.cases[i][j].dom);
             }
         document.getElementById("map").appendChild(ligne);
         }
     }
-    update(){
+
+    getTerrain(){
+        let self = this;
         send("getTerrain",JSON.stringify(
             {
                 "fonction": "getTerrain"
@@ -39,9 +36,28 @@ class Terrain{
         )).then(function(response){
             if(response.ok) {
                 response.json().then(function(json) {
-                    console.log(json);
+                    self.nbLargeur = json.cases.length;
+                    self.nbHauteur = json.cases[0].length;
+                    self.cases = new Array(self.nbLargeur);
+                    // Initialisation de la matrice contenant les cases
+                    for (var i = 0; i < self.nbLargeur; i++) {
+                        self.cases[i] = new Array(self.nbHauteur);
+                    }
+                    for (var i = 0; i < json.cases.length; i++) {
+                        for (var j = 0; j < json.cases[0].length; j++) {
+                            self.cases[i][j] = CaseFactory.createCase(json.cases[i][j]);
+                        }
+                    }
+                self.displayTerrain();
                 });
             }} 
         )
+    }
+
+    cleanTerrain(){
+        let map = document.getElementById("map");
+        while (map.firstChild) {
+            map.removeChild(map.firstChild);
+        }
     }
 }

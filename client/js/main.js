@@ -12,7 +12,7 @@ function send(task,data) {
 let loginManager = new LoginManager();
 let inventoryManager = new InventoryManager();
 let playerManager = new PlayerManager();
-let terrain = new Terrain(5,10);
+let terrain = new Terrain();
 let player = new Player();
 
 let boutonPlanter = document.createElement("button");
