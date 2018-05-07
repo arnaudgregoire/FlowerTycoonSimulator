@@ -7,11 +7,17 @@ class BoughtCase extends Case{
     constructor(x,y,player){
         super(x,y);
         this.owner = player;
+        this.type = BoughtCase.getType();
     }
 
     toJSON(){
         let json = Object.assign({}, this);
         return json;
+    }
+
+    //variables de classes
+    static getType(){
+        return "bought";
     }
 }
 

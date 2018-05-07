@@ -36,7 +36,7 @@ class Player{
         )).then(function(response){
             if(response.ok) {
                 response.json().then(function(json) {
-                    terrain.getTerain();
+                    terrain.getTerrain();
                 });
             }} 
         )

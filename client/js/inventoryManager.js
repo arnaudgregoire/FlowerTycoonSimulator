@@ -17,12 +17,11 @@ class InventoryManager{
         )).then(function(response){
             if(response.ok) {
                 response.json().then(function(json) {
-                	console.log(json);
+                	//console.log(json);
                     self.inventory = [];
                     for (let i = 0; i < json.inventory.length; i++) {
                         self.inventory.push(ObjectFactory.createObject(json.inventory[i]));
                     }
-          
                     self.showInventory();
                 });
             }} 
@@ -35,7 +34,7 @@ class InventoryManager{
             this.inventoryHTML.removeChild(this.inventoryHTML.firstChild);
         }
         // pour rajouter les nouveaux
-        console.log(this.inventory);
+        //console.log(this.inventory);
 		for (var i = 0; i < this.inventory.length; i++) {
 			this.inventoryHTML.appendChild(this.inventory[i].representation);
 		}

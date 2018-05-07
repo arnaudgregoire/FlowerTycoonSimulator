@@ -37,6 +37,7 @@ class Terrain{
         )).then(function(response){
             if(response.ok) {
                 response.json().then(function(json) {
+                    //console.log(json);
                     self.nbLargeur = json.cases.length;
                     self.nbHauteur = json.cases[0].length;
                     self.cases = new Array(self.nbLargeur);

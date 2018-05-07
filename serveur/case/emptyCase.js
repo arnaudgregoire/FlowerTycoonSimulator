@@ -5,12 +5,22 @@ var Case = require("./case.js");
 class EmptyCase extends Case{
     constructor(x,y){
         super(x,y);
-        this.type = 'empty';
+        this.type = EmptyCase.getType();
+        this.cost = EmptyCase.getCost();
     }
 
     toJSON(){
         let json = Object.assign({}, this);
         return json;
+    }
+
+    //variables de classes
+    static getCost(){
+        return 10;
+    }
+
+    static getType(){
+        return "empty";
     }
 }
 

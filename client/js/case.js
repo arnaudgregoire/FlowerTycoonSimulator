@@ -44,9 +44,11 @@ class EmptyCase extends Case{
  * Classe symoblisant l'ensemble des cases qui ont été achetés par un joueur
  */
 class BoughtCase extends Case{
-    constructor(x,y){
+    constructor(x,y,player){
         super(x,y);
+        this.player = player;
         this.dom.style.backgroundImage = "url('img/labours.jpg')";
+        this.dom.style.border = "3px solid" + this.player.color;
     }
 
     actionsPossibles(){
@@ -71,7 +73,15 @@ class CaseFactory{
             object = new EmptyCase(x,y);
             break;
         case 'bought':
-            object = new BoughtCase(x,y);
+            let player;
+            if(playerManager.checkPlayer(JSONCase.owner.name)){
+                player = playerManager.findPlayer(JSONCase.owner.name);
+                object = new BoughtCase(x,y,player);
+                console.log(object);
+            }
+            else{
+                //gestion du cas ou le joueur ayant acheté la case n'apparait pas coté client
+            }
             break;
         }
         //console.log(object);

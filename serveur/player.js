@@ -3,7 +3,7 @@ var utils = require('./utils.js');
 class Player{
 	constructor(name){
 		this.name = name;
-		this.money = 0;
+		this.money = 10;
 		this.color = utils.getRandomColor();
 	}
 }

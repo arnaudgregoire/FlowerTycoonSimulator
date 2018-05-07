@@ -13,36 +13,40 @@ app.use(bodyParser.json());
 
 app.post('/planter', function (req, res) {
   console.log(req.body);
-  let fonction = req.body.fonction;
-  console.log(fonction);
-  res.json({"reponse": 1})
+  let json = {};
+  if(game.checkName(req.body)){
+    json = game.planter(req);
+  }
+  else{
+    json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN (https://www.youtube.com/watch?v=z9CRvCmJUnI)
+  }
+  res.json(json);
 })
 
 app.post('/acheter', function (req, res) {
   console.log(req.body);
-  let fonction = req.body.fonction;
-  console.log(fonction);
-  res.json({"reponse": 1})
+  let json = {};
+  if(game.checkName(req.body)){
+    json = game.acheter(req.body);
+  }
+  else{
+    json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN (https://www.youtube.com/watch?v=z9CRvCmJUnI)
+  }
+  res.json(json);
 })
 
 app.post('/login', function (req, res) {
   console.log(req.body);
-  let fonction = req.body.fonction;
-  console.log(fonction);
   res.json(game.login(req.body));
 })
 
 app.post('/getPlayers', function (req, res) {
   console.log(req.body);
-  let fonction = req.body.fonction;
-  console.log(fonction);
   res.json(game.getPlayers());
 })
 
 app.post('/getInventory', function (req, res) {
   console.log(req.body);
-  let fonction = req.body.fonction;
-  console.log(fonction);
   res.json({"inventory": [
     {type : "seed", name : "Graine de tulipe"},
     {type : "flower", name : "Fleur de tournesol"}
@@ -51,8 +55,6 @@ app.post('/getInventory', function (req, res) {
 
 app.post('/getTerrain', function (req, res) {
   console.log(req.body);
-  let fonction = req.body.fonction;
-  console.log(fonction);
   res.json(game.terrain.toJSON());
 })
 

@@ -1,8 +1,8 @@
 class PlayerManager{
     constructor(){
-        this.listPlayers = [];
-        this.listPlayersHTML = document.createElement('ul');
-        document.getElementById("leaderboards").appendChild(this.listPlayersHTML);
+        this.players = [];
+        this.playersHTML = document.createElement('ul');
+        document.getElementById("leaderboards").appendChild(this.playersHTML);
         this.getPlayers();
     }
 
@@ -15,9 +15,9 @@ class PlayerManager{
         )).then(function(response){
             if(response.ok) {
                 response.json().then(function(json) {
-                    self.listPlayers = [];
+                    self.players = [];
                     for (let i = 0; i < json.players.length; i++) {
-                        self.listPlayers.push( new Personne(json.players[i].name, json.players[i].color));
+                        self.players.push( new Opponent(json.players[i].name, json.players[i].color));
                     }
                     self.showPlayers();
                 });
@@ -27,22 +27,33 @@ class PlayerManager{
 
     showPlayers(){
         // on retire tous les enfants
-        while (this.listPlayersHTML.firstChild) {
-            this.listPlayersHTML.removeChild(this.listPlayersHTML.firstChild);
+        while (this.playersHTML.firstChild) {
+            this.playersHTML.removeChild(this.playersHTML.firstChild);
         }
         // pour rajouter les nouveaux
-        for (let i = 0; i < this.listPlayers.length; i++) {
-            this.listPlayersHTML.appendChild(this.listPlayers[i].representation);
+        for (let i = 0; i < this.players.length; i++) {
+            this.playersHTML.appendChild(this.players[i].representation);
         }
+    }
+
+    checkPlayer(name){
+        let exist = false;
+        for (let i = 0; i < this.players.length; i++) {
+            if(this.players[i].name == name){
+                exist = true;
+            }
+        }
+        return exist;
+    }
+
+    findPlayer(name){
+        let player;
+        for (let i = 0; i < this.players.length; i++) {
+            if(this.players[i].name == name){
+                player = this.players[i];
+            }
+        }
+        return player;
     }
 }
 
-class Personne{
-    constructor(name,color){
-        this.name  = name;
-        this.color = color;
-        this.representation = document.createElement("li");
-        this.representation.appendChild(document.createTextNode(this.name));
-        this.representation.style.color = this.color;
-    }
-}
