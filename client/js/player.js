@@ -28,6 +28,7 @@ class Player{
             {
                 "fonction": "acheter",
                 "param": {
+                    "login": loginManager.name,
                     "x": self.selectedCase.x,
                     "y": self.selectedCase.y
                 }
@@ -35,9 +36,7 @@ class Player{
         )).then(function(response){
             if(response.ok) {
                 response.json().then(function(json) {
-                    if(json.reponse == 1){
-                        terrain.cases[self.selectedCase.x][self.selectedCase.y].achat();
-                    }
+                    terrain.getTerain();
                 });
             }} 
         )

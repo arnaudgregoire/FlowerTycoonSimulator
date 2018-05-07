@@ -10,6 +10,7 @@ class Terrain{
     constructor(){
         this.nbHauteur = 0;
         this.nbLargeur = 0;
+        this.cases = [];
         this.getTerrain();
     }
     /**

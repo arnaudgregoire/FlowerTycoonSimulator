@@ -9,11 +9,11 @@ function send(task,data) {
     })
 }
 
-let loginManager = new LoginManager();
+let loginManager     = new LoginManager();
 let inventoryManager = new InventoryManager();
-let playerManager = new PlayerManager();
-let terrain = new Terrain();
-let player = new Player();
+let playerManager    = new PlayerManager();
+let terrain          = new Terrain();
+let player           = new Player();
 
 let boutonPlanter = document.createElement("button");
 boutonPlanter.classList.add("button");

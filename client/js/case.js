@@ -38,12 +38,6 @@ class EmptyCase extends Case{
         document.getElementById("actions").appendChild(boutonAcheter);
     }
     
-    achat(){
-        let bought =  new BoughtCase(player.selectedCase.x,player.selectedCase.y);
-        terrain.cases[player.selectedCase.x][player.selectedCase.y] = bought;
-        this.dom.parentElement.replaceChild(bought.dom,this.dom);
-        bought.actionsPossibles();
-    }
 }
 
 /**

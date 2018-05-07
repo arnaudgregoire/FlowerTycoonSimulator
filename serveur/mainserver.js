@@ -29,17 +29,14 @@ app.post('/login', function (req, res) {
   console.log(req.body);
   let fonction = req.body.fonction;
   console.log(fonction);
-  res.json({"reponse": 1})
+  res.json(game.login(req.body));
 })
 
 app.post('/getPlayers', function (req, res) {
   console.log(req.body);
   let fonction = req.body.fonction;
   console.log(fonction);
-  res.json({"players": [
-    {name : "Amaury", color : "blue"},
-    {name : "Ogus", color : "red"}
-  ]})
+  res.json(game.getPlayers());
 })
 
 app.post('/getInventory', function (req, res) {

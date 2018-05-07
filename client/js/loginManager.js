@@ -40,9 +40,10 @@ class LoginManager{
         while (this.login.firstChild) {
             this.login.removeChild(this.login.firstChild);
         }
-        let nomHTML = document.createElement("h3");
+        let nomHTML = document.createElement("h5");
         nomHTML.appendChild(document.createTextNode("Identifiant : " + this.name));
         this.login.appendChild(nomHTML);
         inventoryManager.getInventory();
+        playerManager.getPlayers();
     }
 }
