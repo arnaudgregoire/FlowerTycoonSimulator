@@ -3,13 +3,15 @@ var cors = require('cors')
 const bodyParser = require("body-parser");
 var Terrain = require('./terrain.js');
 var Game = require('./game.js');
-
+const PORT = process.env.PORT || 8081;
 var game;
 
 const app = express()
 
 app.use(cors())
 app.use(bodyParser.json());
+
+app.use(express.static('../client/'));
 
 /**
  * Partie du serveur qui repond au demande de plantation de vegetation sur une case
@@ -73,9 +75,9 @@ app.post('/getTerrain', function (req, res) {
 /**
  * Methode lancant le serveur
  */
-app.listen(8081, function () {
+app.listen(PORT, function () {
   start();
-  console.log('listening on port 8081!');
+  console.log('listening on port ' + PORT);
 })
 
 /**
