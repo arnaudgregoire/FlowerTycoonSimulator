@@ -28,6 +28,9 @@ class Terrain{
         }
     }
 
+    /**
+     * Methode lancant une demande au serveur pour savoir le vertiable etat actuel  du  terrain serveur
+     */
     getTerrain(){
         let self = this;
         send("getTerrain",JSON.stringify(

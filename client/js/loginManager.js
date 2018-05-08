@@ -14,6 +14,9 @@ class LoginManager{
 
     }
 
+    /**
+     * Lance une demande de connection cote client
+     */
     tryLogin(){
         let self = this;
         this.name = this.input.value;
@@ -36,6 +39,9 @@ class LoginManager{
         )
     }
 
+    /**
+     * Methode appele lorsque le serveur a repondu positivement a la demande du client
+     */
     correctLogin(){
         while (this.login.firstChild) {
             this.login.removeChild(this.login.firstChild);
