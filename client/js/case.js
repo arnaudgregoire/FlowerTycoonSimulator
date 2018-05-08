@@ -8,10 +8,10 @@ class Case{
         this.y = y;
         this.dom.addEventListener("click",function(){
             if(player.selectedCase != 0){
-                player.selectedCase.dom.style.border = "";
+                player.selectedCase.dom.style.background = "";
             }
             player.update(this);
-            this.dom.style.border = "1px solid red";
+            this.dom.style.background = "rgba(233, 151, 0, 0.39)";
             this.actionsPossibles();
         }.bind(this));
     }
