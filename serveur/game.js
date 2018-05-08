@@ -14,6 +14,9 @@ class Game{
         this.terrain = new Terrain(tailleX, tailleY);
 	}
 	
+	/**
+	* Regarde si le nom d'un joueur donne en entree coresspond au nom d un des objets Player de la liste players 
+	*/
 	checkName(req){
 		let exist = false;
     	for (var i = 0; i < this.players.length; i++) {
@@ -24,6 +27,10 @@ class Game{
 		return exist;
 	}
 
+	/**
+	 * Renvoie le joeur correspondant au nom compris dans la requete
+	 * @param {Request body} req 
+	 */
 	findPlayer(req){
 		let player;
 		for (var i = 0; i < this.players.length; i++) {
@@ -34,6 +41,11 @@ class Game{
 		return player;
 	}
 
+	/**
+	 * Methode appele lorsque que un joueur veut acheter une case
+	 * @param {Request body} req 
+	 * Renvoie un json avec la reponse associe et une petite description de ce qui s est passe
+	 */
 	acheter(req){
 		let player = this.findPlayer(req);
 		let json = {};
@@ -55,10 +67,20 @@ class Game{
 		return json;
 	}
 
+	/**
+	 * Methode appele lorsque que un joueur veut planter une case
+	 * @param {Request body} req 
+	 *  Renvoie un json avec la reponse associe et une petite description de ce qui s est passe
+	 */
 	planter(req){
 
 	}
 
+	/**
+	 * Methode appele lorsque que un joueur veut se connecter
+	 * @param {Request body} req 
+	 *  Renvoie un json avec la reponse associe et une petite description de ce qui s est passe
+	 */	
     login(req){
     	let name = req.param.login;
     	let reponse = {};
@@ -79,10 +101,16 @@ class Game{
     	return reponse;
     }
 
+	/**
+	 * Verifie si le password donne en entree correpond bien ( potentiellement passer des parametres en plus)
+	 */
     checkPassword(){
     	return true;
     }
 
+	/**
+	 * Renvoie la liste des joueurs enregistres sur le serveur sous format json
+	 */
     getPlayers(){
     	let json = {"players": []};
     	for (var i = 0; i < this.players.length; i++) {
@@ -91,6 +119,9 @@ class Game{
     	return json;
 	}
 
+	/**
+	 * Methode appele quand le serveur ne connait pas le login ou que le login est manquant
+	 */
 	destinationUnknown(){
 		return {"reponse":0, "description" : "Please login first"};
 	}

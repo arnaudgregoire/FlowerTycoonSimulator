@@ -11,6 +11,9 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json());
 
+/**
+ * Partie du serveur qui repond au demande de plantation de vegetation sur une case
+ */
 app.post('/planter', function (req, res) {
   console.log(req.body);
   let json = {};
@@ -23,6 +26,9 @@ app.post('/planter', function (req, res) {
   res.json(json);
 })
 
+/**
+ * Partie du serveur s occupant de l achat de cases
+ */
 app.post('/acheter', function (req, res) {
   console.log(req.body);
   let json = {};
@@ -35,11 +41,17 @@ app.post('/acheter', function (req, res) {
   res.json(json);
 })
 
+/**
+ * Partie du serveur qui s occupe de la connexion de nouveaux joueurs, plus generalement de la connexion des utilisateurs
+ */
 app.post('/login', function (req, res) {
   console.log(req.body);
   res.json(game.login(req.body));
 })
 
+/**
+ * Partie du serveur repondant aux demandes d informations du client
+ */
 app.post('/getPlayers', function (req, res) {
   console.log(req.body);
   res.json(game.getPlayers());
@@ -58,11 +70,17 @@ app.post('/getTerrain', function (req, res) {
   res.json(game.terrain.toJSON());
 })
 
+/**
+ * Methode lancant le serveur
+ */
 app.listen(8081, function () {
   start();
   console.log('listening on port 8081!');
 })
 
+/**
+ * Methode pour commencer une partie appele juste au dessus a la creation du serveur
+ */
 function start() {
     game = new Game(24,5,10);
 }
