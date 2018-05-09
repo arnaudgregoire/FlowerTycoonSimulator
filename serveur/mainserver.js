@@ -11,7 +11,7 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json());
 
-app.use(express.static('../client/'));
+app.use(express.static('client/'));
 
 /**
  * Partie du serveur qui repond au demande de plantation de vegetation sur une case

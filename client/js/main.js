@@ -1,5 +1,9 @@
+var adress = "https://polar-peak-94213.herokuapp.com/";
+
+//http://localhost:8081/
+
 function send(task,data) {
-    return fetch("http://localhost:8081/"+task,{
+    return fetch(adress + task,{
         method: "POST",
         headers: {
             'Accept': 'application/json, text/plain, */*',
