@@ -1,4 +1,4 @@
-var adress = "https://polar-peak-94213.herokuapp.com/";
+var adress = "https://flowertycoonsimulator.herokuapp.com/";
 
 //http://localhost:8081/
 
