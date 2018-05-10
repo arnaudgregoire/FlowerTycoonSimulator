@@ -1,6 +1,15 @@
-var adress = "https://flowertycoonsimulator.herokuapp.com/";
-
+var adress = "http://localhost:8081/";
+//https://flowertycoonsimulator.herokuapp.com/
 //http://localhost:8081/
+
+
+let loginManager     = new LoginManager();
+let inventoryManager = new InventoryManager();
+let playerManager    = new PlayerManager();
+let terrain          = new Terrain();
+let player           = new Player();
+var exampleSocket    = new WebSocket("ws://localhost:8080/");
+
 
 function send(task,data) {
     return fetch(adress + task,{
@@ -13,11 +22,20 @@ function send(task,data) {
     })
 }
 
-let loginManager     = new LoginManager();
-let inventoryManager = new InventoryManager();
-let playerManager    = new PlayerManager();
-let terrain          = new Terrain();
-let player           = new Player();
+exampleSocket.onopen = function (event) {
+    exampleSocket.send("Voici un texte que le serveur attend de recevoir dès que possible !"); 
+  };
+
+exampleSocket.onmessage = function (event) {
+    let json = JSON.parse(event.data);
+    console.log(json);
+    if (json.reponse == "update") {
+        terrain.getTerrain();
+        playerManager.getPlayers();
+    }
+}
+
+
 
 let boutonPlanter = document.createElement("button");
 boutonPlanter.classList.add("button");

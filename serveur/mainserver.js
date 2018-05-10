@@ -1,17 +1,31 @@
 const express = require('express')
 var cors = require('cors')
+const WebSocket = require('ws');
 const bodyParser = require("body-parser");
 var Terrain = require('./terrain.js');
 var Game = require('./game.js');
 const PORT = process.env.PORT || 8081;
 var game;
 
-const app = express()
-
+const app = express();
 app.use(cors())
 app.use(bodyParser.json());
-
 app.use(express.static('client/'));
+
+const wss = new WebSocket.Server({ port: 8080 });
+
+// Broadcast to all.
+wss.broadcast = function broadcast(data) {
+  wss.clients.forEach(function each(client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(data);
+    }
+  });
+};
+
+function requestUpdateClients() {
+    wss.broadcast(JSON.stringify({'reponse': 'update'}));
+}
 
 /**
  * Partie du serveur qui repond au demande de plantation de vegetation sur une case
@@ -26,6 +40,7 @@ app.post('/planter', function (req, res) {
     json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN (https://www.youtube.com/watch?v=z9CRvCmJUnI)
   }
   res.json(json);
+  requestUpdateClients();
 })
 
 /**
@@ -41,6 +56,7 @@ app.post('/acheter', function (req, res) {
     json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN (https://www.youtube.com/watch?v=z9CRvCmJUnI)
   }
   res.json(json);
+  requestUpdateClients();
 })
 
 /**
@@ -49,6 +65,7 @@ app.post('/acheter', function (req, res) {
 app.post('/login', function (req, res) {
   console.log(req.body);
   res.json(game.login(req.body));
+  requestUpdateClients();
 })
 
 /**

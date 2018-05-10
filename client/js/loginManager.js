@@ -50,6 +50,6 @@ class LoginManager{
         nomHTML.appendChild(document.createTextNode("Identifiant : " + this.name));
         this.login.appendChild(nomHTML);
         inventoryManager.getInventory();
-        playerManager.getPlayers();
+        //playerManager.getPlayers();
     }
 }
