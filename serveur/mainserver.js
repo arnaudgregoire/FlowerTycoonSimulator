@@ -1,31 +1,17 @@
-const express = require('express')
-var cors = require('cors')
-const WebSocket = require('ws');
+const express    = require('express')
+var cors         = require('cors')
+const WebSocket  = require('ws');
 const bodyParser = require("body-parser");
-var Terrain = require('./terrain.js');
-var Game = require('./game.js');
-const PORT = process.env.PORT || 8081;
+var Terrain      = require('./terrain.js');
+var Game         = require('./game.js');
+let server       = require('http').createServer();
+const PORT       = process.env.PORT || 8081;
 var game;
 
 const app = express();
 app.use(cors())
 app.use(bodyParser.json());
 app.use(express.static('client/'));
-
-const wss = new WebSocket.Server({ port: 8080 });
-
-// Broadcast to all.
-wss.broadcast = function broadcast(data) {
-  wss.clients.forEach(function each(client) {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(data);
-    }
-  });
-};
-
-function requestUpdateClients() {
-    wss.broadcast(JSON.stringify({'reponse': 'update'}));
-}
 
 /**
  * Partie du serveur qui repond au demande de plantation de vegetation sur une case
@@ -89,13 +75,6 @@ app.post('/getTerrain', function (req, res) {
   res.json(game.terrain.toJSON());
 })
 
-/**
- * Methode lancant le serveur
- */
-app.listen(PORT, function () {
-  start();
-  console.log('listening on port ' + PORT);
-})
 
 /**
  * Methode pour commencer une partie appele juste au dessus a la creation du serveur
@@ -103,3 +82,29 @@ app.listen(PORT, function () {
 function start() {
     game = new Game(24,5,10);
 }
+
+
+let wss = new WebSocket.Server({ server : server });
+server.on('request', app);
+
+
+// Broadcast to all.
+wss.broadcast = function broadcast(data) {
+  wss.clients.forEach(function each(client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(data);
+    }
+  });
+};
+
+function requestUpdateClients() {
+    wss.broadcast(JSON.stringify({'reponse': 'update'}));
+}
+
+/**
+ * Methode lancant le serveur
+ */
+server.listen(PORT, function () {
+  start();
+  console.log('listening on port ' + PORT);
+})
