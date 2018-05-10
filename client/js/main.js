@@ -8,7 +8,7 @@ let inventoryManager = new InventoryManager();
 let playerManager    = new PlayerManager();
 let terrain          = new Terrain();
 let player           = new Player();
-var exampleSocket    = new WebSocket("ws://" + address);
+var exampleSocket    = new WebSocket("wss://" + address);
 
 
 function send(task,data) {
