@@ -12,7 +12,7 @@ var exampleSocket    = new WebSocket("ws://" + address);
 
 
 function send(task,data) {
-    return fetch("http://" + address + task,{
+    return fetch("https://" + address + task,{
         method: "POST",
         headers: {
             'Accept': 'application/json, text/plain, */*',
