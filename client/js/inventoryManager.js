@@ -17,7 +17,7 @@ class InventoryManager{
         )).then(function(response){
             if(response.ok) {
                 response.json().then(function(json) {
-                	console.log(json);
+                	//console.log(json);
                     self.inventory = [];
                     for (let i = 0; i < json.inventory.length; i++) {
 						self.inventory.push(ObjectFactory.createObject(json.inventory[i]));
@@ -50,7 +50,7 @@ class ObjectFactory {
 
 		let famille = objectJSON.famille;
 		let object;
-		console.log(objectJSON);
+		//console.log(objectJSON);
 
 		switch(famille) {
 	    case 'seed':
@@ -60,7 +60,7 @@ class ObjectFactory {
 	        object = new Flower(objectJSON.name);
 	        break;
 		case 'plante':
-			object = new Plante(objectJSON.name);
+			object = new Plante(objectJSON.name, objectJSON.id);
 			break;
 		}
 		//console.log(object);

@@ -2,6 +2,7 @@ var Terrain = require('./terrain.js');
 var Player  = require('./player.js');
 var EmptyCase = require('./case/emptyCase.js');
 var BoughtCase = require('./case/boughtCase.js');
+var PlantedCase = require('./case/plantedCase');
 
 /**
  * L'instance Game représente la partie en cours :
@@ -73,7 +74,32 @@ class Game{
 	 *  Renvoie un json avec la reponse associe et une petite description de ce qui s est passe
 	 */
 	planter(req){
-
+		//console.log(req);
+		let player = this.findPlayer(req);
+		let json = {};
+		let x = req.param.x;
+		let y = req.param.y;
+		let id = req.param.plante.id;
+		if (this.terrain.cases[x][y].owner == player) {
+			if(player.checkObject(id)){
+				let plante = player.findObject(id);
+				if(plante.plantable){
+					this.terrain.cases[x][y] = new PlantedCase(x,y,player,plante);
+					player.inventory.splice( player.inventory.indexOf(plante), 1 );
+					json = {"reponse":1, "description" : "La plante a ete plantee"};
+				}
+				else{
+					json = {"reponse":0, "description" : "La plante ne peut pas etre plantee"};
+				}
+			}
+			else{
+				json = {"reponse":0, "description" : "Vous ne possedez pas l objet"};
+			}
+		}
+		else{
+			json = {"reponse":0, "description" : "Vous ne possedez pas la case"};
+		}
+		return json;
 	}
 
 	/**

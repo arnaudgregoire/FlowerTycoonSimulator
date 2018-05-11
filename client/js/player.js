@@ -8,6 +8,7 @@ class Player{
      */
     constructor(){
         this.selectedCase = 0;
+        this.selectedObject = 0;
     }
     /**
      * Méthode appelé pour signaler un changement de case sélectionné par le joueur
@@ -15,6 +16,10 @@ class Player{
      */
     update(parcelle){
         this.selectedCase = parcelle;
+    }
+
+    updateObject(object){
+        this.selectedObject = object;
     }
     /**
      * Méthode appelé pour demander au serveur s'il est possible de acheter. Si le serveur renvoie une réponse affirmative, on peut alors 
@@ -36,9 +41,32 @@ class Player{
         )).then(function(response){
             if(response.ok) {
                 response.json().then(function(json) {
+                    console.log(json);
                     terrain.getTerrain();
                 });
             }} 
         )
     };
+
+    planter(self){
+        send("planter",JSON.stringify(
+            {
+                "fonction": "planter",
+                "param": {
+                    "login": loginManager.name,
+                    "x": self.selectedCase.x,
+                    "y": self.selectedCase.y,
+                    "plante":self.selectedObject.toJSON()
+                }
+            }
+        )).then(function(response){
+            if(response.ok) {
+                response.json().then(function(json) {
+                    console.log(json);
+                    terrain.getTerrain();
+                    inventoryManager.getInventory();
+                });
+            }} 
+        )
+    }
 }

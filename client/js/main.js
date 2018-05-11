@@ -28,7 +28,7 @@ exampleSocket.onopen = function (event) {
 
 exampleSocket.onmessage = function (event) {
     let json = JSON.parse(event.data);
-    console.log(json);
+    //console.log(json);
     if (json.reponse == "update") {
         terrain.getTerrain();
         playerManager.getPlayers();
@@ -36,11 +36,11 @@ exampleSocket.onmessage = function (event) {
 }
 
 
-
 let boutonPlanter = document.createElement("button");
 boutonPlanter.classList.add("button");
 boutonPlanter.id = "buttonPlanter";
 boutonPlanter.appendChild(document.createTextNode("Planter"));
+boutonPlanter.addEventListener("click", function(){player.planter(player)})
 
 let boutonRecolter = document.createElement("button");
 boutonRecolter.classList.add("button");
@@ -56,7 +56,7 @@ boutonAcheter.addEventListener("click", function(){player.acheter(player)})
 let boutonFertiliser = document.createElement("button");
 boutonFertiliser.classList.add("button");
 boutonFertiliser.id = "buttonFertiliser";
-boutonFertiliser.appendChild(document.createTextNode("Acheter"));
+boutonFertiliser.appendChild(document.createTextNode("Fertiliser"));
 
 
 

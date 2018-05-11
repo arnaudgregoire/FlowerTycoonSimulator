@@ -4,14 +4,19 @@ var BoughtCase = require("./boughtCase.js");
  * Le végétal peut être une graine ou une plante
  */
 class PlantedCase extends BoughtCase{
-    constructor(x,y,player,vegetal){
+    constructor(x,y,player,plante){
         super(x,y,player);
-        this.vegetal = vegetal;
+        this.plante = plante;
+        this.type = PlantedCase.getType();
     }
     toJSON(){
         let json = Object.assign({}, this);
-        json.vegetal = JSON.stringify(this.vegetal);
         return json;
+    }
+
+    //variables de classes
+    static getType(){
+        return "planted";
     }
 }
 

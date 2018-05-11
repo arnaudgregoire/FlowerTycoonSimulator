@@ -7,11 +7,7 @@ class Case{
         this.x = x;
         this.y = y;
         this.dom.addEventListener("click",function(){
-            if(player.selectedCase != 0){
-                player.selectedCase.dom.style.background = "";
-            }
             player.update(this);
-            this.dom.style.background = "rgba(233, 151, 0, 0.39)";
             this.actionsPossibles();
         }.bind(this));
     }
@@ -60,20 +56,35 @@ class BoughtCase extends Case{
     }
 }
 
+class PlantedCase extends BoughtCase{
+    constructor(x,y,player, plante){
+        super(x,y, player);
+        this.plante = plante;
+        this.dom.style.backgroundImage = "url(" + this.plante.img +")";
+    }
+
+    actionsPossibles(){
+        super.actionsPossibles();
+        document.getElementById("actions").appendChild(boutonRecolter);
+        document.getElementById("actions").appendChild(boutonFertiliser);
+    }
+}
+
+
 class CaseFactory{
     static createCase(JSONCase){
         let type = JSONCase.type;
         let x = JSONCase.x;
         let y = JSONCase.y;
         let object;
-        //console.log(type);
+        let player;
+        //console.log(JSONCase);
 
         switch(type) {
         case 'empty':
             object = new EmptyCase(x,y);
             break;
         case 'bought':
-            let player;
             if(playerManager.checkPlayer(JSONCase.owner.name)){
                 player = playerManager.findPlayer(JSONCase.owner.name);
                 object = new BoughtCase(x,y,player);
@@ -83,7 +94,17 @@ class CaseFactory{
                 //gestion du cas ou le joueur ayant acheté la case n'apparait pas coté client
             }
             break;
-        }
+        case 'planted':
+            if(playerManager.checkPlayer(JSONCase.owner.name)){
+                player = playerManager.findPlayer(JSONCase.owner.name);
+                let plante = PlanteFactory.createPlante(JSONCase.plante);
+                object = new PlantedCase(x,y,player,plante);
+            }
+            else{
+                console.log("gestion du cas ou le joueur ayant acheté la case n'apparait pas coté client");
+            }
+            break;
+        } 
         //console.log(object);
         return object;
     }

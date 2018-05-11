@@ -20,7 +20,7 @@ app.post('/planter', function (req, res) {
   console.log(req.body);
   let json = {};
   if(game.checkName(req.body)){
-    json = game.planter(req);
+    json = game.planter(req.body);
   }
   else{
     json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN (https://www.youtube.com/watch?v=z9CRvCmJUnI)
