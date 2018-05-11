@@ -64,10 +64,7 @@ app.post('/getPlayers', function (req, res) {
 
 app.post('/getInventory', function (req, res) {
   console.log(req.body);
-  res.json({"inventory": [
-    {type : "seed", name : "Graine de tulipe"},
-    {type : "flower", name : "Fleur de tournesol"}
-  ]})
+  res.json(game.getInventory(req.body));
 })
 
 app.post('/getTerrain', function (req, res) {

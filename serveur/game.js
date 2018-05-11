@@ -97,7 +97,6 @@ class Game{
     		this.players.push(new Player(name));
     		reponse = {"reponse": 1, "description" : "Votre compte a bien ete cree"};
     	}
-
     	return reponse;
     }
 
@@ -117,6 +116,22 @@ class Game{
     		json.players.push({"name": this.players[i].name, "color": this.players[i].color});
     	}
     	return json;
+	}
+
+	getInventory(req){
+    	let name = req.param.login;
+    	let reponse = {"inventory" : []};
+    	let exist = this.checkName(req);
+    	if (exist) {
+			let player = this.findPlayer(req);
+			for (let i = 0; i < player.inventory.length; i++) {
+				reponse.inventory.push(player.inventory[i].toJSON());
+			}
+    	}
+    	else{
+    		reponse = this.destinationUnknown();
+    	}
+    	return reponse;
 	}
 
 	/**

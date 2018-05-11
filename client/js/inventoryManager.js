@@ -17,10 +17,10 @@ class InventoryManager{
         )).then(function(response){
             if(response.ok) {
                 response.json().then(function(json) {
-                	//console.log(json);
+                	console.log(json);
                     self.inventory = [];
                     for (let i = 0; i < json.inventory.length; i++) {
-                        self.inventory.push(ObjectFactory.createObject(json.inventory[i]));
+						self.inventory.push(ObjectFactory.createObject(json.inventory[i]));
                     }
                     self.showInventory();
                 });
@@ -48,17 +48,20 @@ class InventoryManager{
 class ObjectFactory {
 	static createObject(objectJSON){
 
-		let type = objectJSON.type;
+		let famille = objectJSON.famille;
 		let object;
-		//console.log(type);
+		console.log(objectJSON);
 
-		switch(type) {
+		switch(famille) {
 	    case 'seed':
 	        object = new Seed(objectJSON.name);
 	        break;
 	    case 'flower':
 	        object = new Flower(objectJSON.name);
 	        break;
+		case 'plante':
+			object = new Plante(objectJSON.name);
+			break;
 		}
 		//console.log(object);
 		return object;

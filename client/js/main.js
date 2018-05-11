@@ -1,4 +1,4 @@
-var address = "flowertycoonsimulator.herokuapp.com/";
+var address = "localhost:8081/";
 //flowertycoonsimulator.herokuapp.com/
 //localhost:8081/
 
@@ -8,11 +8,11 @@ let inventoryManager = new InventoryManager();
 let playerManager    = new PlayerManager();
 let terrain          = new Terrain();
 let player           = new Player();
-var exampleSocket    = new WebSocket("wss://" + address);
+var exampleSocket    = new WebSocket("ws://" + address); //wss for heroku
 
 
 function send(task,data) {
-    return fetch("https://" + address + task,{
+    return fetch("http://" + address + task,{ // https for heroku
         method: "POST",
         headers: {
             'Accept': 'application/json, text/plain, */*',

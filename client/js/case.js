@@ -77,7 +77,7 @@ class CaseFactory{
             if(playerManager.checkPlayer(JSONCase.owner.name)){
                 player = playerManager.findPlayer(JSONCase.owner.name);
                 object = new BoughtCase(x,y,player);
-                console.log(object);
+                //console.log(object);
             }
             else{
                 //gestion du cas ou le joueur ayant acheté la case n'apparait pas coté client
