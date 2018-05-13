@@ -167,6 +167,16 @@ class Game{
 	destinationUnknown(){
 		return {"reponse":0, "description" : "Please login first"};
 	}
+
+	updateTerrain(){
+		for (let i = 0; i < this.terrain.tailleX; i++) {
+			for (let j = 0; j < this.terrain.tailleY; j++) {
+				if(this.terrain.cases[i][j].type == "planted"){
+					this.terrain.cases[i][j].plante.grow();
+				}
+			}		
+		}
+	}
 }
 
 module.exports = Game;

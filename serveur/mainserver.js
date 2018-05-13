@@ -4,6 +4,7 @@ const WebSocket  = require('ws');
 const bodyParser = require("body-parser");
 var Terrain      = require('./terrain.js');
 var Game         = require('./game.js');
+const delay      = require('delay');
 let server       = require('http').createServer();
 const PORT       = process.env.PORT || 8081;
 var game;
@@ -78,6 +79,15 @@ app.post('/getTerrain', function (req, res) {
  */
 function start() {
     game = new Game(24,5,10);
+    update();
+}
+
+function update(){
+  delay(1000)
+    .then(() => {
+        game.updateTerrain()
+        update();
+    });
 }
 
 
