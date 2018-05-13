@@ -3,7 +3,8 @@ class Plante{
 		this.representation = document.createElement("li");
 		this.representation.style.border = "1px solid black";
 		this.representation.style.padding = "5px";
-		this.representation.addEventListener('click', player.updateObject(this));
+		let self = this;
+		this.representation.addEventListener('click', function(){player.updateObject(self)});
 		this.name = name;
 		this.age   = age;
 		this.state = state;

@@ -19,7 +19,7 @@ class Player{
     }
 
     updateObject(object){
-        console.log(object);
+        //console.log(object);
         this.selectedObject = object;
     }
     /**
@@ -50,23 +50,25 @@ class Player{
     };
 
     planter(self){
-        send("planter",JSON.stringify(
-            {
-                "fonction": "planter",
-                "param": {
-                    "login": loginManager.name,
-                    "x": self.selectedCase.x,
-                    "y": self.selectedCase.y,
-                    "plante":self.selectedObject.toJSON()
+        if(typeof(self.selectedObject) == "number"){
+            informationManager.display("Aucune plante sélectionné, cliquez sur une plante dans l'inventaire");
+        }
+        else{
+            send("planter",JSON.stringify(
+                {
+                    "fonction": "planter",
+                    "param": {
+                        "login": loginManager.name,
+                        "x": self.selectedCase.x,
+                        "y": self.selectedCase.y,
+                        "plante":self.selectedObject.toJSON()
+                    }
                 }
-            }
-        )).then(function(response){
-            if(response.ok) {
-                response.json().then(function(json) {
+            )).then(function(json){
                     console.log(json);
                     inventoryManager.getInventory();
-                });
-            }} 
-        )
+                } 
+            )
+        }
     }
 }

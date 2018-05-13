@@ -20,20 +20,25 @@ class LoginManager{
     tryLogin(){
         let self = this;
         this.name = this.input.value;
-        //console.log(this.name);
-        send("login",JSON.stringify(
-            {
-                "fonction": "login",
-                "param": {
-                    "login": this.name
+        if(this.name == ""){
+            informationManager.display("Le login est vide, choisissez un pseudo");
+        }
+        else{
+            //console.log(this.name);
+            send("login",JSON.stringify(
+                {
+                    "fonction": "login",
+                    "param": {
+                        "login": this.name
+                    }
                 }
-            }
-        )).then(function(json){
-                if(json.reponse == 1){
-                    self.correctLogin();
+            )).then(function(json){
+                    if(json.reponse == 1){
+                        self.correctLogin();
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 
     /**
