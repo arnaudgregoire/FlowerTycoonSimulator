@@ -18,7 +18,20 @@ function send(task,data) {
             'Content-Type': 'application/json'
         },
         body: data  
-    })
+    }).then(
+    (response) =>{
+            if(response.ok){
+                return response.json();
+            }
+        }
+    ).then(
+        (json)=>{
+            if(typeof json.description != "undefined"){
+                document.getElementById("informations").appendChild(document.createTextNode(json.description));
+            }
+            return json;
+        }
+    )
 }
 
 exampleSocket.onopen = function (event) {

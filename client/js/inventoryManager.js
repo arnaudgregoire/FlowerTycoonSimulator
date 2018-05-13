@@ -15,18 +15,15 @@ class InventoryManager{
                 	'login': loginManager.name
                 }
             }
-        )).then(function(response){
-            if(response.ok) {
-                response.json().then(function(json) {
-                	//console.log(json);
-                    self.inventory = [];
-                    for (let i = 0; i < json.inventory.length; i++) {
-						self.inventory.push(ObjectFactory.createObject(json.inventory[i]));
-					}
-					self.money = json.money;
-                    self.showInventory();
-                });
-            }} 
+        )).then(function(json){
+				//console.log(json);
+				self.inventory = [];
+				for (let i = 0; i < json.inventory.length; i++) {
+					self.inventory.push(ObjectFactory.createObject(json.inventory[i]));
+				}
+				self.money = json.money;
+				self.showInventory();
+            }
         )
 	}
 

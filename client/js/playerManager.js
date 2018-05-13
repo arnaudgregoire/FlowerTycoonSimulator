@@ -12,16 +12,13 @@ class PlayerManager{
             {
                 "fonction": "getPlayers"
             }
-        )).then(function(response){
-            if(response.ok) {
-                response.json().then(function(json) {
-                    self.players = [];
-                    for (let i = 0; i < json.players.length; i++) {
-                        self.players.push( new Opponent(json.players[i].name, json.players[i].color, json.players[i].score));
-                    }
-                    self.showPlayers();
-                });
-            }} 
+        )).then(function(json){
+                self.players = [];
+                for (let i = 0; i < json.players.length; i++) {
+                    self.players.push( new Opponent(json.players[i].name, json.players[i].color, json.players[i].score));
+                }
+                self.showPlayers();
+            } 
         )
     }
 

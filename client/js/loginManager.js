@@ -28,14 +28,11 @@ class LoginManager{
                     "login": this.name
                 }
             }
-        )).then(function(response){
-            if(response.ok) {
-                response.json().then(function(json) {
-                    if(json.reponse == 1){
-                        self.correctLogin();
-                    }
-                });
-            }} 
+        )).then(function(json){
+                if(json.reponse == 1){
+                    self.correctLogin();
+                }
+            }
         )
     }
 

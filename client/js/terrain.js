@@ -37,25 +37,22 @@ class Terrain{
             {
                 "fonction": "getTerrain"
             }
-        )).then(function(response){
-            if(response.ok) {
-                response.json().then(function(json) {
-                    console.log(json);
-                    self.nbLargeur = json.cases.length;
-                    self.nbHauteur = json.cases[0].length;
-                    self.cases = new Array(self.nbLargeur);
-                    // Initialisation de la matrice contenant les cases
-                    for (var i = 0; i < self.nbLargeur; i++) {
-                        self.cases[i] = new Array(self.nbHauteur);
+        )).then(function(json){
+                //console.log(json);
+                self.nbLargeur = json.cases.length;
+                self.nbHauteur = json.cases[0].length;
+                self.cases = new Array(self.nbLargeur);
+                // Initialisation de la matrice contenant les cases
+                for (var i = 0; i < self.nbLargeur; i++) {
+                    self.cases[i] = new Array(self.nbHauteur);
+                }
+                for (var i = 0; i < json.cases.length; i++) {
+                    for (var j = 0; j < json.cases[0].length; j++) {
+                        self.cases[i][j] = CaseFactory.createCase(json.cases[i][j]);
                     }
-                    for (var i = 0; i < json.cases.length; i++) {
-                        for (var j = 0; j < json.cases[0].length; j++) {
-                            self.cases[i][j] = CaseFactory.createCase(json.cases[i][j]);
-                        }
-                    }
+                }
                 self.displayTerrain();
-                });
-            }} 
+            }
         )
     }
 
