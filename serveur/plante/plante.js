@@ -13,11 +13,11 @@ var PlanteFactory = require("./plantefactory.js");
  */
 class Plante{
     constructor(){
+        this.speed = 0; // 
+        this.name = ""; // Ces deux première propriétés sont redéfinies dans les classes enfants
         this.birth = 0;
         this.age = 0;
-        this.name = "";
         this.state = 0;
-        this.speed = 0;
         this.nbFlowers = 0;
         this.nbSeeds = 0;
         this.bloomed = false;
@@ -46,14 +46,14 @@ class Plante{
      */
     grow(){
         this.age = Date.now() - this.birth;
-        this.state = Math.floor(this.state/this.speed);
-        if (this.state >= 3 && !this.bloomed) {
+        this.state = Math.floor(this.age/this.speed);
+        if (this.state >= 3000 && !this.bloomed) {
             this.bloom();
         }
-        if(this.state >=5 && !this.fruited){
+        if(this.state >=5000 && !this.fruited){
             this.fruit();
         }
-        if(this.state >9){
+        if(this.state >9000){
             this.die();
         }
         return this.died;

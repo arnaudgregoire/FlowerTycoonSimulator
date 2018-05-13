@@ -84,6 +84,7 @@ class Game{
 			if(player.checkObject(id)){
 				let plante = player.findObject(id);
 				if(plante.plantable){
+					plante.startLife();
 					this.terrain.cases[x][y] = new PlantedCase(x,y,player,plante);
 					player.inventory.splice( player.inventory.indexOf(plante), 1 );
 					json = {"reponse":1, "description" : "La plante a ete plantee"};

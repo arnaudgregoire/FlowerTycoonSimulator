@@ -1,6 +1,8 @@
 var Tulipe = require("./tulipe.js");
 var Rose   = require("./rose.js");
-
+/**
+ * Toujours le design pattern factory pour fabriquer de magnifiques plantes
+ */
 class PlanteFactory{
     static createPlante(nom){
         let plante;
