@@ -8,6 +8,7 @@ let inventoryManager = new InventoryManager();
 let playerManager    = new PlayerManager();
 let terrain          = new Terrain();
 var exampleSocket    = new WebSocket("ws://" + address); //wss for heroku
+let informationManager = new InformationManager();
 
 
 function send(task,data) {
@@ -27,7 +28,7 @@ function send(task,data) {
     ).then(
         (json)=>{
             if(typeof json.description != "undefined"){
-                document.getElementById("informations").appendChild(document.createTextNode(json.description));
+                informationManager.display(json.description);
             }
             return json;
         }
