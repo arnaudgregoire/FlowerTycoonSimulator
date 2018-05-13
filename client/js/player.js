@@ -42,7 +42,7 @@ class Player{
             if(response.ok) {
                 response.json().then(function(json) {
                     console.log(json);
-                    terrain.getTerrain();
+                    inventoryManager.getInventory();
                 });
             }} 
         )
@@ -63,7 +63,6 @@ class Player{
             if(response.ok) {
                 response.json().then(function(json) {
                     console.log(json);
-                    terrain.getTerrain();
                     inventoryManager.getInventory();
                 });
             }} 

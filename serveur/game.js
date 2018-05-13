@@ -139,17 +139,18 @@ class Game{
     getPlayers(){
     	let json = {"players": []};
     	for (var i = 0; i < this.players.length; i++) {
-    		json.players.push({"name": this.players[i].name, "color": this.players[i].color});
+    		json.players.push({"name": this.players[i].name, "color": this.players[i].color,"score":this.players[i].score});
     	}
     	return json;
 	}
 
 	getInventory(req){
     	let name = req.param.login;
-    	let reponse = {"inventory" : []};
+    	let reponse = {"inventory" : [], "money" : 0};
     	let exist = this.checkName(req);
     	if (exist) {
 			let player = this.findPlayer(req);
+			reponse.money = player.money;
 			for (let i = 0; i < player.inventory.length; i++) {
 				reponse.inventory.push(player.inventory[i].toJSON());
 			}

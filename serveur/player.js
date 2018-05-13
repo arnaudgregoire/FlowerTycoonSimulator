@@ -5,6 +5,7 @@ class Player{
 	constructor(name){
 		this.name = name;
 		this.money = 100;
+		this.score = 0;
 		this.color = utils.getRandomColor();
 		this.inventory = [];
 		this.inventory.push(PlanteFactory.getRandomPlante());

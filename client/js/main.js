@@ -2,12 +2,11 @@ var address = "localhost:8081/";
 //flowertycoonsimulator.herokuapp.com/
 //localhost:8081/
 
-
+let player           = new Player();
 let loginManager     = new LoginManager();
 let inventoryManager = new InventoryManager();
 let playerManager    = new PlayerManager();
 let terrain          = new Terrain();
-let player           = new Player();
 var exampleSocket    = new WebSocket("ws://" + address); //wss for heroku
 
 

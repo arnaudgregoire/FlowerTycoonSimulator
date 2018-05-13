@@ -1,5 +1,6 @@
 class InventoryManager{
 	constructor(){
+		this.money = 0;
 		this.inventory = [];
 		this.inventoryHTML = document.createElement('ul');
         document.getElementById("inventory").appendChild(this.inventoryHTML);
@@ -21,7 +22,8 @@ class InventoryManager{
                     self.inventory = [];
                     for (let i = 0; i < json.inventory.length; i++) {
 						self.inventory.push(ObjectFactory.createObject(json.inventory[i]));
-                    }
+					}
+					self.money = json.money;
                     self.showInventory();
                 });
             }} 
@@ -34,10 +36,16 @@ class InventoryManager{
             this.inventoryHTML.removeChild(this.inventoryHTML.firstChild);
         }
         // pour rajouter les nouveaux
-        //console.log(this.inventory);
+		//console.log(this.inventory);
+		this.showMoney();
 		for (var i = 0; i < this.inventory.length; i++) {
 			this.inventoryHTML.appendChild(this.inventory[i].representation);
 		}
+	}
+
+	showMoney(){
+		let moneyHTML = document.createElement("li").appendChild(document.createTextNode("Money : " + this.money));
+		this.inventoryHTML.appendChild(moneyHTML);
 	}
 }
 
