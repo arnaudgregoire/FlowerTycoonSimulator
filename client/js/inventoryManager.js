@@ -65,7 +65,7 @@ class ObjectFactory {
 	        object = new Flower(objectJSON.name);
 	        break;
 		case 'plante':
-			object = new Plante(objectJSON.name, objectJSON.id);
+			object = PlanteFactory.createPlante(objectJSON);
 			break;
 		}
 		//console.log(object);

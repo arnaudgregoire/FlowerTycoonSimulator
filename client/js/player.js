@@ -19,6 +19,7 @@ class Player{
     }
 
     updateObject(object){
+        console.log(object);
         this.selectedObject = object;
     }
     /**
