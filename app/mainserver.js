@@ -5,9 +5,6 @@ var WebSocket  = require('ws');
 var bodyParser = require("body-parser");
 var delay      = require('delay');
 
-var serverRoute = require('./routes/server-route.js');
-var gameRoute = require('./routes/game-route.js');
-
 var Terrain    = require('./terrain.js');
 var Game       = require('./game.js');
 var game;
@@ -20,11 +17,7 @@ var server = http.createServer(app);
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
-app.use(express.static(__dirname + '/shared'));
-
-// Mise en place des routes
-app.use(serverRoute);
-app.use(gameRoute);
+// app.use(express.static(__dirname + '/shared'));
 
 /**
  * Lancement du serveur

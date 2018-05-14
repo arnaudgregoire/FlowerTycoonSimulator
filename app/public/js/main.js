@@ -2,6 +2,7 @@
 
 const URL = "localhost:8081/";  // flowertycoonsimulator.herokuapp.com/ ||  localhost:8081/
 const JS_DEPENDENCIES = [
+  "js/utl/asset-loadr.js",
   "js/case.js", "js/flower.js", "js/player.js", "js/opponent.js", "js/plante.js", "js/seed.js", "js/terrain.js",
   "js/informationManager.js", "js/inventoryManager", "js/loginManager.js", "js/playerManager.js";
 ];
@@ -14,6 +15,15 @@ var player,
     exampleSocket,
     informationManager;
 
+
+function initGame() {
+  player             = new Player();
+  loginManager       = new LoginManager();
+  inventoryManager   = new InventoryManager();
+  playerManager      = new PlayerManager();
+  terrain            = new Terrain();
+  informationManager = new InformationManager();
+}
 
 function initDOM() {
   let boutonPlanter = document.createElement("button");
@@ -37,15 +47,6 @@ function initDOM() {
   boutonFertiliser.classList.add("button");
   boutonFertiliser.id = "buttonFertiliser";
   boutonFertiliser.appendChild(document.createTextNode("Fertiliser"));
-}
-
-function initGame() {
-  player             = new Player();
-  loginManager       = new LoginManager();
-  inventoryManager   = new InventoryManager();
-  playerManager      = new PlayerManager();
-  terrain            = new Terrain();
-  informationManager = new InformationManager();
 }
 
 function initSocket() {

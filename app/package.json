@@ -17,8 +17,7 @@
     "jasmine-node": "^1.14.5",
     "nodemon": "^1.17.3",
     "ws": "^5.1.1",
-    "nanoid": "^1.0.2",
-    "socket.io": "^2.1.0"
+    "nanoid": "^1.0.2"
   },
   "repository": {
     "type": "git",
