@@ -9,7 +9,6 @@
   }
 
 
-
   class UserManager extends IManager {
     constructor(doc, container) {
       super(doc, container);
@@ -39,8 +38,8 @@
     }
 
     clearInfo() {
-      while (!!this.container.firstElementChild) {
-        this.container.removeChild(this.container.firstElementChild);
+      while (!!this.container.firstChild) {
+        this.container.removeChild(this.container.firstChild);
       }
     }
   }
@@ -48,11 +47,86 @@
   class InventoryManager extends IManager {
     constructor(doc, container) {
       super(doc, container);
+      this.player_id = null // keep track of the player id to avoid recreating the inventory
       this.money = 0;
   		this.inventory = [];
 
+      this.moneyHTML = this.doc.createElement("p");
       this.inventoryHTML = this.doc.createElement("ul");
+
+      this.container.appendChild(this.moneyHTML);
       this.container.appendChild(this.inventoryHTML);
+    }
+
+    displayInventory(player) {
+      if(!!this.player_id && this.player_id == player.id) {
+        //TODO: update inventoryHTML by comparing values, and change only the modified item
+      }
+      else {
+        this.clearInventory();
+        for (var i = 0; i < player.getInventory.length; i++) {
+          this.inventoryHTML.appendChild( this.createHTML(player.getInventory[i]) );
+        }
+      }
+    }
+
+    displayMoney(player) {
+      this.moneyHTML.innerText = String(player.money);
+    }
+
+    clearInventory() {
+      while (!!inventoryHTML.firstChild) {
+        this.inventoryHTML.removeChild(inventoryHTML.firstChild);
+      }
+    }
+
+    createHTML(item) {
+      let el = this.doc.createElement("div");
+      // TODO: put things in the div
+      return div;
+    }
+  }
+
+
+  class BoardManager extends IManager {
+    constructor(doc, container) {
+      super(doc, container);
+
+      this.player_list = [];
+    }
+
+    displayBoard(player_list) {
+      let old_child, new_child;
+
+      for (var i = 0; i < player_list.length; i++) {
+        if(player_list[i].id != this.player_list[i].id) {
+
+          old_child = this.findPlayerById(this.player_list[i].id);
+          if(old_child == null) break;
+
+          new_child = this.createHTML(player_list[i]);
+          this.container.replaceChild(newChild, oldChild);
+        }
+      }
+    }
+
+    findPlayerById(id) {
+      let childs = this.container.childNodes;
+      for (var i = 0; i < childs.length; i++) {
+        if(childs[i].dataset.id == id) {
+          return childs[i];
+        }
+      }
+      return null;
+    }
+
+
+    createHTML(player) {
+      // TODO: make a pretty div
+      let div = this.doc.createElement("div");
+      el.dataset.id = player.id;
+      el.innerHtML = "<p>"+player.name+" - "+player.score+"</p>";
+      return div;
     }
   }
 
@@ -65,18 +139,27 @@
       this.fertilize_button = this.doc.querySelector("#fertilize-button");
       this.buy_button = this.doc.querySelector("#buy-button");
 
-      this.plant_button.addEventListener("click", function(){
-        player.planter(player);
+      // TODO: Event will be later handled by the client game instance
+      this.plant_button.addEventListener("click", function() {
+        this.dispatchClickEvent("plantEvent", null);
+      });
+      this.harvest_button.addEventListener("click", function(){
+        this.dispatchClickEvent("harvestEvent", null);
+      });
+      this.fertilize_button.addEventListener("click", function(){
+        this.dispatchClickEvent("fertilizeEvent", null);
       });
       this.buy_button.addEventListener("click", function(){
-        player.acheter(player);
+        this.dispatchClickEvent("buyEvent", null);
       });
     }
-  }
 
-  class BoardManager extends IManager {
-    constructor(doc, container) {
-      super(doc, container);
+    dispatchClickEvent(event_name, detail) {
+      window.dispatchEvent(
+        new CustomEvent(String(event_name), {
+          detail: detail
+        })
+      );
     }
   }
 
@@ -106,12 +189,24 @@
     /**
     * Wrap common child method for a quicker access
     */
+    setUsername(name) {
+      this.userManager.setUsername(name);
+    }
+
     displayInfo(msg) {
       this.infoManager.displayInfo(msg);
     }
 
     clearInfo() {
       this.infoManager.clearInfo();
+    }
+
+    clearInventory(player) {
+      this.inventoryManager.displayInventory(player);
+    }
+
+    displayMoney(player) {
+      this.inventoryManager.displayMoney(player);
     }
   }
 

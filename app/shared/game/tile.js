@@ -4,7 +4,7 @@
 
   var FlowerFactory;
   if(isNode) {
-    FlowerFactory = require('flowers').FlowerFactory;
+    FlowerFactory = require('flower').FlowerFactory;
   }
   else {
     FlowerFactory = window.FlowerFactory;
@@ -104,7 +104,7 @@
 
 
   var TileFactory = {
-    TILES = ["empty", "bought", "seeded"];
+    TILES: ["empty", "bought", "seeded"]
   };
   TileFactory.prototype = {
     createTile: function (tile_data){

@@ -10,7 +10,8 @@
       this.doc.body.appendChild(this.createHTML());
 
       let button = this.doc.querySelector("#login-button");
-      button.addEventListener("click", function () {
+      button.addEventListener("click", function (e) {
+        e.preventDefault();
         this.sendLogin();
       }.bind(this), false);
     }
@@ -19,12 +20,15 @@
       let overlay = this.doc.createElement("div");
       overlay.id = "overlay";
 
-      overlay.innerHTML = "<div id='login-box'> \
-      <div><p>Authentification</p></div> \
+      let form = this.doc.createElement("form");
+      form.method = "get";
+      form.id = "login-box";
+      form.innerHTML = "<div><p>Authentification</p></div> \
       <div><label for='login-username'>Pseudo</label><input type='text' id='login-name'></div> \
       <div><label for='login-paswd'>Mot de passe</label><input type='password' id='login-paswd'></div> \
-      <div class='button' id='login-button'><p>Connexion</p></div> </div>";
+      <div><input type='submit' value='Connexion' class='button' id='login-button'></div>";
 
+      overlay.appendChild(form);
       return overlay;
     }
 
@@ -50,7 +54,9 @@
 
     remove() {
       this.doc.querySelector("#wrap").classList.remove("hidden");
-      this.doc.body.removeChild(this.doc.querySelector("#overlay"));
+      if(this.doc.querySelector("#overlay") != null) {
+        this.doc.body.removeChild(this.doc.querySelector("#overlay"));
+      }
     }
   }
 

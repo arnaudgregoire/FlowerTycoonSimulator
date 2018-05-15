@@ -113,7 +113,7 @@
 
   // Static class style
   var FlowerFactory = {
-    FLOWERS: ["rose", "tulip"];
+    FLOWERS: ["rose", "tulip"]
   };
   FlowerFactory.prototype = {
     createFlower: function (flower_name) {
@@ -133,11 +133,11 @@
             break;
       }
       return flower;
-    }
+    },
 
-    createFlowerFromData(flower_data) {
+    createFlowerFromData: function(flower_data) {
       let flower = this.createFlower(flower_data.name);
-      
+
       if(flower == null) {
         return null;
       }
@@ -146,7 +146,7 @@
       flower.age = flower_data.age;
       flower.state = flower_data.state;
   		return flower;
-    }
+    },
 
     getRandomFlower: function () {
       return this.createFlower(this.FLOWERS[Math.floor(Math.random() * this.FLOWERS.length)]);

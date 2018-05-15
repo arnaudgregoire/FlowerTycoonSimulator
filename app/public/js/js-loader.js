@@ -40,7 +40,6 @@ var JsLoader = window.JsLoader = (function (window, document) {
       }
     }
 
-    console.log(script);
     document.head.appendChild(script);
   }
 

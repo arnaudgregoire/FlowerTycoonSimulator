@@ -8,28 +8,10 @@ html, body{
   font-family: sans-serif;
 }
 
-#wrap{
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template: [first-row] 70px 30px [top-row] auto [bottom-row] 80px [last-row] /
-  [first-col] 150px 50px [left-col] auto [right-col] 200px [last-col];
-
-  box-sizing: border-box;
-  background: #00af6e;
-  color: #31302b;
-  opacity: 1;
-  overflow: hidden;
-}
-#wrap.hidden{opacity: 0}
-#wrap>div{
-  box-sizing: border-box;
-}
-
 .button {
   display: inline-block;
   margin: 0;
+  padding: 5px 10px;
   background: #0c5ea8;
   color: #fff;
   border: none;
@@ -52,6 +34,12 @@ html, body{
   text-decoration: none;
   font-weight: bold;
   font-size: 18px;
+}
+
+.info-text{
+  margin: 5px;
+  padding: 5px 10px;
+  color: #0f0;
 }
 
 
@@ -96,13 +84,48 @@ html, body{
   padding: 0 10px;
 }
 
+
+#wrap{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template: [first-row] 70px 30px [top-row] auto [bottom-row] 80px [last-row] /
+  [first-col] 150px 50px [left-col] auto [right-col] 200px [last-col];
+
+  box-sizing: border-box;
+  background: #00af6e;
+  color: #31302b;
+  opacity: 1;
+  overflow: hidden;
+}
+#wrap.hidden{opacity: 0}
+#wrap>div{
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+
 #user-info{
   grid-row: first-row / top-row;
   grid-column: first-col / left-col;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: flex-start;
   margin: 5px;
   background: #fafafa;
   border: 3px solid #31302b;
   box-shadow: 3px 2px 4px rgba(0,0,0,0.25);
+}
+#user-info p{
+  margin: 0;
+  padding: 10px;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 #click-info{
@@ -117,7 +140,6 @@ html, body{
   grid-column: first-col / 1;
   margin: 10px 20px;
   background: rgba(0,0,0,0.25);
-  box-shadow: inset 3px 2px 4px rgba(0,0,0,0.25);
 }
 
 #actions{

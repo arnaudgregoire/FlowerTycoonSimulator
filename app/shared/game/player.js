@@ -5,21 +5,22 @@
 	var utils, FlowerFactory;
   if(isNode) {
 		utils = require('utils.js');
-		PlanteFactory = require("flowers").FlowerFactory;
+		FlowerFactory = require("flower").FlowerFactory;
   }
 	else {
 		utils = window.Utility;
-		PlanteFactory = window.PlanteFactory;
+		FlowerFactory = window.FlowerFactory;
 	}
 
 	class Player{
-		constructor(name){
+		constructor(id, name){
+      this.id = id;
 			this.name = name;
 			this.money = 100;
 			this.score = 0;
 			this.color = utils.getRandomColor();
 			this.inventory = [];
-			this.inventory.push(PlanteFactory.getRandomPlante());
+			this.inventory.push(FlowerFactory.getRandomPlante());
 		}
 
 		checkObject(id){
@@ -51,40 +52,3 @@
   }
 
 })();
-
-
-var utils = require('./utils.js');
-var PlanteFactory = require("./plante/plantefactory.js");
-
-class Player{
-	constructor(name){
-		this.name = name;
-		this.money = 100;
-		this.score = 0;
-		this.color = utils.getRandomColor();
-		this.inventory = [];
-		this.inventory.push(PlanteFactory.getRandomPlante());
-	}
-
-	checkObject(id){
-		let exist = false;
-		for (let i = 0; i < this.inventory.length; i++) {
-			if (this.inventory[i].id == id) {
-				exist = true;
-			}
-		}
-		return exist;
-	}
-
-	findObject(id){
-		let object;
-		for (let i = 0; i < this.inventory.length; i++) {
-			if (this.inventory[i].id == id) {
-				object = this.inventory[i];
-			}
-		}
-		return object;
-	}
-}
-
-module.exports = Player;

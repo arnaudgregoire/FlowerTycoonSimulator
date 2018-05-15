@@ -4,7 +4,7 @@
 
   var TileEmpty;
   if(isNode) {
-    TileEmpty = require("tiles.js").TileEmpty;
+    TileEmpty = require("tile.js").TileEmpty;
   }
   else {
     TileEmpty = window.TileEmpty;

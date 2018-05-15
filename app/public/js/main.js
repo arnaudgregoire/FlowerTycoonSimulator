@@ -2,9 +2,9 @@
 
 const URL = "localhost:8081/";  // flowertycoonsimulator.herokuapp.com/ ||  localhost:8081/
 const JS_DEPENDENCIES = [
-  "js/asset-loader.js",
-  "js/player.js", "js/opponent.js", "js/playerManager.js",
-  "js/login-manager.js", "js/ui-manager.js"
+  "js/player.js", "js/opponent.js",    // delete soon
+  URL+"public/js/asset-loader.js", URL+"public/js/login-manager.js", URL+"public/js/ui-manager.js",
+  URL+"shared/game/seed.js", URL+"shared/game/flower.js", URL+"shared/game/tile.js", URL+"shared/game/player.js", URL+"shared/game/farm.js"
 ];
 
 var game,
@@ -16,9 +16,6 @@ var game,
 
 
 window.onload = function () {
-  // var jsloader = new JsLoader();
-  console.log(JsLoader);
-
   JsLoader.load(JS_DEPENDENCIES, function () {
     initSocket();
     initGame();
@@ -27,31 +24,34 @@ window.onload = function () {
 
 
 function initGame() {
-  // player       = new Player();
-  // farm         = new Farm();
   loginManager = new LoginManager(window.document);
   uiManager    = new UIManager(window.document);
 
   loginManager.init();
 
+  // TODO: put this event listener in the client game ?
   window.addEventListener("sendLogin", function (e) {
     tryLogin(e.detail);
   });
-
-  // game = new Game();
-  // game.start();
 }
 
 // TODO: This method should be part of the game object, only here for debug
 function tryLogin(info) {
   console.log(info);
 
-  let success = true;
+
   // TODO: implement login logic here
   // let success = send(...)
 
+  let success = true;
   if(success) {
     loginManager.remove();
+
+    game = new Game()
+    player = new Player();
+    farm = new Farm();
+
+    uiManager.setUsername(info.username);
   }
 }
 
