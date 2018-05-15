@@ -1,17 +1,22 @@
 "use strict";
 
-const URL = "localhost:8081/";  // flowertycoonsimulator.herokuapp.com/ ||  localhost:8081/
-const JS_DEPENDENCIES = [
-  URL+"public/js/asset-loader.js", URL+"public/js/ui-manager.js", URL+"public/js/game.js",
-  URL+"shared/game/seed.js",  // WARNING: This file seems to be unused
-  URL+"shared/utils.js", URL+"shared/game/flower.js", URL+"shared/game/tile.js",
-  URL+"shared/game/farm.js", URL+"shared/game/player.js"
-];
+const URL = "file:///C:/Users/Augustin/Desktop/FlowerTycoonSimulator/app/";
+// const URL = "localhost:8081/";  // flowertycoonsimulator.herokuapp.com/ ||  localhost:8081/
+
+const JS_DEPENDENCIES = {
+  [URL]: {
+    "shared/": {
+      ".": "utils",
+      "game/": ["flower", "tile", "farm", "player"]
+    },
+    "public/js/": ["asset-loader", "ui-manager", "game"]
+  }
+};
 
 var game, exampleSocket;
 
 window.onload = function () {
-  JsLoader.loadFile(JS_DEPENDENCIES, function () {
+  JsLoader.loadTree(JS_DEPENDENCIES, function () {
     initSocket();
     initGame();
   });

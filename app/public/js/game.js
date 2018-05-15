@@ -28,7 +28,7 @@
       this.width = this.TILE_SIZE * this.columns;
       this.height = this.TILE_SIZE * this.rows;
 
-      this.player_list = [];
+      this.player_list = null;
       this.player = null;
       this.farm = null;
 
@@ -43,12 +43,13 @@
       this.ctx.textAlign = "center";
   		this.ctx.textBaseline = "middle";
 
-      this.ui_manager = new UIManager();
+      this.player_list = [];
+      this.farm = new Farm(this.columns, this.rows);
 
-      this.farm = new Farm(this.columns, this.rows, this.tile_size);
+      this.ui_manager = new UIManager();
+      this.ui_manager.toggleLogin();
 
       this.resizeCanvas();
-
       this.initEventListener();
 
       // AssetLoader.load([ ]);
@@ -71,7 +72,7 @@
       }.bind(this), false);
 
       this.canvas.addEventListener("click", function (e) {
-        this.handleCanvasClick();
+        this.handleCanvasClick(e);
       }.bind(this), false);
 
       window.addEventListener("plantEvent", function (e) {
@@ -110,18 +111,18 @@
 
     loop() {
       this.now = Date.now();
-      update(this.now - this.then);
+      this.update(this.now - this.then);
       this.then = Date.now();
 
       this.draw();
-      requestAnimFrame(this.loop.bind(this));
+      // requestAnimFrame(this.loop.bind(this));
     }
 
     update(dt) {
-      for (var i = 0; i < this.players.length; i++) {
-        this.players[i].update(dt);
-      }
-      this.farm.update(dt);
+      // for (var i = 0; i < this.player_list.length; i++) {
+      //   this.player_list[i].update(dt);
+      // }
+      // this.farm.update(dt);
     }
 
     draw() {
@@ -157,11 +158,11 @@
 
       let success = true;
       if(success) {
-        game = new Game()
-        player = new Player();
-        farm = new Farm();
+        this.player = new Player(0, info.username);
+        console.log(this.player);
+        this.ui_manager.setInfo(this.player);
 
-        uiManager.setUsername(info.username);
+        this.ui_manager.toggleLogin();
       }
     }
 
@@ -182,6 +183,7 @@
       let col = Math.floor(this.x / this.columns);
       let row = Math.floor(this.y / this.rows);
       this.player.setSelectedTile(col, row);
+      console.log(this.player);
     }
 
     getMousePosition(e) {
@@ -192,4 +194,6 @@
     	};
     }
   }
-})
+
+  window.Game = Game;
+})();

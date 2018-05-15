@@ -28,14 +28,16 @@ var JsLoader = window.JsLoader = (function (window, document) {
   function _load (src) {
     file_number++;
 
+    let s = src.split(".");
+    if(s[s.length-1] != "js") { src += ".js"}
+
     let script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = String(src);
-
     script.onload = function () {
       file_number--;
       if (isReady()) {
-        _exec(callback);
+        _exec(callback_list);
       }
     }
 
@@ -66,7 +68,7 @@ var JsLoader = window.JsLoader = (function (window, document) {
     }
   }
 
-  function loadFile (array, func) {
+  function load (array, func) {
     let file_list = Array.isArray(array) ? array : [array];
     onLoad(func);
 
@@ -77,7 +79,7 @@ var JsLoader = window.JsLoader = (function (window, document) {
     }
     else {
        window.addEventListener("load", function () {
-        loadFile(file_list);
+        load(file_list);
       }, false);
     }
   }
@@ -86,7 +88,7 @@ var JsLoader = window.JsLoader = (function (window, document) {
     onLoad(func);
 
     if(document.readyState === "complete") {
-      _load_tree(null, folders);
+      _load_tree(null, tree);
     }
     else {
        window.addEventListener("load", function () {
@@ -96,7 +98,7 @@ var JsLoader = window.JsLoader = (function (window, document) {
   }
 
   return  {
-    loadFile: loadFile,
+    load: load,
     loadTree: loadTree,
     isReady: isReady,
     onLoad: onLoad

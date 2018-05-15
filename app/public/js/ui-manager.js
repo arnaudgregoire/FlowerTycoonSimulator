@@ -86,15 +86,15 @@
   class UserManager extends IManager {
     constructor(container) {
       super(container);
-      this.username = "";
       this.usernameHTML = document.createElement("p");
       this.container.appendChild(this.usernameHTML);
+    }
 
-      this.setUsername("");
+    setPlayerInfo(player) {
+      this.setUsername(player.name);
     }
 
     setUsername(name) {
-      this.username = String(name);
       this.usernameHTML.textContent = String(name);
     }
   }
@@ -125,7 +125,7 @@
       this.money = 0;
   		this.inventory = [];
 
-      this.moneyHTML = documentc.createElement("p");
+      this.moneyHTML = document.createElement("p");
       this.inventoryHTML = document.createElement("ul");
 
       this.container.appendChild(this.moneyHTML);
@@ -228,19 +228,19 @@
       // All event are handled by the client game
       this.plant_button.addEventListener("click", function() {
         this.dispatchUIEvent("plantEvent", null);
-      }.bind(this);
+      }.bind(this), false);
 
       this.harvest_button.addEventListener("click", function(){
         this.dispatchUIEvent("harvestEvent", null);
-      }.bind(this);
+      }.bind(this), false);
 
       this.fertilize_button.addEventListener("click", function(){
         this.dispatchUIEvent("fertilizeEvent", null);
-      }.bind(this);
+      }.bind(this), false);
 
       this.buy_button.addEventListener("click", function(){
         this.dispatchUIEvent("buyEvent", null);
-      }.bind(this);
+      }.bind(this), false);
     }
   }
 
@@ -259,7 +259,7 @@
     }
 
     init() {
-      this.loginManager     = new UserManager(document);
+      this.loginManager     = new LoginManager(null);
       this.userManager      = new UserManager(document.querySelector("#user-info"));
       this.infoManager      = new InfoManager(document.querySelector("#click-info"));
       this.inventoryManager = new InventoryManager(document.querySelector("#inventory"));
@@ -274,8 +274,8 @@
       this.loginManager.toggle();
     }
 
-    setUsername(name) {
-      this.userManager.setUsername(name);
+    setInfo(player) {
+      this.userManager.setPlayerInfo(player);
     }
 
     displayInfo(msg) {

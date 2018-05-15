@@ -26,7 +26,6 @@
 
     update(dt) {
       for (var i = 0; i < this.width; i++) {
-        array[i] = new Array(this.height);
         for (var j = 0; j < this.height; j++) {
           this.tiles[i][j].update(dt);
         }
@@ -35,7 +34,6 @@
 
     draw(ctx) {
       for (var i = 0; i < this.width; i++) {
-        array[i] = new Array(this.height);
         for (var j = 0; j < this.height; j++) {
           this.tiles[i][j].draw(ctx);
         }
