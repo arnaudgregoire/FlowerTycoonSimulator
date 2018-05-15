@@ -1,98 +1,112 @@
 html, body{
-    margin:0;
-    padding:0;
-    background: gainsboro;
-}
-
-.button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 5% 5%;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1.3em;
-    cursor: pointer;
-    -webkit-transition-duration: 0.4s; 
-    transition-duration: 0.4s;
-}
-
-.button:hover {
-    background-color: #008CBA;
-    color: white;
-}
-
-#map{
-    margin-top:5%;
-    width: 60%;
-    height: 80%;
-    border-color: black;
-    border-style: solid;
-    border-spacing: 0px;
-    background-image: url(../img/grass.jpg);
-    table-layout: fixed;
-}
-
-#map tr td {
-    border: 1px solid black;
-    padding:0px;
-    margin:0px;
-}
-#map tr td:hover{
-    background: rgba(110, 6, 79, 0.39);
-} 
-#map tr td:active{
-    background: green;
-} 
-
-#actions{
-    border-style: solid;
-    display: flex;
-    justify-content: space-around;
-    margin-top: 1%;
-    margin-left: 30%;
-    margin-right:30%;
-    padding:1%;
-}
-
-#login{
-    padding :.5%;
-    width: 20%;
-    border-style: solid;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-#leaderboards{
-    border-style: solid;
-    margin-right: 5%;
-    margin-top: 5%;
-    padding: 1%;
+  margin :0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #fff;
+  font-family: sans-serif;
 }
 
 #wrap{
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    height: 70%;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template: [first-row] 70px 30px [top-row] auto [bottom-row] 80px [last-row] /
+  [first-col] 150px 50px [left-col] auto [right-col] 200px [last-col];
+
+  box-sizing: border-box;
+  background: #00af6e;
+  color: #31302b;
+  overflow: hidden;
+}
+#wrap>div{
+  box-sizing: border-box;
+}
+
+.button {
+  display: inline-block;
+  margin: 0;
+  background: #0c5ea8;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  -webkit-transition: all 0.25s;
+  transition: all 0.25s;
+}
+.button:hover {
+  background: #008cba;
+}
+.button.inactive, .button.inactive:hover{
+  background: #aaa;
+  cursor: default;
+}
+
+.button p{
+  margin: 0;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+
+
+
+#user-info{
+  grid-row: first-row / top-row;
+  grid-column: first-col / left-col;
+  margin: 5px;
+  background: #fafafa;
+  border: 3px solid #31302b;
+  box-shadow: 3px 2px 4px rgba(0,0,0,0.25);
+}
+
+#click-info{
+  grid-row: first-row / 1;
+  grid-column: left-col / right-col;
+  margin: 5px 25px;
+  background: rgba(0,0,0,0.25);
 }
 
 #inventory{
-    border-style: solid;
-    margin-left: 5%;
-    margin-top: 5%;
-    padding: 1%;
+  grid-row: top-row / last-row;
+  grid-column: first-col / 1;
+  margin: 10px 20px;
+  background: rgba(0,0,0,0.25);
+  box-shadow: inset 3px 2px 4px rgba(0,0,0,0.25);
 }
 
-#inventory ul li:hover{
-    background: rgba(110, 6, 79, 0.39);
+#actions{
+  grid-row: bottom-row / last-row;
+  grid-column: left-col / right-col;
+  margin: 10px 20px;
+  padding: 0 25px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  background: #fafafa;
+  box-shadow: inset 3px 2px 4px rgba(0,0,0,0.25);
 }
 
-#header{
-    display: flex;
-    justify-content: space-around;
+#leaderboard{
+  grid-row: first-row / bottom-row;
+  grid-column: right-col / last-col;
+  margin: 5px;
+  background: #fafafa;
+  border: 3px solid #31302b;
+  box-shadow: 3px 2px 4px rgba(0,0,0,0.25);
 }
 
-#informations{
-    border: black 1px solid;
+#game{
+  grid-row: top-row / bottom-row;
+  grid-column: left-col / right-col;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

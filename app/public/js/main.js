@@ -2,9 +2,9 @@
 
 const URL = "localhost:8081/";  // flowertycoonsimulator.herokuapp.com/ ||  localhost:8081/
 const JS_DEPENDENCIES = [
-  "js/utl/asset-loadr.js",
+  "js/utl/asset-loader.js",
   "js/case.js", "js/flower.js", "js/player.js", "js/opponent.js", "js/plante.js", "js/seed.js", "js/terrain.js",
-  "js/informationManager.js", "js/inventoryManager", "js/loginManager.js", "js/playerManager.js";
+  "js/informationManager.js", "js/inventoryManager.js", "js/loginManager.js", "js/playerManager.js"
 ];
 
 var player,
@@ -14,6 +14,8 @@ var player,
     terrain,
     exampleSocket,
     informationManager;
+
+var $plant_button, $harvest_button, $buy_button;
 
 
 function initGame() {
@@ -26,27 +28,17 @@ function initGame() {
 }
 
 function initDOM() {
-  let boutonPlanter = document.createElement("button");
-  boutonPlanter.classList.add("button");
-  boutonPlanter.id = "buttonPlanter";
-  boutonPlanter.appendChild(document.createTextNode("Planter"));
-  boutonPlanter.addEventListener("click", function(){player.planter(player)})
+  $plant_button = document.querySelector("#plant-button");
+  $harvest_button = document.querySelector("#harvest-button");
+  $fertilize_button = document.querySelector("#fertilize-button");
+  $buy_button = document.querySelector("#buy-button");
 
-  let boutonRecolter = document.createElement("button");
-  boutonRecolter.classList.add("button");
-  boutonRecolter.id = "buttonRecolter";
-  boutonRecolter.appendChild(document.createTextNode("Recolter"));
-
-  let boutonAcheter = document.createElement("button");
-  boutonAcheter.classList.add("button");
-  boutonAcheter.id = "buttonAcheter";
-  boutonAcheter.appendChild(document.createTextNode("Acheter"));
-  boutonAcheter.addEventListener("click", function(){player.acheter(player)})
-
-  let boutonFertiliser = document.createElement("button");
-  boutonFertiliser.classList.add("button");
-  boutonFertiliser.id = "buttonFertiliser";
-  boutonFertiliser.appendChild(document.createTextNode("Fertiliser"));
+  $plant_button.addEventListener("click", function(){
+    player.planter(player);
+  });
+  $buy_button.addEventListener("click", function(){
+    player.acheter(player);
+  });
 }
 
 function initSocket() {
