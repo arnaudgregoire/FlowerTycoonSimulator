@@ -10,23 +10,23 @@
     })();
 
   class Game {
-    constructor(websocket, user_config) {
+    constructor(user_config) {
       let config = user_config || {};
-
-      this.websocket = websocket;
 
       this.container = null;
       this.canvas_id = config.canvasID || "canvas";
       this.canvas = null;
       this.ctx = null;
 
-      this.ui_manager = null;
-
       this.columns = config.columns || 10;
       this.rows = config.rows || 10;
       this.TILE_SIZE = 40;
       this.width = this.TILE_SIZE * this.columns;
       this.height = this.TILE_SIZE * this.rows;
+
+      this.server_url = config.url || "";
+      this.socket_manager = null;
+      this.ui_manager = null;
 
       this.player_list = null;
       this.player = null;
@@ -43,23 +43,20 @@
       this.ctx.textAlign = "center";
   		this.ctx.textBaseline = "middle";
 
+      this.socket_manager = new SocketManager(this.server_url);
+      this.ui_manager = new UIManager();
+
       this.player_list = [];
       this.farm = new Farm(this.columns, this.rows);
-
-      this.ui_manager = new UIManager();
-      this.ui_manager.toggleLogin();
 
       this.resizeCanvas();
       this.initEventListener();
 
       // AssetLoader.load([ ]);
   		// ResourcesLoader.onReady(function(){
-  		// 	this.then = Date.now();
-  		// 	this.run();
+  		// 	this.ui_manager.toggleLogin();
   		// }.bind(this));
-
-      this.then = Date.now();
-      requestAnimFrame(this.loop.bind(this));
+      this.ui_manager.toggleLogin();
     }
 
     initEventListener() {
@@ -68,7 +65,7 @@
   		}.bind(this), false);
 
       window.addEventListener("sendLogin", function (e) {
-        this.tryLogin(e.detail);
+        this.handleLogin(e.detail);
       }.bind(this), false);
 
       this.canvas.addEventListener("click", function (e) {
@@ -76,29 +73,19 @@
       }.bind(this), false);
 
       window.addEventListener("plantEvent", function (e) {
-        if(this.player.selectedTile != null && this.player.selectedItem != null) {
-          //TODO: Plant a new flower on the selected tile, and ask server
-          this.player.selectedTile = null;
-          this.player.selectedItem = null;
-        }
+        this.handlePlantEvent(e);
       }, false);
+
       window.addEventListener("harvestEvent", function (e) {
-        if(this.player.selectedTile != null) {
-          //TODO: Harvest the selected tile, and ask server
-          this.player.selectedTile = null;
-        }
+        this.handleHarvestEvent(e);
       }, false);
+
       window.addEventListener("fertilizeEvent", function (e) {
-        if(this.player.selectedTile != null) {
-          //TODO: Fertilize the selected tile, and ask server
-          this.player.selectedTile = null;
-        }
+        this.handleFertilizeEvent(e);
       }, false);
+
       window.addEventListener("buyEvent", function (e) {
-        if(this.player.selectedTile != null) {
-          //TODO: Fertilize the selected tile, and ask server
-          this.player.selectedTile = null;
-        }
+        this.handleBuyEvent(e);
       }, false);
 
       window.addEventListener("inventoryEvent", function (e) {
@@ -107,26 +94,25 @@
           this.player.setSelectedItem(item_id);
         }
       }, false);
+
+      window.addEventListener("updateGame", function () {
+        this.update();
+      }.bind(this), false);
+
+      window.addEventListener("displayInfo", function (e) {
+        this.ui_manager.displayInfo(e.detail);
+      }.bind(this), false);
     }
 
-    loop() {
-      this.now = Date.now();
-      this.update(this.now - this.then);
-      this.then = Date.now();
-
-      this.draw();
-      // requestAnimFrame(this.loop.bind(this));
-    }
-
-    update(dt) {
-      // for (var i = 0; i < this.player_list.length; i++) {
-      //   this.player_list[i].update(dt);
-      // }
-      // this.farm.update(dt);
-    }
-
-    draw() {
+    update() {
+      for (var i = 0; i < this.player_list.length; i++) {
+        this.player_list[i].update();
+      }
+      this.farm.update();
       this.farm.draw(this.ctx);
+
+      this.ui_manager.updateBoard(this.player_list);
+      this.ui_manager.updateInventory(this.player);
     }
 
     resizeCanvas() {
@@ -138,7 +124,7 @@
       w -= parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
 
       let screenHeight, screenWidth;
-      if(w/h > this.gameWidth/this.gameHeight) {   // get the best game ratio
+      if((w/h) > (this.width/this.height)) {   // get the best game ratio
         screenHeight = h;
         screenWidth = screenHeight * this.width/this.height;
       }
@@ -151,7 +137,7 @@
       this.canvas.style.width = String(screenWidth)+"px";
     }
 
-    tryLogin(info) {
+    handleLogin(info) {
       console.log(info);
       // TODO: implement login logic here
       // let success = send(...)
@@ -166,12 +152,39 @@
       }
     }
 
-    setCurrentPlayer(player) {
-      this.player = player;
+    handlePlantEvent(e) {
+      if(this.player.selectedTile != null && this.player.selectedItem != null) {
+        //TODO: Plant a new flower on the selected tile, and ask server
+        this.player.selectedTile = null;
+        this.player.selectedItem = null;
+      }
+    }
+
+    handleHarvestEvent(e) {
+      if(this.player.selectedTile != null) {
+        //TODO: Harvest the selected tile, and ask server
+        this.player.selectedTile = null;
+      }
+    }
+
+    handleFertilizeEvent(e) {
+      if(this.player.selectedTile != null) {
+        //TODO: Fertilize the selected tile, and ask server
+        this.player.selectedTile = null;
+      }
+    }
+
+    handleBuyEvent(e) {
+      if(this.player.selectedTile != null && this.player.money > this.player.selectedTile.cost) {
+        //TODO: Buy the selected tile, and ask server
+        this.player.selectedTile = null;
+      }
     }
 
     setPlayerList(player_list) {
-      this.player_list = player_list;
+      if(Array.isArray(player_list)) {
+        this.player_list = player_list;
+      }
     }
 
     addPlayer(player) {
@@ -182,8 +195,10 @@
       let pos = this.getMousePosition(e);
       let col = Math.floor(this.x / this.columns);
       let row = Math.floor(this.y / this.rows);
-      this.player.setSelectedTile(col, row);
-      console.log(this.player);
+      let tile = this.farm.tiles[col][row];
+
+      this.player.setSelectedTile(tile);
+      this.ui_manager.updateActions(tile.getAvailableActions());
     }
 
     getMousePosition(e) {

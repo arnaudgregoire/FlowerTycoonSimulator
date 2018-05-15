@@ -69,9 +69,9 @@ var JsLoader = window.JsLoader = (function (window, document) {
   }
 
   function load (array, func) {
-    let file_list = Array.isArray(array) ? array : [array];
     onLoad(func);
 
+    let file_list = Array.isArray(array) ? array : [array];
     if(document.readyState === "complete") {
       for (var src of file_list) {
         _load( String(src) );

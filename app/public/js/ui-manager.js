@@ -99,6 +99,7 @@
     }
   }
 
+
   class InfoManager extends IManager {
     constructor(container) {
       super(container);
@@ -138,8 +139,8 @@
       }
       else {
         this.clearInventory();
-        for (var i = 0; i < player.getInventory.length; i++) {
-          this.inventoryHTML.appendChild( this.createHTML(player.getInventory[i]) );
+        for (var i = 0; i < player.inventory.length; i++) {
+          this.inventoryHTML.appendChild( this.createHTML(player.inventory[i]) );
         }
       }
     }
@@ -149,7 +150,7 @@
     }
 
     clearInventory() {
-      while (!!inventoryHTML.firstChild) {
+      while (!!this.inventoryHTML.firstChild) {
         this.inventoryHTML.removeChild(inventoryHTML.firstChild);
       }
     }
@@ -242,6 +243,20 @@
         this.dispatchUIEvent("buyEvent", null);
       }.bind(this), false);
     }
+
+    setButtonState(actions) {
+      if (!!actions.plant) { this.plant_button.classList.remove("inactive") }
+      else { this.plant_button.classList.add("inactive") }
+
+      if (!!actions.harvest) { this.harvest_button.classList.remove("inactive") }
+      else { this.harvest_button.classList.add("inactive") }
+
+      if (!!actions.fertilize) { this.fertilize_button.classList.remove("inactive") }
+      else { this.fertilize_button.classList.add("inactive") }
+
+      if (!!actions.buy) { this.buy_button.classList.remove("inactive") }
+      else { this.buy_button.classList.add("inactive") }
+    }
   }
 
 
@@ -267,6 +282,19 @@
       this.boardManager     = new BoardManager(document.querySelector("#leaderboard"));
     }
 
+    updateBoard(player_list) {
+      this.boardManager.displayBoard(player_list);
+    }
+
+    updateInventory(player) {
+      this.inventoryManager.displayInventory(player);
+      this.inventoryManager.displayMoney(player);
+    }
+
+    updateActions(actions) {
+      this.actionsManager.setButtonState(actions);
+    }
+
     /**
     * Wrap common child method for a quicker access
     */
@@ -284,14 +312,6 @@
 
     clearInfo() {
       this.infoManager.clearInfo();
-    }
-
-    displayInventory(player) {
-      this.inventoryManager.displayInventory(player);
-    }
-
-    displayMoney(player) {
-      this.inventoryManager.displayMoney(player);
     }
   }
 

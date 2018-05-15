@@ -46,7 +46,7 @@
       ctx.strokeRect(this.x*this.size, this.y*this.size, this.size, this.size);
     }
 
-    getAvailableAction() {
+    getAvailableActions() {
       return {
         plant: false,
         harvest: false,
@@ -74,7 +74,7 @@
       ctx.fillRect(this.x*this.size+4, this.y*this.size+4, this.size-8, this.size-8);
     }
 
-    getAvailableAction() {
+    getAvailableActions() {
       return {
         plant: true,
         harvest: false,
@@ -104,7 +104,7 @@
       this.flower.draw(ctx, (this.x+0.5)*this.size, (this.y+0.5)*this.size);
     }
 
-    getAvailableAction() {
+    getAvailableActions() {
       return {
         plant: false,
         harvest: true,
