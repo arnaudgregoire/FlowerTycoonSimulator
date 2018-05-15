@@ -20,6 +20,7 @@
       this.height = height;
 
       this.tiles = [];
+
       this.reset();
     }
 

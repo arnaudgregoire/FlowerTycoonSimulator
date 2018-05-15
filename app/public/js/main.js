@@ -2,21 +2,16 @@
 
 const URL = "localhost:8081/";  // flowertycoonsimulator.herokuapp.com/ ||  localhost:8081/
 const JS_DEPENDENCIES = [
-  "js/player.js", "js/opponent.js",    // delete soon
-  URL+"public/js/asset-loader.js", URL+"public/js/login-manager.js", URL+"public/js/ui-manager.js",
-  URL+"shared/game/seed.js", URL+"shared/game/flower.js", URL+"shared/game/tile.js", URL+"shared/game/player.js", URL+"shared/game/farm.js"
+  URL+"public/js/asset-loader.js", URL+"public/js/ui-manager.js", URL+"public/js/game.js",
+  URL+"shared/game/seed.js",  // WARNING: This file seems to be unused
+  URL+"shared/utils.js", URL+"shared/game/flower.js", URL+"shared/game/tile.js",
+  URL+"shared/game/farm.js", URL+"shared/game/player.js"
 ];
 
-var game,
-    player,
-    farm,
-    loginManager,
-    uiManager,
-    exampleSocket;
-
+var game, exampleSocket;
 
 window.onload = function () {
-  JsLoader.load(JS_DEPENDENCIES, function () {
+  JsLoader.loadFile(JS_DEPENDENCIES, function () {
     initSocket();
     initGame();
   });
@@ -24,35 +19,12 @@ window.onload = function () {
 
 
 function initGame() {
-  loginManager = new LoginManager(window.document);
-  uiManager    = new UIManager(window.document);
-
-  loginManager.init();
-
-  // TODO: put this event listener in the client game ?
-  window.addEventListener("sendLogin", function (e) {
-    tryLogin(e.detail);
+  game = new Game(exampleSocket, {
+    columns: 5,
+    rows: 5
   });
-}
 
-// TODO: This method should be part of the game object, only here for debug
-function tryLogin(info) {
-  console.log(info);
-
-
-  // TODO: implement login logic here
-  // let success = send(...)
-
-  let success = true;
-  if(success) {
-    loginManager.remove();
-
-    game = new Game()
-    player = new Player();
-    farm = new Farm();
-
-    uiManager.setUsername(info.username);
-  }
+  game.init();
 }
 
 function initSocket() {
@@ -64,13 +36,14 @@ function initSocket() {
 
   exampleSocket.onmessage = function (event) {
     let json = JSON.parse(event.data);
+    // TODO: CHANGE THIS
     if (json.reponse == "update") {
-      terrain.getTerrain();
-      playerManager.getPlayers();
+      game.update(0.016);
     }
   }
 }
 
+// TODO: CHANGE THIS, and put every communication with the server in a new class owned by the game object
 function send(task,data) {
   return fetch("http://" + URL + task,{
     method: "POST",

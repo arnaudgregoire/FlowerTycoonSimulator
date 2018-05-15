@@ -5,8 +5,8 @@ var WebSocket  = require('ws');
 var bodyParser = require("body-parser");
 var delay      = require('delay');
 
-var Terrain    = require('./terrain.js');
-var Game       = require('./game.js');
+var Terrain    = require('shared/farm.js');
+var Game       = require('server/game.js');
 var game;
 
 const PORT     = process.env.PORT || 8081;
@@ -40,7 +40,7 @@ app.use(function bodyLog(req, res, next) {
 /**
  * Partie du serveur qui repond au demande de plantation de vegetation sur une case
  */
-app.post('/planter', function (req, res) {
+app.post('/plant', function (req, res) {
   let json = {};
   if(game.checkName(req.body)){
     json = game.planter(req.body);
@@ -55,7 +55,7 @@ app.post('/planter', function (req, res) {
 /**
  * Partie du serveur s occupant de l achat de cases
  */
-app.post('/acheter', function (req, res) {
+app.post('/buy', function (req, res) {
   let json = {};
   if(game.checkName(req.body)){
     json = game.acheter(req.body);

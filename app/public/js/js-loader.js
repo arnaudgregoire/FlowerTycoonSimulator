@@ -2,14 +2,16 @@ var JsLoader = window.JsLoader = (function (window, document) {
   "use strict";
 
   var file_number = 0;
-  var callback = undefined;
+  var callback_list = [];
 
   function isReady () {
     return file_number === 0;
   }
 
   function onLoad(func) {
-    callback = func;
+    if(typeof(func) == "function"){
+      callback_list.push(func);
+    }
   }
 
   function _exec (e) {
@@ -20,9 +22,6 @@ var JsLoader = window.JsLoader = (function (window, document) {
       for (var i = 0; i < e.length; i++) {
         _exec(e[i]);
       }
-    }
-    else {
-      //
     }
   }
 
@@ -43,24 +42,62 @@ var JsLoader = window.JsLoader = (function (window, document) {
     document.head.appendChild(script);
   }
 
-  function load (array, func) {
-    let src_list = Array.isArray(array) ? array : [array];
-    callback = func;
+  function _load_tree(root, node) {
+    let url = (root == null ? "" : String(root));
+
+    if (typeof node == "string") {
+      _load(url + node);
+    }
+    else if(Array.isArray(node)) {
+      for (var file of node) {
+        _load_tree(url, file);
+      }
+    }
+    else {
+      let keys = Object.keys(node);
+      for (var k of keys) {
+        if(k === ".") {
+          _load_tree(url, node[k]);
+        }
+        else {
+          _load_tree(url+k, node[k]);
+        }
+      }
+    }
+  }
+
+  function loadFile (array, func) {
+    let file_list = Array.isArray(array) ? array : [array];
+    onLoad(func);
 
     if(document.readyState === "complete") {
-      for (var src of src_list) {
+      for (var src of file_list) {
         _load( String(src) );
       }
     }
     else {
        window.addEventListener("load", function () {
-        load(file_list);
+        loadFile(file_list);
+      }, false);
+    }
+  }
+
+  function loadTree(tree, func) {
+    onLoad(func);
+
+    if(document.readyState === "complete") {
+      _load_tree(null, folders);
+    }
+    else {
+       window.addEventListener("load", function () {
+        _load_tree(null, tree);
       }, false);
     }
   }
 
   return  {
-    load: load,
+    loadFile: loadFile,
+    loadTree: loadTree,
     isReady: isReady,
     onLoad: onLoad
   };

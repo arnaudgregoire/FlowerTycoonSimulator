@@ -2,7 +2,11 @@
   "name": "flowertycoonsimulator",
   "author": "@arnaudgregoire @thomasSinno @Ogus",
   "description": "",
-  "keywords": ["flower", "game", "tycoon"],
+  "keywords": [
+    "flower",
+    "game",
+    "tycoon"
+  ],
   "license": "ISC",
   "version": "0.1.0",
   "main": "mainserver.js",

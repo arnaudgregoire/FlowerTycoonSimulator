@@ -13,34 +13,48 @@
 	}
 
 	class Player{
-		constructor(id, name){
+		constructor(id, name) {
       this.id = id;
 			this.name = name;
 			this.money = 100;
 			this.score = 0;
 			this.color = utils.getRandomColor();
 			this.inventory = [];
-			this.inventory.push(FlowerFactory.getRandomPlante());
+
+      this.selectedTile = null;
+      this.selectedItem = null;
+
+			// this.inventory.push(FlowerFactory.getRandomPlante());
 		}
 
-		checkObject(id){
-			let exist = false;
+    setSelectedTile(column, row) {
+      this.selectedTile = {
+        column: column,
+        row: row
+      };
+    }
+
+    setSelectedItem(item_id) {
+      this.selectedItem = this.findItem(item_id);
+    }
+
+		hasItem(item_id) {
 			for (let i = 0; i < this.inventory.length; i++) {
-				if (this.inventory[i].id == id) {
-					exist = true;
+				if (this.inventory[i].id == item_id) {
+					return true;
 				}
 			}
-			return exist;
+			return false;
 		}
 
-		findObject(id){
+		findItem(item_id) {
 			let object;
 			for (let i = 0; i < this.inventory.length; i++) {
-				if (this.inventory[i].id == id) {
-					object = this.inventory[i];
+				if (this.inventory[i].id == item_id) {
+					return this.inventory[i];
 				}
 			}
-			return object;
+			return null;
 		}
 	}
 

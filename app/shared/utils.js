@@ -11,6 +11,7 @@
     return color;
   }
 
+  // USE nanoid instead, or smthing else, everyting is better (& more secure) than that
   function generateID () {
     let letters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let id_length = 8;

@@ -14,6 +14,7 @@
     constructor(x, y) {
       this.x = x;
       this.y = y;
+      this.size = 40;
       this.type = "";
     }
 
@@ -34,11 +35,15 @@
     }
 
     update(dt) {
-
+      //
     }
 
     draw(ctx) {
-
+      ctx.fillStyle = "#fff";
+      ctx.strokeStyle = "#000";
+      ctx.lineWidth = 1;
+      ctx.fillRect(this.x*this.size, this.y*this.size, this.size, this.size);
+      ctx.strokeRect(this.x*this.size, this.y*this.size, this.size, this.size);
     }
 
     getAvailableAction() {
@@ -59,11 +64,14 @@
     }
 
     update(dt) {
-
+      //
     }
 
     draw(ctx) {
-
+      ctx.strokeStyle = owner.color;
+      ctx.fillRect(this.x*this.size, this.y*this.size, this.size, this.size);
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(this.x*this.size+4, this.y*this.size+4, this.size-8, this.size-8);
     }
 
     getAvailableAction() {
@@ -77,18 +85,23 @@
   }
 
   class TileSeeded extends TileBought {
-    constructor(x, y, owner, plant) {
+    constructor(x, y, owner, flower) {
       super(x, y, owner);
       this.type = "seeded";
-      this.plant = plant;
+      this.flower = flower;
     }
 
     update(dt) {
-
+      //
     }
 
     draw(ctx) {
+      ctx.strokeStyle = owner.color;
+      ctx.fillRect(this.x*this.size, this.y*this.size, this.size, this.size);
+      ctx.fillStyle = "#bb8044";
+      ctx.fillRect(this.x*this.size+4, this.y*this.size+4, this.size-8, this.size-8);
 
+      this.flower.draw(ctx, (this.x+0.5)*this.size, (this.y+0.5)*this.size);
     }
 
     getAvailableAction() {
@@ -107,7 +120,7 @@
     TILES: ["empty", "bought", "seeded"]
   };
   TileFactory.prototype = {
-    createTile: function (tile_data){
+    createTile: function (tile_data) {
       let tile, player;
       let tile_id = this.TILES.indexOf(tile_data.type);
 

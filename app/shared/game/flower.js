@@ -24,8 +24,8 @@
       this.grow(dt);
     }
 
-    draw(ctx) {
-
+    draw(ctx, x, y) {
+      //
     }
 
     toJson() {
@@ -102,12 +102,24 @@
       super(id, "rose");
       this.speed = 1;
     }
+
+    draw(ctx, x, y) {
+      ctx.fillStyle = "#fe6150";
+      ctx.arc(x,y, 15, 0, 2*Math.PI, false);
+      ctx.fill();
+    }
   }
 
   class Tulip extends Flower {
     constructor(id) {
       super(id, "tulip");
       this.speed = 1.5;
+    }
+
+    draw(ctx, x, y) {
+      ctx.fillStyle = "#ff8230";
+      ctx.arc(x,y, 15, 0, 2*Math.PI, false);
+      ctx.fill();
     }
   }
 
