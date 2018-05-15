@@ -2,8 +2,8 @@
 
 const URL = "localhost:8081/";  // flowertycoonsimulator.herokuapp.com/ ||  localhost:8081/
 const JS_DEPENDENCIES = [
-  "js/utl/asset-loader.js",
-  "js/case.js", "js/flower.js", "js/player.js", "js/opponent.js", "js/plante.js", "js/seed.js", "js/terrain.js",
+  "js/asset-loader.js",
+  "js/player.js", "js/opponent.js", "js/playerManager.js",
   "js/login-manager.js", "js/ui-manager.js"
 ];
 
@@ -16,8 +16,10 @@ var game,
 
 
 window.onload = function () {
-  var jsloader = new JsLoader();
-  jsloader.load(JS_DEPENDENCIES, function () {
+  // var jsloader = new JsLoader();
+  console.log(JsLoader);
+
+  JsLoader.load(JS_DEPENDENCIES, function () {
     initSocket();
     initGame();
   });
@@ -45,6 +47,7 @@ function tryLogin(info) {
   console.log(info);
 
   let success = true;
+  // TODO: implement login logic here
   // let success = send(...)
 
   if(success) {

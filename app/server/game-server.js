@@ -1,10 +1,5 @@
 var nanoid = require("nanoid");
-require("../shared/game_core.js");
-
-const LOGG = true;
-
-
-global.window = global.document = global;
+require("game.js");
 
 var gameServer = {
   gameList: {},

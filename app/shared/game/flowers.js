@@ -3,12 +3,12 @@
   let isNode = (typeof module !== 'undefined' && typeof module.exports !== 'undefined');
 
   class Flower{
-    constructor(id){
+    constructor(id, name){
       this.id = id;
       this.category = "plant";
+      this.name = name;
 
       this.speed = 0;
-      this.name = "";
       this.birth = 0;
       this.age = 0;
       this.state = 0;
@@ -20,24 +20,34 @@
       this.died = false;
     }
 
+    update(dt) {
+      this.grow(dt);
+    }
+
+    draw(ctx) {
+
+    }
 
     toJson() {
-      return JSON.stringify(this);
+      // return JSON.stringify(this);
+      return({"name": this.name, "age": this.age, "state": this.state, "id": this.id});
     }
 
     /**
     * Appelé quand la plante est mise en terre pour la première fois
     */
     startLife(){
-      this.birth = Date.now();
+      // this.birth = Date.now();
+      this.birth = 0;
     }
     /**
     * Méthode appelé sur toutes les cases plantés par l'instance game.
     * Elle update l'état de la plante et voit si cette dernière n'est pas décédé
     * retourne un bouleen pour savoir si la plante est morte ou pas
     */
-    grow(){
-      this.age = Date.now() - this.birth;
+    grow(dt){
+      // this.age = Date.now() - this.birth;
+      this.age += dt;
       this.state = Math.floor(this.age/this.speed);
       if (this.state >= 3000 && !this.bloomed) {
         this.bloom();
@@ -52,10 +62,10 @@
     }
     /**
     * Méthode simulant la floraison
-    * une plante peut produire aléatoirement en 0 et 3 fleurs
+    * une plante peut produire aléatoirement en 1 et 3 fleurs
     */
     bloom(){
-      this.nbFlowers = Math.floor(Math.random() * 3);
+      this.nbFlowers = 1 + Math.floor(Math.random() * 2);
       this.bloomed = true;
     }
     /**
@@ -89,41 +99,59 @@
 
   class Rose extends Flower {
     constructor(id) {
-      super(id);
-      this.name = "rose";
+      super(id, "rose");
       this.speed = 1;
     }
   }
 
   class Tulip extends Flower {
     constructor(id) {
-      super(id);
-      this.name = "tulip";
+      super(id, "tulip");
       this.speed = 1.5;
     }
   }
 
+  // Static class style
   var FlowerFactory = {
-    this.FLOWERS = ["rose", "tulip"];
+    FLOWERS: ["rose", "tulip"];
+  };
+  FlowerFactory.prototype = {
+    createFlower: function (flower_name) {
+      let flower_id = this.FLOWERS.indexOf(flower_name);
 
-    this.createFlower = function (flower_name) {
-      let flower = null;
-      switch(flower_name){
-          case "rose":
-              flower = new Rose();
-              break;
+      if(flower_id == -1) {
+        return null;
+      }
 
-          case "tulip":
-              flower = new Tulip();
-              break;
+      switch(flower_id){
+          case 0:
+            flower = new Rose();
+            break;
+
+          case 1:
+            flower = new Tulip();
+            break;
       }
       return flower;
     }
 
-    this.getRandomFlower = function () {
+    createFlowerFromData(flower_data) {
+      let flower = this.createFlower(flower_data.name);
+      
+      if(flower == null) {
+        return null;
+      }
+
+      flower.id = flower_data.id;
+      flower.age = flower_data.age;
+      flower.state = flower_data.state;
+  		return flower;
+    }
+
+    getRandomFlower: function () {
       return this.createFlower(this.FLOWERS[Math.floor(Math.random() * this.FLOWERS.length)]);
     }
-  }
+  };
 
   // Node export
   if (isNode) {

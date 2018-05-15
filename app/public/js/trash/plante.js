@@ -48,7 +48,7 @@ class PlanteFactory{
 			case "tulipe":
 				plante = new Tulipe(name,id,age, state);
 				break;
-			
+
 			case "rose":
 				plante = new Rose(name,id,age, state);
 				break;

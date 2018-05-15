@@ -17,7 +17,7 @@ var server = http.createServer(app);
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
-// app.use(express.static(__dirname + '/shared'));
+app.use(express.static(__dirname + '/shared'));
 
 /**
  * Lancement du serveur
