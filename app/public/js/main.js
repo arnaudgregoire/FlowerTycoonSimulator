@@ -4,41 +4,52 @@ const URL = "localhost:8081/";  // flowertycoonsimulator.herokuapp.com/ ||  loca
 const JS_DEPENDENCIES = [
   "js/utl/asset-loader.js",
   "js/case.js", "js/flower.js", "js/player.js", "js/opponent.js", "js/plante.js", "js/seed.js", "js/terrain.js",
-  "js/informationManager.js", "js/inventoryManager.js", "js/loginManager.js", "js/playerManager.js"
+  "js/login-manager.js", "js/ui-manager.js"
 ];
 
-var player,
+var game,
+    player,
+    farm,
     loginManager,
-    inventoryManager,
-    playerManager,
-    terrain,
-    exampleSocket,
-    informationManager;
+    uiManager,
+    exampleSocket;
 
-var $plant_button, $harvest_button, $buy_button;
+
+window.onload = function () {
+  var jsloader = new JsLoader();
+  jsloader.load(JS_DEPENDENCIES, function () {
+    initSocket();
+    initGame();
+  });
+}
 
 
 function initGame() {
-  player             = new Player();
-  loginManager       = new LoginManager();
-  inventoryManager   = new InventoryManager();
-  playerManager      = new PlayerManager();
-  terrain            = new Terrain();
-  informationManager = new InformationManager();
+  // player       = new Player();
+  // farm         = new Farm();
+  loginManager = new LoginManager(window.document);
+  uiManager    = new UIManager(window.document);
+
+  loginManager.init();
+
+  window.addEventListener("sendLogin", function (e) {
+    tryLogin(e.detail);
+  });
+
+  // game = new Game();
+  // game.start();
 }
 
-function initDOM() {
-  $plant_button = document.querySelector("#plant-button");
-  $harvest_button = document.querySelector("#harvest-button");
-  $fertilize_button = document.querySelector("#fertilize-button");
-  $buy_button = document.querySelector("#buy-button");
+// TODO: This method should be part of the game object, only here for debug
+function tryLogin(info) {
+  console.log(info);
 
-  $plant_button.addEventListener("click", function(){
-    player.planter(player);
-  });
-  $buy_button.addEventListener("click", function(){
-    player.acheter(player);
-  });
+  let success = true;
+  // let success = send(...)
+
+  if(success) {
+    loginManager.remove();
+  }
 }
 
 function initSocket() {
@@ -76,14 +87,5 @@ function send(task,data) {
       informationManager.display(json.description);
     }
     return json;
-  });
-}
-
-window.onload = function () {
-  var jsloader = new JsLoader();
-  jsloader.load(JS_DEPENDENCIES, function () {
-    initGame();
-    initDOM();
-    initSocket();
   });
 }

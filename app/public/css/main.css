@@ -19,8 +19,10 @@ html, body{
   box-sizing: border-box;
   background: #00af6e;
   color: #31302b;
+  opacity: 1;
   overflow: hidden;
 }
+#wrap.hidden{opacity: 0}
 #wrap>div{
   box-sizing: border-box;
 }
@@ -53,7 +55,46 @@ html, body{
 }
 
 
+#overlay{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.8);
+  z-index: 9999;
+}
 
+#login-box{
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: auto;
+  padding: 20px 30px;
+  background: #fff;
+  border: 3px solid #31302b;
+  box-shadow: 3px 2px 4px rgba(0,0,0,0.3);
+}
+
+#login-box>div{
+  display: inline;
+  margin: 15px 0;
+}
+#login-box>div:first-child p{
+  margin: 5px auto;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+}
+
+#login-box label{
+  padding: 0 10px;
+}
 
 #user-info{
   grid-row: first-row / top-row;
@@ -83,7 +124,7 @@ html, body{
   grid-row: bottom-row / last-row;
   grid-column: left-col / right-col;
   margin: 10px 20px;
-  padding: 0 25px;
+  padding: 0 10%;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-around;
