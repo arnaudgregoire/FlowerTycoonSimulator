@@ -1,183 +1,218 @@
-var Terrain = require('./terrain.js');
-var Player  = require('./player.js');
-var EmptyCase = require('./case/emptyCase.js');
-var BoughtCase = require('./case/boughtCase.js');
-var PlantedCase = require('./case/plantedCase');
+var nanoid = require('nanoid');
+
+var flower = require('shared/flower.js');
+var tile = require('shared/tile.js');
+var player = require('shared/player.js');
+var farm = require('shared/farm.js');
 
 /**
- * L'instance Game représente la partie en cours :
- * un partie est composé de joueurs, d'un plateau d'une taille fixé ainsi que d'une durée fixé
- */
+* L'instance Game représente la partie en cours :
+* un partie est composé de joueurs, d'un plateau d'une taille fixé ainsi que d'une durée fixé
+*/
 class Game{
-    constructor(duree, tailleX, tailleY){
-        this.duree = duree;
-        this.players = [];
-        this.terrain = new Terrain(tailleX, tailleY);
-	}
-	
-	/**
-	* Regarde si le nom d'un joueur donne en entree coresspond au nom d un des objets Player de la liste players 
-	*/
-	checkName(req){
-		let exist = false;
-    	for (var i = 0; i < this.players.length; i++) {
-    		if (this.players[i].name == req.param.login) {
-    			exist = true;
-    		}
-		}
-		return exist;
-	}
+  constructor(server_config) {
+    let config = user_config || {};
 
-	/**
-	 * Renvoie le joeur correspondant au nom compris dans la requete
-	 * @param {Request body} req 
-	 */
-	findPlayer(req){
-		let player;
-		for (var i = 0; i < this.players.length; i++) {
-    		if (this.players[i].name == req.param.login) {
-    			player = this.players[i];
-    		}
-		}
-		return player;
-	}
+    this.columns = config.columns || 10;
+    this.rows = config.rows || 10;
 
-	/**
-	 * Methode appele lorsque que un joueur veut acheter une case
-	 * @param {Request body} req 
-	 * Renvoie un json avec la reponse associe et une petite description de ce qui s est passe
-	 */
-	acheter(req){
-		let player = this.findPlayer(req);
-		let json = {};
-		let x = req.param.x;
-		let y = req.param.y;
-		if (this.terrain.cases[x][y].type == "empty") {
-			if (player.money >= EmptyCase.getCost()) {
-				this.terrain.cases[x][y] = new BoughtCase(x,y,player);
-				player.money -= EmptyCase.getCost();
-				json = {"reponse":1, "description" : "La case a bien été acheté"};
-			}
-			else{
-				json = {"reponse":0, "description" : "Pas assez d'argent"}
-			}
-		}
-		else{
-			json = {"reponse":0, "description" : "La case n'est pas vide"};
-		}
-		return json;
-	}
+    this.client_url = config.url || "";
 
-	/**
-	 * Methode appele lorsque que un joueur veut planter une case
-	 * @param {Request body} req 
-	 *  Renvoie un json avec la reponse associe et une petite description de ce qui s est passe
-	 */
-	planter(req){
-		//console.log(req);
-		let player = this.findPlayer(req);
-		let json = {};
-		let x = req.param.x;
-		let y = req.param.y;
-		let id = req.param.plante.id;
-		if (this.terrain.cases[x][y].owner == player) {
-			if(player.checkObject(id)){
-				let plante = player.findObject(id);
-				if(plante.plantable){
-					plante.startLife();
-					this.terrain.cases[x][y] = new PlantedCase(x,y,player,plante);
-					player.inventory.splice( player.inventory.indexOf(plante), 1 );
-					json = {"reponse":1, "description" : "La plante a ete plantee"};
-				}
-				else{
-					json = {"reponse":0, "description" : "La plante ne peut pas etre plantee"};
-				}
-			}
-			else{
-				json = {"reponse":0, "description" : "Vous ne possedez pas l objet"};
-			}
-		}
-		else{
-			json = {"reponse":0, "description" : "Vous ne possedez pas la case"};
-		}
-		return json;
-	}
+    this.farm = new Farm(this.columns, this.rows);;
+    this.player_list = [];
 
-	/**
-	 * Methode appele lorsque que un joueur veut se connecter
-	 * @param {Request body} req 
-	 *  Renvoie un json avec la reponse associe et une petite description de ce qui s est passe
-	 */	
-    login(req){
-    	let name = req.param.login;
-    	let reponse = {};
-    	let exist = this.checkName(req);
-    	if (exist) {
-    		if(this.checkPassword()){
-    			reponse = {"reponse": 1, "description" : "Heureux de vous revoir"};
-    		}
-    		else{
-    			reponse = {"reponse": 0, "description" : "Mauvais mot de passe"};
-    		}
-    	}
-    	else{
-    		this.players.push(new Player(name));
-    		reponse = {"reponse": 1, "description" : "Votre compte a bien ete cree"};
-    	}
-    	return reponse;
+    this.duration = config.duration || 3600;
+
+    this.then = 0;
+    this.now = 0;
+
+    this.loop();
+  }
+
+  loop() {
+    // Handle client connection/disconnection
+
+    // Decode (encrypted) network messages
+
+    // Perform players actions && update game objects
+
+    // Send (encrypted) messages to clients about state changes
+  }
+
+  update() {
+    for (var i = 0; i < this.player_list.length; i++) {
+      this.player_list[i].update();
     }
+    this.farm.update();
+  }
 
-	/**
-	 * Verifie si le password donne en entree correpond bien ( potentiellement passer des parametres en plus)
-	 */
-    checkPassword(){
-    	return true;
+  /**
+  * Check if a player exist in the player_list, based on his ID
+  */
+  checkID(req){
+    for (var i = 0; i < this.player_list.length; i++) {
+      if (this.player_list[i].id == req.param.login) {
+        return true;
+      }
     }
+    return false;
+  }
 
-	/**
-	 * Renvoie la liste des joueurs enregistres sur le serveur sous format json
-	 */
-    getPlayers(){
-    	let json = {"players": []};
-    	for (var i = 0; i < this.players.length; i++) {
-    		json.players.push({"name": this.players[i].name, "color": this.players[i].color,"score":this.players[i].score});
-    	}
-    	return json;
-	}
+  /**
+  * Renvoie le joeur correspondant au nom compris dans la requete
+  * @param {Request body} req
+  */
+  findPlayer(req){
+    for (var i = 0; i < this.player_list.length; i++) {
+      if (this.player_list[i].id == req.param.login) {
+        return this.player_list[i];
+      }
+    }
+    return null;
+  }
 
-	getInventory(req){
-    	let name = req.param.login;
-    	let reponse = {"inventory" : [], "money" : 0};
-    	let exist = this.checkName(req);
-    	if (exist) {
-			let player = this.findPlayer(req);
-			reponse.money = player.money;
-			for (let i = 0; i < player.inventory.length; i++) {
-				reponse.inventory.push(player.inventory[i].toJSON());
-			}
-    	}
-    	else{
-    		reponse = this.destinationUnknown();
-    	}
-    	return reponse;
-	}
+  /**
+  * Methode appele lorsque que un joueur veut acheter une case
+  * @param {Request body} req
+  * Renvoie un json avec la reponse associe et une petite description de ce qui s est passe
+  */
+  buy(req){
+    let json = {};
 
-	/**
-	 * Methode appele quand le serveur ne connait pas le login ou que le login est manquant
-	 */
-	destinationUnknown(){
-		return {"reponse":0, "description" : "Please login first"};
-	}
+    let player = this.findPlayer(req);
+    if(player == null) {
+      json = {"response":1};
+    }
+    else {
+      let x = parseInt(req.param.x);
+      let y = parseInt(req.param.y);
 
-	updateTerrain(){
-		for (let i = 0; i < this.terrain.tailleX; i++) {
-			for (let j = 0; j < this.terrain.tailleY; j++) {
-				if(this.terrain.cases[i][j].type == "planted"){
-					this.terrain.cases[i][j].plante.grow();
-				}
-			}		
-		}
-	}
+      if (this.farm.tile[x][y].type == "empty") {
+        if (player.money >= this.farm.tile[x][y].cost) {
+          this.farm.tile[x][y] = new tile.TileBought(x, y, player);
+          player.money -= this.farm.tile[x][y].cost;
+          json = {"response":1, "description" : "La case a été achetée"};
+        }
+        else{
+          json = {"response":0, "description" : "Pas assez d'argent"};
+        }
+      }
+      else{
+        json = {"response":0, "description" : "La case n'est pas vide"};
+      }
+    }
+    return json;
+  }
+
+  /**
+  * Methode appele lorsque que un joueur veut planter une case
+  * @param {Request body} req
+  *  Renvoie un json avec la reponse associe et une petite description de ce qui s est passe
+  */
+  plant(req){
+    let json = {};
+
+    let player = this.findPlayer(req);
+    if(player == null) {
+      json = {"response":1};
+    }
+    else {
+      let x = parseInt(req.param.x);
+      let y = parseInt(req.param.y);
+
+      if (this.farm.tile[x][y].owner.id == player.id) {
+        let id = req.param.flower.id;
+        if(player.hasItem(id)){
+          let flower = player.findItem(id);
+          if(flower.plantable){
+            flower.startLife();
+            this.farm.tiles[x][y] = new tile.TileSeeded(x, y, player, flower);
+            player.removeItem(flower);
+            json = {"reponse": 1, "description" : "La plante a ete plantee"};
+          }
+          else{
+            json = {"reponse": 0, "description" : "La plante ne peut pas etre plantee"};
+          }
+        }
+        else{
+          json = {"reponse": 0, "description" : "Vous ne possedez pas l objet"};
+        }
+      }
+      else{
+        json = {"reponse":0, "description" : "Vous ne possedez pas la case"};
+      }
+    }
+    return json;
+  }
+
+  /**
+  * Methode appele lorsque que un joueur veut se connecter
+  * @param {Request body} req
+  *  Renvoie un json avec la reponse associe et une petite description de ce qui s est passe
+  */
+  login(req) {
+    let json = {};
+
+    let login = req.param.login;
+    let exist = this.checkName(login.username);
+    if (exist) {
+      if(this.checkPassword(login.password)) {
+        json = {"response": 1, "description" : "Heureux de vous revoir"};
+      }
+      else{
+        json = {"response": 0, "description" : "Mauvais mot de passe"};
+      }
+    }
+    else{
+      let id = nanoid();
+      this.player_list.push(new Player(id, name));
+      json = {"response": 1, "description" : "Votre compte a bien ete cree"};
+    }
+    return json;
+  }
+
+  /**
+  * Verifie si le password donne en entree correpond bien ( potentiellement passer des parametres en plus)
+  */
+  checkPassword(password) {
+    // Decode password
+    return true;
+  }
+
+  /**
+  * Renvoie la liste des joueurs enregistres sur le serveur sous format json
+  */
+  getPlayers() {
+    let json = {"players": []};
+    for (var i = 0; i < this.players.length; i++) {
+      json.players.push({"name": this.players[i].name, "color": this.players[i].color,"score":this.players[i].score});
+    }
+    return json;
+  }
+
+  getInventory(req) {
+    let name = req.param.login;
+    let reponse = {"inventory" : [], "money" : 0};
+    let exist = this.checkName(req);
+    if (exist) {
+      let player = this.findPlayer(req);
+      reponse.money = player.money;
+      for (let i = 0; i < player.inventory.length; i++) {
+        reponse.inventory.push(player.inventory[i].toJSON());
+      }
+    }
+    else{
+      reponse = this.destinationUnknown();
+    }
+    return reponse;
+  }
+
+  /**
+  * Methode appele quand le serveur ne connait pas le login ou que le login est manquant
+  */
+  destinationUnknown(){
+    return {"reponse":0, "description" : "Please login first"};
+  }
 }
 
 module.exports = Game;

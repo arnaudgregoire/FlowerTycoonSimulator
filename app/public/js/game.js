@@ -28,12 +28,9 @@
       this.socket_manager = null;
       this.ui_manager = null;
 
+      this.farm = null;
       this.player_list = null;
       this.player = null;
-      this.farm = null;
-
-      this.then = 0;
-      this.now = 0;
     }
 
     init() {
@@ -46,10 +43,6 @@
       this.socket_manager = new SocketManager(this.server_url);
       this.ui_manager = new UIManager();
 
-      this.player_list = [];
-      this.farm = new Farm(this.columns, this.rows);
-
-      this.resizeCanvas();
       this.initEventListener();
 
       // AssetLoader.load([ ]);
@@ -144,10 +137,17 @@
 
       let success = true;
       if(success) {
+        this.width = this.TILE_SIZE * this.columns;
+        this.height = this.TILE_SIZE * this.rows;
+        this.farm = new Farm(this.columns, this.rows);
+
+        this.player_list = [];
+
         this.player = new Player(0, info.username);
         console.log(this.player);
         this.ui_manager.setInfo(this.player);
 
+        this.resizeCanvas();
         this.ui_manager.toggleLogin();
       }
     }
@@ -175,20 +175,10 @@
     }
 
     handleBuyEvent(e) {
-      if(this.player.selectedTile != null && this.player.money > this.player.selectedTile.cost) {
+      if(this.player.selectedTile != null && this.player.selectedTile.type === "empty" && this.player.money > this.player.selectedTile.cost) {
         //TODO: Buy the selected tile, and ask server
         this.player.selectedTile = null;
       }
-    }
-
-    setPlayerList(player_list) {
-      if(Array.isArray(player_list)) {
-        this.player_list = player_list;
-      }
-    }
-
-    addPlayer(player) {
-      this.player_list.push(player);
     }
 
     handleCanvasClick(e) {
@@ -199,6 +189,16 @@
 
       this.player.setSelectedTile(tile);
       this.ui_manager.updateActions(tile.getAvailableActions());
+    }
+
+    setPlayerList(player_list) {
+      if(Array.isArray(player_list)) {
+        this.player_list = player_list;
+      }
+    }
+
+    addPlayer(player) {
+      this.player_list.push(player);
     }
 
     getMousePosition(e) {

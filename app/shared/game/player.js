@@ -56,6 +56,10 @@
 			}
 			return null;
 		}
+
+    removeItem(item) {
+      this.inventory.splice(player.inventory.indexOf(item), 1);
+    }
 	}
 
   if (isNode) {
