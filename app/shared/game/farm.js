@@ -4,7 +4,7 @@
 
   var TileEmpty;
   if(isNode) {
-    TileEmpty = require("tile.js").TileEmpty;
+    TileEmpty = require("./tile.js").TileEmpty;
   }
   else {
     TileEmpty = window.TileEmpty;
@@ -69,7 +69,7 @@
   }
 
   if (isNode) {
-    module.export = Farm;
+    module.exports = Farm;
   }
   else {
     window.Farm = Farm;

@@ -4,7 +4,7 @@
 
   var FlowerFactory;
   if(isNode) {
-    FlowerFactory = require('flower').FlowerFactory;
+    FlowerFactory = require('./flower.js').FlowerFactory;
   }
   else {
     FlowerFactory = window.FlowerFactory;

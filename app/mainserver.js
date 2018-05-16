@@ -5,8 +5,8 @@ var WebSocket  = require('ws');
 var bodyParser = require("body-parser");
 var delay      = require('delay');
 
-var Terrain    = require('shared/farm.js');
-var Game       = require('server/game.js');
+var Terrain    = require('./shared/game/farm.js');
+var Game       = require('./server/game.js');
 var game;
 
 const PORT     = process.env.PORT || 8081;
@@ -16,8 +16,13 @@ var server = http.createServer(app);
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/public'));
-app.use(express.static(__dirname + '/shared'));
+app.use('/public', express.static(__dirname + '/public'));
+app.use('/shared',express.static(__dirname + '/shared'));
+
+app.use(function bodyLog(req, res, next) {
+  console.log(req.body);
+  next();
+});
 
 /**
  * Lancement du serveur
@@ -30,11 +35,6 @@ server.listen(PORT, function () {
 // Routage du client vers la page principale
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/public/index.html');
-});
-
-app.use(function bodyLog(req, res, next) {
-  console.log(req.body);
-  next();
 });
 
 /**
@@ -101,14 +101,14 @@ function start() {
 
 function update(){
   delay(1000).then(() => {
-    game.updateTerrain();
+    game.update();
     update();
   });
 }
 
 // TODO: Change WebSocket to Socket.io
 
-
+/*
 let wss = new WebSocket.Server({ server : server });
 server.on('request', app);
 
@@ -124,3 +124,4 @@ wss.broadcast = function broadcast(data) {
 function requestUpdateClients() {
     wss.broadcast(JSON.stringify({'reponse': 'update'}));
 }
+*/

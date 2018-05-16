@@ -1,7 +1,7 @@
 "use strict";
 
 // const URL = "localhost:8081/";  // flowertycoonsimulator.herokuapp.com/ ||  localhost:8081/
-const URL = "file:///C:/Users/Augustin/Desktop/FlowerTycoonSimulator/app/";  // flowertycoonsimulator.herokuapp.com/ ||  localhost:8081/
+const URL = "localhost:8081/";  // flowertycoonsimulator.herokuapp.com/ ||  localhost:8081/ || file:///C:/Users/Augustin/Desktop/FlowerTycoonSimulator/app/
 
 const JS_DEPENDENCIES = {
   [URL]: {

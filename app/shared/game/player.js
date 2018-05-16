@@ -4,8 +4,8 @@
 
 	var utils, FlowerFactory;
   if(isNode) {
-		utils = require('utils.js');
-		FlowerFactory = require("flower").FlowerFactory;
+		utils = require('../utils.js');
+		FlowerFactory = require("./flower.js").FlowerFactory;
   }
 	else {
 		utils = window.Utility;

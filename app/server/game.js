@@ -1,9 +1,9 @@
 var nanoid = require('nanoid');
 
-var flower = require('shared/flower.js');
-var tile = require('shared/tile.js');
-var player = require('shared/player.js');
-var farm = require('shared/farm.js');
+var Farm = require('../shared/game/farm.js');
+var Flower = require('../shared/game/flower.js');
+var Tile = require('../shared/game/tile.js');
+var Player = require('../shared/game/player.js');
 
 /**
 * L'instance Game représente la partie en cours :
@@ -11,14 +11,13 @@ var farm = require('shared/farm.js');
 */
 class Game{
   constructor(server_config) {
-    let config = user_config || {};
+    let config = server_config || {};
 
     this.columns = config.columns || 10;
     this.rows = config.rows || 10;
 
     this.client_url = config.url || "";
-
-    this.farm = new Farm(this.columns, this.rows);;
+    this.farm = new Farm(this.columns, this.rows);
     this.player_list = [];
 
     this.duration = config.duration || 3600;
