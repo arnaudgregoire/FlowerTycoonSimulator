@@ -1,0 +1,175 @@
+html, body{
+  margin :0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #fff;
+  font-family: sans-serif;
+}
+
+.button {
+  display: inline-block;
+  margin: 0;
+  padding: 5px 10px;
+  background: #0c5ea8;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  -webkit-transition: all 0.25s;
+  transition: all 0.25s;
+}
+.button:hover {
+  background: #008cba;
+}
+.button.inactive, .button.inactive:hover{
+  background: #aaa;
+  cursor: default;
+}
+
+.button p{
+  margin: 0;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.info-text{
+  margin: 5px;
+  padding: 5px 10px;
+  color: #0f0;
+}
+
+
+#overlay{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.8);
+  z-index: 9999;
+}
+
+#login-box{
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: auto;
+  padding: 20px 30px;
+  background: #fff;
+  border: 3px solid #31302b;
+  box-shadow: 3px 2px 4px rgba(0,0,0,0.3);
+}
+
+#login-box>div{
+  display: inline;
+  margin: 15px 0;
+}
+#login-box>div:first-child p{
+  margin: 5px auto;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+}
+
+#login-box label{
+  padding: 0 10px;
+}
+
+
+#wrap{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template: [first-row] 70px 30px [top-row] auto [bottom-row] 80px [last-row] /
+  [first-col] 150px 50px [left-col] auto [right-col] 200px [last-col];
+
+  box-sizing: border-box;
+  background: #00af6e;
+  color: #31302b;
+  opacity: 1;
+  overflow: hidden;
+}
+#wrap.hidden{opacity: 0}
+#wrap>div{
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+
+#user-info{
+  grid-row: first-row / top-row;
+  grid-column: first-col / left-col;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 5px;
+  background: #fafafa;
+  border: 3px solid #31302b;
+  box-shadow: 3px 2px 4px rgba(0,0,0,0.25);
+}
+#user-info p{
+  margin: 0;
+  padding: 10px;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+#click-info{
+  grid-row: first-row / 1;
+  grid-column: left-col / right-col;
+  margin: 5px 25px;
+  background: rgba(0,0,0,0.25);
+}
+
+#inventory{
+  grid-row: top-row / last-row;
+  grid-column: first-col / 1;
+  margin: 10px 20px;
+  background: rgba(0,0,0,0.25);
+}
+
+#actions{
+  grid-row: bottom-row / last-row;
+  grid-column: left-col / right-col;
+  margin: 10px 20px;
+  padding: 0 10%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  background: #fafafa;
+  box-shadow: inset 3px 2px 4px rgba(0,0,0,0.25);
+}
+
+#leaderboard{
+  grid-row: first-row / bottom-row;
+  grid-column: right-col / last-col;
+  margin: 5px;
+  background: #fafafa;
+  border: 3px solid #31302b;
+  box-shadow: 3px 2px 4px rgba(0,0,0,0.25);
+}
+
+#game{
+  grid-row: top-row / bottom-row;
+  grid-column: left-col / right-col;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

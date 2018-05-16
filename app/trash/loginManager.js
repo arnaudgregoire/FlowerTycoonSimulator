@@ -11,7 +11,6 @@ class LoginManager{
         this.login.appendChild(this.input);
         this.login.appendChild(this.submit);
         this.name = '';
-
     }
 
     /**
