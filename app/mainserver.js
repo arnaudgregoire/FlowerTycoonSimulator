@@ -27,7 +27,7 @@ app.use(function bodyLog(req, res, next) {
 /**
  * Lancement du serveur
  */
-server.listen(PORT, function () {
+app.listen(PORT, function () {
   console.log('listening on port:', PORT);
   start();
 });
@@ -108,9 +108,8 @@ function update(){
 
 // TODO: Change WebSocket to Socket.io
 
-/*
+
 let wss = new WebSocket.Server({ server : server });
-server.on('request', app);
 
 // Broadcast to all.
 wss.broadcast = function broadcast(data) {
@@ -124,4 +123,3 @@ wss.broadcast = function broadcast(data) {
 function requestUpdateClients() {
     wss.broadcast(JSON.stringify({'reponse': 'update'}));
 }
-*/
