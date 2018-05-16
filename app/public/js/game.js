@@ -65,23 +65,23 @@
         this.handleCanvasClick(e);
       }.bind(this), false);
 
-      window.addEventListener("plantEvent", function (e) {
+      window.addEventListener("plantClick", function (e) {
         this.handlePlantEvent(e);
       }, false);
 
-      window.addEventListener("harvestEvent", function (e) {
+      window.addEventListener("harvestClick", function (e) {
         this.handleHarvestEvent(e);
       }, false);
 
-      window.addEventListener("fertilizeEvent", function (e) {
+      window.addEventListener("fertilizeClick", function (e) {
         this.handleFertilizeEvent(e);
       }, false);
 
-      window.addEventListener("buyEvent", function (e) {
+      window.addEventListener("buyClick", function (e) {
         this.handleBuyEvent(e);
       }, false);
 
-      window.addEventListener("inventoryEvent", function (e) {
+      window.addEventListener("inventoryClick", function (e) {
         let item_id = e.detail.id;
         if(this.player.hasItem(item_id)) {
           this.player.setSelectedItem(item_id);

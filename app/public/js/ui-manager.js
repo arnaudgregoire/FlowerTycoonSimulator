@@ -164,7 +164,7 @@
 
     setEventListener(div) {
       div.addEventListener("click", function () {
-        this.dispatchUIEvent("inventoryEvent", div.dataset.id);
+        this.dispatchUIEvent("inventoryClick", div.dataset.id);
       }.bind(this))
     }
   }
@@ -228,19 +228,19 @@
 
       // All event are handled by the client game
       this.plant_button.addEventListener("click", function() {
-        this.dispatchUIEvent("plantEvent", null);
+        this.dispatchUIEvent("plantClick", null);
       }.bind(this), false);
 
       this.harvest_button.addEventListener("click", function(){
-        this.dispatchUIEvent("harvestEvent", null);
+        this.dispatchUIEvent("harvestClick", null);
       }.bind(this), false);
 
       this.fertilize_button.addEventListener("click", function(){
-        this.dispatchUIEvent("fertilizeEvent", null);
+        this.dispatchUIEvent("fertilizeClickt", null);
       }.bind(this), false);
 
       this.buy_button.addEventListener("click", function(){
-        this.dispatchUIEvent("buyEvent", null);
+        this.dispatchUIEvent("buyClick", null);
       }.bind(this), false);
     }
 
