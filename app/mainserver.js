@@ -12,7 +12,7 @@ var game;
 const PORT     = process.env.PORT || 8081;
 
 var app = express();
-var server = http.createServer(app);
+var server = http.createServer();
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -27,7 +27,7 @@ app.use(function bodyLog(req, res, next) {
 /**
  * Lancement du serveur
  */
-app.listen(PORT, function () {
+server.listen(PORT, function () {
   console.log('listening on port:', PORT);
   start();
 });
@@ -110,6 +110,7 @@ function update(){
 
 
 let wss = new WebSocket.Server({ server : server });
+server.on('request', app);
 
 // Broadcast to all.
 wss.broadcast = function broadcast(data) {

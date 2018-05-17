@@ -7,7 +7,7 @@
       this.socket = null;
 
       this.init();
-      this.initEventListener();
+      //this.initEventListener();
     }
 
     init() {
