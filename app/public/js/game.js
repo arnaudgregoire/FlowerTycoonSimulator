@@ -38,11 +38,12 @@
       this.container = this.canvas.parentElement;
       this.ctx = this.canvas.getContext("2d");
       this.ctx.textAlign = "center";
-  		this.ctx.textBaseline = "middle";
+      this.ctx.textBaseline = "middle";
+      this.farm = new Farm(this.columns,this.rows);
+      this.player_list = [];
 
       this.socket_manager = new SocketManager(this.server_url);
       this.ui_manager = new UIManager();
-
       this.initEventListener();
 
       // AssetLoader.load([ ]);
@@ -98,14 +99,16 @@
     }
 
     update() {
-      for (var i = 0; i < this.player_list.length; i++) {
-        this.player_list[i].update();
-      }
+      this.socket_manager.sendMessage('getPlayers',{},this.updatePlayer_list);
       this.farm.update();
       this.farm.draw(this.ctx);
 
       this.ui_manager.updateBoard(this.player_list);
       this.ui_manager.updateInventory(this.player);
+    }
+
+    updatePlayer_list(json){
+      console.log('json');
     }
 
     resizeCanvas() {
@@ -149,6 +152,7 @@
 
         this.resizeCanvas();
         this.ui_manager.toggleLogin();
+        this.update();
       }
     }
 

@@ -183,8 +183,8 @@ class Game{
   */
   getPlayers() {
     let json = {"players": []};
-    for (var i = 0; i < this.players.length; i++) {
-      json.players.push({"name": this.players[i].name, "color": this.players[i].color,"score":this.players[i].score});
+    for (var i = 0; i < this.player_list.length; i++) {
+      json.players.push({"name": this.player_list[i].name, "color": this.player_list[i].color,"score":this.player_list[i].score});
     }
     return json;
   }
