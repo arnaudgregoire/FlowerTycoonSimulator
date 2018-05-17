@@ -7,7 +7,7 @@
       this.socket = null;
 
       this.init();
-      //this.initEventListener();
+      this.initEventListener();
     }
 
     init() {
@@ -17,15 +17,15 @@
     initEventListener() {
       this.socket.onopen = function (e) {
         this.socket.send("Voici un texte que le serveur attend de recevoir dès que possible !");
-      };
+      }.bind(this);
 
       this.socket.onmessage = function (e) {
         this.handleResponse(JSON.parse(e.data));
-      }
+      }.bind(this);
     }
 
     sendMessage(msg_type, data, callback) {
-      let f = fetch("http://" + this.base_url + task, {
+      let f = fetch("http://" + this.base_url + msg_type, {
         method: "POST",
         headers: {
           'Accept': 'application/json, text/plain, */*',

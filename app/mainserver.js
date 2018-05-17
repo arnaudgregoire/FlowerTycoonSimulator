@@ -87,7 +87,7 @@ app.post('/getInventory', function (req, res) {
 });
 
 app.post('/getTerrain', function (req, res) {
-  res.json(game.terrain.toJSON());
+  res.json(game.farm.toJSON());
 });
 
 
