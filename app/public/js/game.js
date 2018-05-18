@@ -39,9 +39,9 @@
       this.ctx = this.canvas.getContext("2d");
       this.ctx.textAlign = "center";
       this.ctx.textBaseline = "middle";
-      this.farm = new Farm(this.columns,this.rows);
-      this.player_list = [];
 
+      this.farm = null;
+      this.player_list = [];
       this.socket_manager = new SocketManager(this.server_url);
       this.ui_manager = new UIManager();
       this.initEventListener();
@@ -68,26 +68,26 @@
 
       window.addEventListener("plantClick", function (e) {
         this.handlePlantEvent(e);
-      }, false);
+      }.bind(this), false);
 
       window.addEventListener("harvestClick", function (e) {
         this.handleHarvestEvent(e);
-      }, false);
+      }.bind(this), false);
 
       window.addEventListener("fertilizeClick", function (e) {
         this.handleFertilizeEvent(e);
-      }, false);
+      }.bind(this), false);
 
       window.addEventListener("buyClick", function (e) {
         this.handleBuyEvent(e);
-      }, false);
+      }.bind(this), false);
 
       window.addEventListener("inventoryClick", function (e) {
         let item_id = e.detail.id;
         if(this.player.hasItem(item_id)) {
           this.player.setSelectedItem(item_id);
         }
-      }, false);
+      }.bind(this), false);
 
       window.addEventListener("updateGame", function () {
         this.update();
@@ -108,6 +108,7 @@
         }
         this.ui_manager.updateBoard(this.player_list);
       });
+
       this.farm.update();
       this.farm.draw(this.ctx);
 
@@ -143,6 +144,7 @@
 
       this.canvas.style.height = String(screenHeight)+"px";
       this.canvas.style.width = String(screenWidth)+"px";
+      this.canvas.style.marginTop = String(0.5 * (h - screenHeight))+"px";
     }
 
     handleLogin(info) {
@@ -156,16 +158,15 @@
         .then((res)=>{
           let success = res.response;
           if(success) {
-            this.width = this.TILE_SIZE * this.columns;
-            this.height = this.TILE_SIZE * this.rows;
+            this.width = this.canvas.width = this.TILE_SIZE * this.columns;
+            this.height = this.canvas.height = this.TILE_SIZE * this.rows;
+
             this.farm = new Farm(this.columns, this.rows);
-    
             this.player_list = [];
-    
             this.player = new Player(0, info.username);
-            //console.log(this.player);
+
             this.ui_manager.setInfo(this.player);
-    
+
             this.resizeCanvas();
             this.ui_manager.toggleLogin();
             this.update();
@@ -206,12 +207,18 @@
 
     handleCanvasClick(e) {
       let pos = this.getMousePosition(e);
-      let col = Math.floor(this.x / this.columns);
-      let row = Math.floor(this.y / this.rows);
-      let tile = this.farm.tiles[col][row];
+      console.log(pos);
+      let col = Math.floor(pos.x / this.TILE_SIZE);
+      let row = Math.floor(pos.y / this.TILE_SIZE);
+      console.log(col, row);
+      if(this.farm) {
+        console.log(this.farm.tiles, col, row);
+        let tile = this.farm.tiles[col][row];
+        console.log(col, row, tile);
 
-      this.player.setSelectedTile(tile);
-      this.ui_manager.updateActions(tile.getAvailableActions());
+        this.player.setSelectedTile(tile);
+        this.ui_manager.updateActions(tile.getAvailableActions());
+      }
     }
 
     setPlayerList(player_list) {

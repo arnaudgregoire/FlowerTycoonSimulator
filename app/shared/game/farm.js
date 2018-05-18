@@ -12,12 +12,16 @@
 
   /**
    * La classe Farm est instancié une seule fois et représente l'ensemble des parcelles.
-   * Elle est constitué de Tile
+   * Elle est constitué de Tile:
+   * [[0 0 0]
+   *  [0 0 0]
+   *  [0 0 0]]
+   * going through: rows (y), columns (x)
    */
   class Farm {
-    constructor(width, height) {
-      this.width = width;
-      this.height = height;
+    constructor(columns, rows) {
+      this.columns = columns;
+      this.rows = rows;
 
       this.tiles = [];
 
@@ -25,27 +29,27 @@
     }
 
     update(dt) {
-      for (var i = 0; i < this.width; i++) {
-        for (var j = 0; j < this.height; j++) {
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
           this.tiles[i][j].update(dt);
         }
       }
     }
 
     draw(ctx) {
-      for (var i = 0; i < this.width; i++) {
-        for (var j = 0; j < this.height; j++) {
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
           this.tiles[i][j].draw(ctx);
         }
       }
     }
 
     reset() {
-      this.tiles = new Array(this.width);
-      for (var i = 0; i < this.width; i++) {
-        this.tiles[i] = new Array(this.height);
-        for (var j = 0; j < this.height; j++) {
-          this.tiles[i][j] = new TileEmpty(i, j);
+      this.tiles = new Array(this.rows);
+      for (var i = 0; i < this.rows; i++) {
+        this.tiles[i] = new Array(this.columns);
+        for (var j = 0; j < this.columns; j++) {
+          this.tiles[i][j] = new TileEmpty(j, i);
         }
       }
     }
@@ -54,10 +58,10 @@
   	 * La méthode toJSON est appelé dès qu'un client envoie une requete getTerrain
   	 */
   	toJSON(){
-      let array = new Array(this.width);
-      for (var i = 0; i < this.width; i++) {
-        array[i] = new Array(this.height);
-        for (var j = 0; j < this.height; j++) {
+      let array = new Array(this.rows);
+      for (var i = 0; i < this.rows; i++) {
+        array[i] = new Array(this.columns);
+        for (var j = 0; j < this.columns; j++) {
           array[i][j] = this.tiles[i][j].toJson();
         }
       }

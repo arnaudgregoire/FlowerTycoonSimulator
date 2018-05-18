@@ -5,7 +5,7 @@ html, body{
   height: 100%;
   overflow: hidden;
   background: #fff;
-  font-family: sans-serif;
+  font-family: Verdana, sans-serif;
 }
 
 .button {
@@ -162,6 +162,23 @@ html, body{
   background: #fafafa;
   border: 3px solid #31302b;
   box-shadow: 3px 2px 4px rgba(0,0,0,0.25);
+  overflow-y: scroll;
+}
+#leaderboard div{
+  width: 100%;
+  height: auto;
+  margin: 10px 0;
+}
+#leaderboard>div p{
+  margin: 0;
+  padding: 5px 10px;
+  font-family: monospace;
+  font-size: 15px;
+  font-weight: normal;
+}
+#leaderboard>div p:first-child{
+  font-family: Verdana;
+  font-weight: bold;
 }
 
 #game{
@@ -169,7 +186,9 @@ html, body{
   grid-column: left-col / right-col;
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+}
+#game canvas{
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
 }

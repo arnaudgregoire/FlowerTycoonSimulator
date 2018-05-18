@@ -39,7 +39,7 @@
     }
 
     draw(ctx) {
-      ctx.fillStyle = "#fff";
+      ctx.fillStyle = "#fff"
       ctx.strokeStyle = "#000";
       ctx.lineWidth = 1;
       ctx.fillRect(this.x*this.size, this.y*this.size, this.size, this.size);

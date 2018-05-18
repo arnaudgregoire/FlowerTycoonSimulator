@@ -185,9 +185,12 @@
       let old_child, new_child;
 
       for (var i = 0; i < player_list.length; i++) {
-        if(player_list[i].id != this.player_list[i].id) {
-
-          old_child = this.findPlayerDiv(this.player_list[i].id);
+        if (!this.player_list[i]) {
+          new_child = this.createHTML(player_list[i]);
+          this.container.appendChild(new_child);
+        }
+        else if (this.player_list[i] && player_list[i].id !== this.player_list[i].id) {
+          old_child = this.getPlayerDiv(this.player_list[i].name);
           if(old_child == null) break; // the player is not on the leaderboard ???
 
           new_child = this.createHTML(player_list[i]);
@@ -212,11 +215,12 @@
       }
     }
 
-    findPlayerDiv(id) {
-      let childs = this.container.childNodes;
-      for (var i = 0; i < childs.length; i++) {
-        if(childs[i].dataset.id == id) {
-          return childs[i];
+    getPlayerDiv(name) {
+      if (this.container.hasChildNodes()) {
+        for (var div of this.container.childNodes) {
+          if (div.dataset.name === name) {
+            return div;
+          }
         }
       }
       return null;
@@ -225,14 +229,11 @@
 
     createHTML(player) {
       let div = document.createElement("div");
-      div.appendChild(
-        document.createElement("p").appendChild(
-          document.createTextNode(player.name)
-        )
-      )
-      // TODO: make a pretty div
-      //el.dataset.id = player.id;
-      //div.innerHtML = "<p>"+player.name+" ("+player.score+")</p>";
+      div.dataset.name = player.name;
+      let p = document.createElement("p");
+      p.innerText =  player.name;
+      p.style.color = player.color;
+      div.appendChild(p);
       return div;
     }
   }
@@ -303,7 +304,8 @@
     }
 
     updateBoard(player_list) {
-      this.boardManager.displayBoardTemp(player_list);
+      this.boardManager.displayBoard(player_list);
+      // this.boardManager.displayBoardTemp(player_list);
     }
 
     updateInventory(player) {
