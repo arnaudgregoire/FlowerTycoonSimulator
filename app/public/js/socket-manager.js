@@ -24,8 +24,8 @@
       }.bind(this);
     }
 
-    sendMessage(msg_type, data, callback) {
-      let f = fetch("http://" + this.base_url + msg_type, {
+    sendMessage(msg_type, data) {
+      return fetch("http://" + this.base_url + msg_type, {
         method: "POST",
         headers: {
           'Accept': 'application/json, text/plain, */*',
@@ -38,13 +38,10 @@
         }
       }).then(function (json) {
         if(json.hasOwnProperty("response") && typeof(json.description) != "undefined"){
-          this.dispatchEvent(new CustomEvent("display", json.description));
+          window.dispatchEvent(new CustomEvent("display",{ 'detail': json.description } ));
         }
-
-        if(typeof(callback) == "function") {
-          callback(json);
-        }
-      });
+        return json;
+      })
     }
 
     handleResponse(json) {

@@ -31,7 +31,7 @@ class Game{
   loop() {
     // Handle client connection/disconnection
 
-    // Decode (encrypted) network messages
+    // Decode (encrypted) network messagesd
 
     // Perform players actions && update game objects
 
@@ -39,9 +39,6 @@ class Game{
   }
 
   update() {
-    for (var i = 0; i < this.player_list.length; i++) {
-      this.player_list[i].update();
-    }
     this.farm.update();
   }
 
@@ -50,7 +47,7 @@ class Game{
   */
   checkID(req){
     for (var i = 0; i < this.player_list.length; i++) {
-      if (this.player_list[i].id == req.param.login) {
+      if (this.player_list[i].id == req.param.username) {
         return true;
       }
     }
@@ -152,8 +149,8 @@ class Game{
   login(req) {
     let json = {};
 
-    let login = req.param.login;
-    let exist = this.checkName(login.username);
+    let login = req.param;
+    let exist = this.checkID(req);
     if (exist) {
       if(this.checkPassword(login.password)) {
         json = {"response": 1, "description" : "Heureux de vous revoir"};
@@ -164,7 +161,7 @@ class Game{
     }
     else{
       let id = nanoid();
-      this.player_list.push(new Player(id, name));
+      this.player_list.push(new Player(id, login.username));
       json = {"response": 1, "description" : "Votre compte a bien ete cree"};
     }
     return json;
@@ -184,7 +181,7 @@ class Game{
   getPlayers() {
     let json = {"players": []};
     for (var i = 0; i < this.player_list.length; i++) {
-      json.players.push({"name": this.player_list[i].name, "color": this.player_list[i].color,"score":this.player_list[i].score});
+      json.players.push({"id":this.player_list[i].id, "username": this.player_list[i].name});
     }
     return json;
   }

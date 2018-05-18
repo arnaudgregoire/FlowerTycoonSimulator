@@ -99,16 +99,28 @@
     }
 
     update() {
-      this.socket_manager.sendMessage('getPlayers',{},this.updatePlayer_list);
+      this.socket_manager.sendMessage('getPlayers',JSON.stringify({"description" : "getPlayers"}))
+      .then((json) =>{
+        console.log(json);
+        this.player_list = [];
+        for (let i = 0; i < json.players.length; i++) {
+          this.player_list.push(new Player(json.players[i].id, json.players[i].username));
+        }
+        this.ui_manager.updateBoard(this.player_list);
+      });
       this.farm.update();
       this.farm.draw(this.ctx);
 
-      this.ui_manager.updateBoard(this.player_list);
+
       this.ui_manager.updateInventory(this.player);
     }
 
     updatePlayer_list(json){
-      console.log('json');
+      this.player_list = []
+      for (let i = 0; i < this.player_list.length; i++) {
+        //this.player_list.push(new Player())
+      }
+      console.log(json);
     }
 
     resizeCanvas() {
@@ -135,26 +147,33 @@
 
     handleLogin(info) {
       console.log(info);
-      // TODO: implement login logic here
-      // let success = send(...)
-
-      let success = true;
-      if(success) {
-        this.width = this.TILE_SIZE * this.columns;
-        this.height = this.TILE_SIZE * this.rows;
-        this.farm = new Farm(this.columns, this.rows);
-
-        this.player_list = [];
-
-        this.player = new Player(0, info.username);
-        console.log(this.player);
-        this.ui_manager.setInfo(this.player);
-
-        this.resizeCanvas();
-        this.ui_manager.toggleLogin();
-        this.update();
-      }
+      this.socket_manager.sendMessage("login",JSON.stringify(
+        {
+          "description": "login",
+          "param": info
+        }
+        ))
+        .then((res)=>{
+          let success = res.response;
+          if(success) {
+            this.width = this.TILE_SIZE * this.columns;
+            this.height = this.TILE_SIZE * this.rows;
+            this.farm = new Farm(this.columns, this.rows);
+    
+            this.player_list = [];
+    
+            this.player = new Player(0, info.username);
+            //console.log(this.player);
+            this.ui_manager.setInfo(this.player);
+    
+            this.resizeCanvas();
+            this.ui_manager.toggleLogin();
+            this.update();
+          }
+        }
+      );
     }
+
 
     handlePlantEvent(e) {
       if(this.player.selectedTile != null && this.player.selectedItem != null) {

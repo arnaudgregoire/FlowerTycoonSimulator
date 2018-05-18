@@ -196,6 +196,22 @@
       }
     }
 
+    displayBoardTemp(player_list){
+      this.clearBoard();
+      this.player_list = [];
+      let child;
+      for (let i = 0; i < player_list.length; i++) {
+        child = this.createHTML(player_list[i]);
+        this.container.appendChild(child);
+      }
+    }
+
+    clearBoard(){
+      while (this.container.firstChild) {
+        this.container.removeChild(this.container.firstChild);
+      }
+    }
+
     findPlayerDiv(id) {
       let childs = this.container.childNodes;
       for (var i = 0; i < childs.length; i++) {
@@ -209,10 +225,14 @@
 
     createHTML(player) {
       let div = document.createElement("div");
+      div.appendChild(
+        document.createElement("p").appendChild(
+          document.createTextNode(player.name)
+        )
+      )
       // TODO: make a pretty div
-
-      el.dataset.id = player.id;
-      el.innerHtML = "<p>"+player.name+" ("+player.score+")</p>";
+      //el.dataset.id = player.id;
+      //div.innerHtML = "<p>"+player.name+" ("+player.score+")</p>";
       return div;
     }
   }
@@ -283,7 +303,7 @@
     }
 
     updateBoard(player_list) {
-      this.boardManager.displayBoard(player_list);
+      this.boardManager.displayBoardTemp(player_list);
     }
 
     updateInventory(player) {
