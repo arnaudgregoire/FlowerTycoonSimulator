@@ -27,6 +27,9 @@
 
       this.reset();
     }
+    updateTiles(tiles){
+      console.log(tiles);
+    }
 
     update(dt) {
       for (var i = 0; i < this.rows; i++) {
@@ -62,12 +65,12 @@
       for (var i = 0; i < this.rows; i++) {
         array[i] = new Array(this.columns);
         for (var j = 0; j < this.columns; j++) {
-          array[i][j] = this.tiles[i][j].toJson();
+          array[i][j] = this.tiles[i][j];
         }
       }
 
       return {
-        cases: array
+        tiles: array
       };
   	}
   }

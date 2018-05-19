@@ -99,30 +99,30 @@
     }
 
     update() {
+      this.getPlayers();
+      this.getFarm();
+    }
+
+    getFarm(){
+      this.socket_manager.sendMessage("getFarm", JSON.stringify({"description" : "getFarm"}))
+      .then((json)=>{
+        this.farm.updateTiles(json.tiles);
+        this.farm.draw(this.ctx);
+      })
+    }
+//
+    getPlayers(){
       this.socket_manager.sendMessage('getPlayers',JSON.stringify({"description" : "getPlayers"}))
       .then((json) =>{
-        console.log(json);
         this.player_list = [];
         for (let i = 0; i < json.players.length; i++) {
           this.player_list.push(new Player(json.players[i].id, json.players[i].username));
         }
         this.ui_manager.updateBoard(this.player_list);
+        //this.ui_manager.updateInventory(this.player);
       });
-
-      this.farm.update();
-      this.farm.draw(this.ctx);
-
-
-      this.ui_manager.updateInventory(this.player);
     }
 
-    updatePlayer_list(json){
-      this.player_list = []
-      for (let i = 0; i < this.player_list.length; i++) {
-        //this.player_list.push(new Player())
-      }
-      console.log(json);
-    }
 
     resizeCanvas() {
       let w = this.container.clientWidth;
@@ -148,7 +148,7 @@
     }
 
     handleLogin(info) {
-      console.log(info);
+      //console.log(info);
       this.socket_manager.sendMessage("login",JSON.stringify(
         {
           "description": "login",
@@ -156,6 +156,7 @@
         }
         ))
         .then((res)=>{
+          //console.log(res);
           let success = res.response;
           if(success) {
             this.width = this.canvas.width = this.TILE_SIZE * this.columns;
@@ -163,13 +164,12 @@
 
             this.farm = new Farm(this.columns, this.rows);
             this.player_list = [];
-            this.player = new Player(0, info.username);
-
+            this.player = new Player(res.player.id, res.player.name);
+            console.log(this.player);
             this.ui_manager.setInfo(this.player);
 
             this.resizeCanvas();
             this.ui_manager.toggleLogin();
-            this.update();
           }
         }
       );
@@ -193,30 +193,44 @@
 
     handleFertilizeEvent(e) {
       if(this.player.selectedTile != null) {
-        //TODO: Fertilize the selected tile, and ask server
+        //TODO: Fertilize the  selected tile, and ask server
         this.player.selectedTile = null;
       }
     }
 
     handleBuyEvent(e) {
+      //console.log(this.player.selectedTile);
       if(this.player.selectedTile != null && this.player.selectedTile.type === "empty" && this.player.money > this.player.selectedTile.cost) {
-        //TODO: Buy the selected tile, and ask server
-        this.player.selectedTile = null;
+        this.socket_manager.sendMessage("buy",JSON.stringify(
+          {
+            "description": "buy",
+            "param": {
+              "player": {"id": this.player.id},
+              "tile":{
+                "x": this.player.selectedTile.x,
+                "y": this.player.selectedTile.y
+              }
+            }
+          }
+        )).then((res)=>{
+          console.log(res);
+          this.player.selectedTile = null;
+        })
       }
     }
 
     handleCanvasClick(e) {
       let pos = this.getMousePosition(e);
-      console.log(pos);
+      //console.log(pos);
       let col = Math.floor(pos.x / this.TILE_SIZE);
       let row = Math.floor(pos.y / this.TILE_SIZE);
-      console.log(col, row);
+      //console.log(col, row);
       if(this.farm) {
-        console.log(this.farm.tiles, col, row);
+        //console.log(this.farm.tiles, col, row);
         let tile = this.farm.tiles[col][row];
-        console.log(col, row, tile);
-
+        //console.log(tile);
         this.player.setSelectedTile(tile);
+        //console.log(this.player.selectedTile);
         this.ui_manager.updateActions(tile.getAvailableActions());
       }
     }

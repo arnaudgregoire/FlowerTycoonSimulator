@@ -16,8 +16,8 @@ window.onload = function () {
     (new Game({
       url: URL,
       canvasID: "canvas",
-      columns: 12,
-      rows: 12
+      columns: 10,
+      rows: 10
     })).init();
   });
 }

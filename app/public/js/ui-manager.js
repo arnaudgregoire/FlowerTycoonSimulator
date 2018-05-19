@@ -75,8 +75,10 @@
         paswd = paswd.value;
         // TODO: encode password, add verification with regex ?
         this.dispatchUIEvent("sendLogin", {
-          username: username,
-          password: paswd
+          player: {
+            username: username,
+            password: paswd,
+          }
         });
       }
     }
@@ -139,8 +141,8 @@
       }
       else {
         this.clearInventory();
-        for (var i = 0; i < player.inventory.length; i++) {
-          this.inventoryHTML.appendChild( this.createHTML(player.inventory[i]) );
+        for (var i = 0; i < this.player.inventory.length; i++) {
+          this.inventoryHTML.appendChild( this.createHTML(this.player.inventory[i]) );
         }
       }
     }
@@ -196,16 +198,6 @@
           new_child = this.createHTML(player_list[i]);
           this.container.replaceChild(newChild, oldChild);
         }
-      }
-    }
-
-    displayBoardTemp(player_list){
-      this.clearBoard();
-      this.player_list = [];
-      let child;
-      for (let i = 0; i < player_list.length; i++) {
-        child = this.createHTML(player_list[i]);
-        this.container.appendChild(child);
       }
     }
 

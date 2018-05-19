@@ -57,8 +57,8 @@ app.post('/plant', function (req, res) {
  */
 app.post('/buy', function (req, res) {
   let json = {};
-  if(game.checkName(req.body)){
-    json = game.acheter(req.body);
+  if(game.checkID(req.body)){
+    json = game.buy(req.body);
   }
   else{
     json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN (https://www.youtube.com/watch?v=z9CRvCmJUnI)
@@ -86,7 +86,7 @@ app.post('/getInventory', function (req, res) {
   res.json(game.getInventory(req.body));
 });
 
-app.post('/getTerrain', function (req, res) {
+app.post('/getFarm', function (req, res) {
   res.json(game.farm.toJSON());
 });
 
@@ -122,5 +122,5 @@ wss.broadcast = function broadcast(data) {
 };
 
 function requestUpdateClients() {
-    wss.broadcast(JSON.stringify({'reponse': 'update'}));
+    wss.broadcast(JSON.stringify({'response': 'update'}));
 }

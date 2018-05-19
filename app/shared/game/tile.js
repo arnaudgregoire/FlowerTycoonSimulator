@@ -18,10 +18,6 @@
       this.type = "";
     }
 
-    toJson() {
-      return JSON.stringify(this);
-    }
-
     getType() {
       return this.type;
     }

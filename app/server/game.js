@@ -2,7 +2,8 @@ var nanoid = require('nanoid');
 
 var Farm = require('../shared/game/farm.js');
 var Flower = require('../shared/game/flower.js');
-var Tile = require('../shared/game/tile.js');
+var TileEmpty = require('../shared/game/tile.js').TileEmpty;
+var TileBought = require('../shared/game/tile.js').TileBought;
 var Player = require('../shared/game/player.js');
 
 /**
@@ -47,7 +48,7 @@ class Game{
   */
   checkID(req){
     for (var i = 0; i < this.player_list.length; i++) {
-      if (this.player_list[i].id == req.param.username) {
+      if (this.player_list[i].id == req.param.player.id) {
         return true;
       }
     }
@@ -58,9 +59,18 @@ class Game{
   * Renvoie le joeur correspondant au nom compris dans la requete
   * @param {Request body} req
   */
-  findPlayer(req){
+  findPlayerById(req){
     for (var i = 0; i < this.player_list.length; i++) {
-      if (this.player_list[i].id == req.param.login) {
+      if (this.player_list[i].id == req.param.player.id) {
+        return this.player_list[i];
+      }
+    }
+    return null;
+  }
+
+  findPlayerByName(req){
+    for (var i = 0; i < this.player_list.length; i++) {
+      if (this.player_list[i].id == req.param.player.username) {
         return this.player_list[i];
       }
     }
@@ -74,29 +84,23 @@ class Game{
   */
   buy(req){
     let json = {};
-
-    let player = this.findPlayer(req);
-    if(player == null) {
-      json = {"response":1};
-    }
-    else {
-      let x = parseInt(req.param.x);
-      let y = parseInt(req.param.y);
-
-      if (this.farm.tile[x][y].type == "empty") {
-        if (player.money >= this.farm.tile[x][y].cost) {
-          this.farm.tile[x][y] = new tile.TileBought(x, y, player);
-          player.money -= this.farm.tile[x][y].cost;
-          json = {"response":1, "description" : "La case a été achetée"};
-        }
-        else{
-          json = {"response":0, "description" : "Pas assez d'argent"};
-        }
+    let player = this.findPlayerById(req);
+    let x = parseInt(req.param.tile.x);
+    let y = parseInt(req.param.tile.y);
+    if (this.farm.tiles[x][y].type == "empty") {
+      if (player.money >= this.farm.tiles[x][y].cost) {
+        this.farm.tiles[x][y] = new TileBought(x, y, player);
+        player.money -= this.farm.tiles[x][y].cost;
+        json = {"response":1, "description" : "La case a été achetée"};
       }
       else{
-        json = {"response":0, "description" : "La case n'est pas vide"};
+        json = {"response":0, "description" : "Pas assez d'argent"};
       }
     }
+    else{
+      json = {"response":0, "description" : "La case n'est pas vide"};
+    }
+    //console.log(this.farm.tiles);
     return json;
   }
 
@@ -148,12 +152,19 @@ class Game{
   */
   login(req) {
     let json = {};
-
     let login = req.param;
-    let exist = this.checkID(req);
+    let exist;
+    if (req.param.player.hasOwnProperty("id")){
+      exist = this.checkID(req);
+    }
+    else{
+      exist = false;
+    }
+    let player; 
     if (exist) {
+      player = this.findPlayerByName(req);
       if(this.checkPassword(login.password)) {
-        json = {"response": 1, "description" : "Heureux de vous revoir"};
+        json = {"response": 1, "description" : "Heureux de vous revoir", "player": {"name": player.name, "id":player.id}};
       }
       else{
         json = {"response": 0, "description" : "Mauvais mot de passe"};
@@ -161,8 +172,9 @@ class Game{
     }
     else{
       let id = nanoid();
-      this.player_list.push(new Player(id, login.username));
-      json = {"response": 1, "description" : "Votre compte a bien ete cree"};
+      player = new Player(id, login.player.username);
+      this.player_list.push(player);
+      json = {"response": 1, "description" : "Votre compte a bien ete cree", "player": {"name": player.name, "id":player.id}};
     }
     return json;
   }

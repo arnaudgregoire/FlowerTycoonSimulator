@@ -27,11 +27,8 @@
 			// this.inventory.push(FlowerFactory.getRandomPlante());
 		}
 
-    setSelectedTile(column, row) {
-      this.selectedTile = {
-        column: column,
-        row: row
-      };
+    setSelectedTile(tile) {
+      this.selectedTile = tile;
     }
 
     setSelectedItem(item_id) {
