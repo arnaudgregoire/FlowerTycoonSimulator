@@ -140,7 +140,7 @@
           this.player_list.push(new Player(json.players[i].id, json.players[i].username));
         }
         this.ui_manager.updateBoard(this.player_list);
-        //this.ui_manager.updateInventory(this.player);
+        this.ui_manager.updateInventory(this.player);
       });
     }
 

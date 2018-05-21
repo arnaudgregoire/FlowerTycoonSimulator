@@ -25,7 +25,6 @@
     constructor(columns, rows) {
       this.columns = columns;
       this.rows = rows;
-      console.log(TileFactory);
       this.tiles = [];
 
       this.reset();

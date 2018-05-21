@@ -141,8 +141,8 @@
       }
       else {
         this.clearInventory();
-        for (var i = 0; i < this.player.inventory.length; i++) {
-          this.inventoryHTML.appendChild( this.createHTML(this.player.inventory[i]) );
+        for (var i = 0; i < player.inventory.length; i++) {
+          this.inventoryHTML.appendChild( this.createHTML(player.inventory[i]) );
         }
       }
     }
