@@ -3,11 +3,14 @@
   let isNode = (typeof module !== 'undefined' && typeof module.exports !== 'undefined');
 
   var TileEmpty;
+  var TileFactory;
   if(isNode) {
     TileEmpty = require("./tile.js").TileEmpty;
+    TileFactory = require('./tile.js').TileFactory;
   }
   else {
     TileEmpty = window.TileEmpty;
+    TileFactory = window.TileFactory;
   }
 
   /**
@@ -22,13 +25,17 @@
     constructor(columns, rows) {
       this.columns = columns;
       this.rows = rows;
-
+      console.log(TileFactory);
       this.tiles = [];
 
       this.reset();
     }
-    updateTiles(tiles){
-      console.log(tiles);
+    updateTiles(tiles, game){
+      for (var i = 0; i < this.rows; i++) {
+        for (var j = 0; j < this.columns; j++) {
+          this.tiles[i][j] = TileFactory.prototype.createTile(tiles[i][j], game);
+        }
+      }
     }
 
     update(dt) {

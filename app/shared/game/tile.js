@@ -5,6 +5,7 @@
   var FlowerFactory;
   if(isNode) {
     FlowerFactory = require('./flower.js').FlowerFactory;
+
   }
   else {
     FlowerFactory = window.FlowerFactory;
@@ -64,7 +65,7 @@
     }
 
     draw(ctx) {
-      ctx.strokeStyle = owner.color;
+      ctx.strokeStyle = this.owner.color;
       ctx.fillRect(this.x*this.size, this.y*this.size, this.size, this.size);
       ctx.fillStyle = "#fff";
       ctx.fillRect(this.x*this.size+4, this.y*this.size+4, this.size-8, this.size-8);
@@ -116,13 +117,9 @@
     TILES: ["empty", "bought", "seeded"]
   };
   TileFactory.prototype = {
-    createTile: function (tile_data) {
+    createTile: function (tile_data, game) {
       let tile, player;
-      let tile_id = this.TILES.indexOf(tile_data.type);
-
-      if (tile_id == _1) {
-        return null;
-      }
+      let tile_id = TileFactory.TILES.indexOf(tile_data.type);
 
       switch(tile_id) {
         case 0:
@@ -130,8 +127,9 @@
           break;
 
         case 1:
-          if(playerManager.checkPlayer(tile_data.owner.name)) {
-            player = playerManager.findPlayer(tile_data.owner.name);
+          //console.log(tile_data);
+          if(game.checkID(tile_data.owner.id)) {
+            player = game.findPlayerById(tile_data.owner.id);
             tile = new TileBought(tile_data.x, tile_data.y, player);
           }
           else {

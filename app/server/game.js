@@ -46,9 +46,9 @@ class Game{
   /**
   * Check if a player exist in the player_list, based on his ID
   */
-  checkID(req){
+  checkID(id){
     for (var i = 0; i < this.player_list.length; i++) {
-      if (this.player_list[i].id == req.param.player.id) {
+      if (this.player_list[i].id == id) {
         return true;
       }
     }
@@ -59,18 +59,18 @@ class Game{
   * Renvoie le joeur correspondant au nom compris dans la requete
   * @param {Request body} req
   */
-  findPlayerById(req){
+  findPlayerById(id){
     for (var i = 0; i < this.player_list.length; i++) {
-      if (this.player_list[i].id == req.param.player.id) {
+      if (this.player_list[i].id == id) {
         return this.player_list[i];
       }
     }
     return null;
   }
 
-  findPlayerByName(req){
+  findPlayerByName(username){
     for (var i = 0; i < this.player_list.length; i++) {
-      if (this.player_list[i].id == req.param.player.username) {
+      if (this.player_list[i].id == username) {
         return this.player_list[i];
       }
     }
@@ -84,7 +84,7 @@ class Game{
   */
   buy(req){
     let json = {};
-    let player = this.findPlayerById(req);
+    let player = this.findPlayerById(req.param.player.id);
     let x = parseInt(req.param.tile.x);
     let y = parseInt(req.param.tile.y);
     if (this.farm.tiles[x][y].type == "empty") {
@@ -155,14 +155,14 @@ class Game{
     let login = req.param;
     let exist;
     if (req.param.player.hasOwnProperty("id")){
-      exist = this.checkID(req);
+      exist = this.checkID(req.param.player.id);
     }
     else{
       exist = false;
     }
     let player; 
     if (exist) {
-      player = this.findPlayerByName(req);
+      player = this.findPlayerByName(req.param.player.username);
       if(this.checkPassword(login.password)) {
         json = {"response": 1, "description" : "Heureux de vous revoir", "player": {"name": player.name, "id":player.id}};
       }

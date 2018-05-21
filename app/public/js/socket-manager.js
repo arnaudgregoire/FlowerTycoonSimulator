@@ -45,7 +45,7 @@
     }
 
     handleResponse(json) {
-      console.log(json);
+      //console.log(json);
       if (json.hasOwnProperty("response") && json.response == "update") {
         window.dispatchEvent(new CustomEvent("updateGame"));
       }

@@ -42,7 +42,7 @@ app.get('/', function(req, res) {
  */
 app.post('/plant', function (req, res) {
   let json = {};
-  if(game.checkName(req.body)){
+  if(game.checkName(req.body.param.player.id)){
     json = game.planter(req.body);
   }
   else{
@@ -57,7 +57,7 @@ app.post('/plant', function (req, res) {
  */
 app.post('/buy', function (req, res) {
   let json = {};
-  if(game.checkID(req.body)){
+  if(game.checkID(req.body.param.player.id)){
     json = game.buy(req.body);
   }
   else{

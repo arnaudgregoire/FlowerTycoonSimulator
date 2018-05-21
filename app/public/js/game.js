@@ -97,7 +97,28 @@
         this.ui_manager.displayInfo(e.detail);
       }.bind(this), false);
     }
-
+    
+    checkID(id){
+      for (var i = 0; i < this.player_list.length; i++) {
+        if (this.player_list[i].id == id) {
+          return true;
+        }
+      }
+      return false;
+    }
+  
+    /**
+    * Renvoie le joeur correspondant au nom compris dans la requete
+    * @param {Request body} req
+    */
+    findPlayerById(id){
+      for (var i = 0; i < this.player_list.length; i++) {
+        if (this.player_list[i].id == id) {
+          return this.player_list[i];
+        }
+      }
+      return null;
+    }
     update() {
       this.getPlayers();
       this.getFarm();
@@ -106,7 +127,7 @@
     getFarm(){
       this.socket_manager.sendMessage("getFarm", JSON.stringify({"description" : "getFarm"}))
       .then((json)=>{
-        this.farm.updateTiles(json.tiles);
+        this.farm.updateTiles(json.tiles,this);
         this.farm.draw(this.ctx);
       })
     }
