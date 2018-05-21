@@ -317,6 +317,10 @@
       this.actionsManager.setButtonState(actions);
     }
 
+    displayInfo(msg){
+      this.infoManager.clearInfo();
+      this.infoManager.displayInfo(msg);
+    }
     /**
     * Wrap common child method for a quicker access
     */
@@ -328,13 +332,6 @@
       this.userManager.setPlayerInfo(player);
     }
 
-    displayInfo(msg) {
-      this.infoManager.displayInfo(msg);
-    }
-
-    clearInfo() {
-      this.infoManager.clearInfo();
-    }
   }
 
   window.UIManager = UIManager;

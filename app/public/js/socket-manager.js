@@ -38,7 +38,7 @@
         }
       }).then(function (json) {
         if(json.hasOwnProperty("response") && typeof(json.description) != "undefined"){
-          window.dispatchEvent(new CustomEvent("display",{ 'detail': json.description } ));
+          window.dispatchEvent(new CustomEvent("displayInfo",{ 'detail': json.description } ));
         }
         return json;
       })
