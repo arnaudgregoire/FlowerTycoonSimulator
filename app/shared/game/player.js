@@ -23,8 +23,6 @@
 
       this.selectedTile = null;
       this.selectedItem = null;
-
-			// this.inventory.push(FlowerFactory.getRandomPlante());
 		}
 
     setSelectedTile(tile) {

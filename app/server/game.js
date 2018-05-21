@@ -1,7 +1,7 @@
 var nanoid = require('nanoid');
 
 var Farm = require('../shared/game/farm.js');
-var Flower = require('../shared/game/flower.js');
+var FlowerFactory = require('../shared/game/flower.js').FlowerFactory;
 var TileEmpty = require('../shared/game/tile.js').TileEmpty;
 var TileBought = require('../shared/game/tile.js').TileBought;
 var Player = require('../shared/game/player.js');
@@ -89,8 +89,9 @@ class Game{
     let y = parseInt(req.param.tile.y);
     if (this.farm.tiles[x][y].type == "empty") {
       if (player.money >= this.farm.tiles[x][y].cost) {
-        this.farm.tiles[x][y] = new TileBought(x, y, player);
+        //console.log(this.farm.tiles[x][y].cost);
         player.money -= this.farm.tiles[x][y].cost;
+        this.farm.tiles[x][y] = new TileBought(x, y, player);
         json = {"response":1, "description" : "La case a été achetée"};
       }
       else{
@@ -172,11 +173,16 @@ class Game{
     }
     else{
       let id = nanoid();
-      player = new Player(id, login.player.username);
-      this.player_list.push(player);
+      let player = new Player(id,req.param.player.username);
+      this.addNewPlayer(player);
       json = {"response": 1, "description" : "Votre compte a bien ete cree", "player": {"name": player.name, "id":player.id}};
     }
     return json;
+  }
+
+  addNewPlayer(player){
+    this.player_list.push(player);
+    player.inventory.push(FlowerFactory.prototype.getRandomFlower());
   }
 
   /**
@@ -199,15 +205,13 @@ class Game{
   }
 
   getInventory(req) {
-    let name = req.param.login;
+    let id = req.param.player.id;
     let reponse = {"inventory" : [], "money" : 0};
-    let exist = this.checkName(req);
+    let exist = this.checkID(id);
     if (exist) {
-      let player = this.findPlayer(req);
+      let player = this.findPlayerById(id);
       reponse.money = player.money;
-      for (let i = 0; i < player.inventory.length; i++) {
-        reponse.inventory.push(player.inventory[i].toJSON());
-      }
+      reponse.inventory = player.inventory;
     }
     else{
       reponse = this.destinationUnknown();

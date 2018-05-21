@@ -152,14 +152,15 @@
     }
 
     clearInventory() {
-      while (!!this.inventoryHTML.firstChild) {
-        this.inventoryHTML.removeChild(inventoryHTML.firstChild);
+      while (this.inventoryHTML.firstChild) {
+        this.inventoryHTML.removeChild(this.inventoryHTML.firstChild);
       }
     }
 
     createHTML(item) {
       let div = document.createElement("div");
       // TODO: put things in the div
+      div.appendChild(document.createTextNode(item.name));
       this.setEventListener(div);
       return div;
     }
@@ -198,6 +199,13 @@
           new_child = this.createHTML(player_list[i]);
           this.container.replaceChild(newChild, oldChild);
         }
+      }
+    }
+
+    displayBoardTemp(player_list){
+      this.clearBoard();
+      for (var i = 0; i < player_list.length; i++) {
+          this.container.appendChild(this.createHTML(player_list[i]));
       }
     }
 
@@ -296,8 +304,8 @@
     }
 
     updateBoard(player_list) {
-      this.boardManager.displayBoard(player_list);
-      // this.boardManager.displayBoardTemp(player_list);
+      //this.boardManager.displayBoard(player_list);
+      this.boardManager.displayBoardTemp(player_list);
     }
 
     updateInventory(player) {

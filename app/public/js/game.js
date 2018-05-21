@@ -120,8 +120,11 @@
       return null;
     }
     update() {
-      this.getPlayers();
-      this.getFarm();
+      if(this.player != null){
+        this.getPlayers();
+        this.getFarm();
+        this.getInventory();
+      }
     }
 
     getFarm(){
@@ -140,10 +143,26 @@
           this.player_list.push(new Player(json.players[i].id, json.players[i].username));
         }
         this.ui_manager.updateBoard(this.player_list);
-        this.ui_manager.updateInventory(this.player);
-      });
+      })
     }
 
+    getInventory(){
+      this.socket_manager.sendMessage('getInventory', JSON.stringify(
+        {
+          "description" : "getInventory",
+          "param":{
+            "player" : {
+              "id": this.player.id
+            }
+          }
+        }
+      )).then((json)=>{
+        console.log(json);
+        this.player.inventory = json.inventory;
+        this.player.money = json.money;
+        this.ui_manager.updateInventory(this.player);
+      })
+    }
 
     resizeCanvas() {
       let w = this.container.clientWidth;
@@ -191,6 +210,7 @@
 
             this.resizeCanvas();
             this.ui_manager.toggleLogin();
+            this.update();
           }
         }
       );

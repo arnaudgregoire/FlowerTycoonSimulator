@@ -129,8 +129,8 @@
   };
   FlowerFactory.prototype = {
     createFlower: function (flower_name) {
-      let flower_id = this.FLOWERS.indexOf(flower_name);
-
+      let flower_id = FlowerFactory.FLOWERS.indexOf(flower_name);
+      let flower;
       if(flower_id == -1) {
         return null;
       }
@@ -161,7 +161,7 @@
     },
 
     getRandomFlower: function () {
-      return this.createFlower(this.FLOWERS[Math.floor(Math.random() * this.FLOWERS.length)]);
+      return this.createFlower(FlowerFactory.FLOWERS[Math.floor(Math.random() * FlowerFactory.FLOWERS.length)]);
     }
   };
 
