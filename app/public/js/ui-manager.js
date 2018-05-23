@@ -158,16 +158,18 @@
     }
 
     createHTML(item) {
+      //console.log(item);
       let div = document.createElement("div");
       // TODO: put things in the div
       div.appendChild(document.createTextNode(item.name));
+      div.setAttribute("id",item.id);
       this.setEventListener(div);
       return div;
     }
 
     setEventListener(div) {
       div.addEventListener("click", function () {
-        this.dispatchUIEvent("inventoryClick", div.dataset.id);
+        this.dispatchUIEvent("inventoryClick", div);
       }.bind(this))
     }
   }

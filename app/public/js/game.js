@@ -157,7 +157,7 @@
           }
         }
       )).then((json)=>{
-        console.log(json);
+        //console.log(json);
         this.player.inventory = json.inventory;
         this.player.money = json.money;
         this.ui_manager.updateInventory(this.player);

@@ -2,6 +2,9 @@
   "use strict";
   let isNode = (typeof module !== 'undefined' && typeof module.exports !== 'undefined');
 
+  if (isNode) {
+    var nanoid = require("nanoid");
+  }
   class Flower{
     constructor(id, name){
       this.id = id;
@@ -128,7 +131,7 @@
     FLOWERS: ["rose", "tulip"]
   };
   FlowerFactory.prototype = {
-    createFlower: function (flower_name) {
+    createFlower: function (flower_name, id) {
       let flower_id = FlowerFactory.FLOWERS.indexOf(flower_name);
       let flower;
       if(flower_id == -1) {
@@ -137,31 +140,30 @@
 
       switch(flower_id){
           case 0:
-            flower = new Rose();
+            flower = new Rose(id);
             break;
 
           case 1:
-            flower = new Tulip();
+            flower = new Tulip(id);
             break;
       }
       return flower;
     },
 
     createFlowerFromData: function(flower_data) {
-      let flower = this.createFlower(flower_data.name);
+      let flower = this.createFlower(flower_data.name,flower_data.id);
 
       if(flower == null) {
         return null;
       }
 
-      flower.id = flower_data.id;
       flower.age = flower_data.age;
       flower.state = flower_data.state;
   		return flower;
     },
 
     getRandomFlower: function () {
-      return this.createFlower(FlowerFactory.FLOWERS[Math.floor(Math.random() * FlowerFactory.FLOWERS.length)]);
+      return this.createFlower(FlowerFactory.FLOWERS[Math.floor(Math.random() * FlowerFactory.FLOWERS.length)],nanoid());
     }
   };
 
