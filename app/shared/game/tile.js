@@ -93,7 +93,7 @@
     }
 
     draw(ctx) {
-      ctx.strokeStyle = owner.color;
+      ctx.strokeStyle = this.owner.color;
       ctx.fillRect(this.x*this.size, this.y*this.size, this.size, this.size);
       ctx.fillStyle = "#bb8044";
       ctx.fillRect(this.x*this.size+4, this.y*this.size+4, this.size-8, this.size-8);
@@ -118,6 +118,7 @@
   };
   TileFactory.prototype = {
     createTile: function (tile_data, game) {
+      //console.log(tile_data);
       let tile, player;
       let tile_id = TileFactory.TILES.indexOf(tile_data.type);
 
@@ -139,10 +140,12 @@
           break;
 
         case 2:
-          if(playerManager.checkPlayer(tile_data.owner.name)) {
-              player = playerManager.findPlayer(tile_data.owner.name);
-              let plante = FlowerFactory.createPlante(tile_data.plant);
-              object = new TileSeeded(tile_data.x, tile_data.y, player, plante);
+          if(game.checkID(tile_data.owner.id)) {
+              player = game.findPlayerById(tile_data.owner.id);
+              let plante = FlowerFactory.prototype.createFlowerFromData(tile_data.flower);
+              console.log(plante);
+              console.log(tile_data.flower);
+              tile = new TileSeeded(tile_data.x, tile_data.y, player, plante);
           }
           else{
               //gestion du cas ou le joueur ayant acheté la case n'apparait pas coté client

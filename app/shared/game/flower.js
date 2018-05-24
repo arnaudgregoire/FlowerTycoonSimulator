@@ -151,7 +151,7 @@
     },
 
     createFlowerFromData: function(flower_data) {
-      let flower = this.createFlower(flower_data.name,flower_data.id);
+      let flower = this.createFlower(flower_data.name, flower_data.id);
 
       if(flower == null) {
         return null;

@@ -42,8 +42,8 @@ app.get('/', function(req, res) {
  */
 app.post('/plant', function (req, res) {
   let json = {};
-  if(game.checkName(req.body.param.player.id)){
-    json = game.planter(req.body);
+  if(game.checkID(req.body.param.player.id)){
+    json = game.plant(req.body);
   }
   else{
     json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN (https://www.youtube.com/watch?v=z9CRvCmJUnI)

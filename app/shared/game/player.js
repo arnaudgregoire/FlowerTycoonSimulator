@@ -53,7 +53,7 @@
 		}
 
     removeItem(item) {
-      this.inventory.splice(player.inventory.indexOf(item), 1);
+      this.inventory.splice(this.inventory.indexOf(item), 1);
     }
 	}
 

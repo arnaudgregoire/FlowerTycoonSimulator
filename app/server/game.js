@@ -4,6 +4,7 @@ var Farm = require('../shared/game/farm.js');
 var FlowerFactory = require('../shared/game/flower.js').FlowerFactory;
 var TileEmpty = require('../shared/game/tile.js').TileEmpty;
 var TileBought = require('../shared/game/tile.js').TileBought;
+var TileSeeded = require('../shared/game/tile.js').TileSeeded;
 var Player = require('../shared/game/player.js');
 
 /**
@@ -113,35 +114,30 @@ class Game{
   plant(req){
     let json = {};
 
-    let player = this.findPlayer(req);
-    if(player == null) {
-      json = {"response":1};
-    }
-    else {
-      let x = parseInt(req.param.x);
-      let y = parseInt(req.param.y);
+    let player = this.findPlayerById(req.param.player.id);
+    let x = parseInt(req.param.tile.x);
+    let y = parseInt(req.param.tile.y);
 
-      if (this.farm.tile[x][y].owner.id == player.id) {
-        let id = req.param.flower.id;
-        if(player.hasItem(id)){
-          let flower = player.findItem(id);
-          if(flower.plantable){
-            flower.startLife();
-            this.farm.tiles[x][y] = new tile.TileSeeded(x, y, player, flower);
-            player.removeItem(flower);
-            json = {"reponse": 1, "description" : "La plante a ete plantee"};
-          }
-          else{
-            json = {"reponse": 0, "description" : "La plante ne peut pas etre plantee"};
-          }
+    if (this.farm.tiles[x][y].owner.id == player.id) {
+      let id = req.param.flower.id;
+      if(player.hasItem(id)){
+        let flower = player.findItem(id);
+        if(flower.plantable){
+          flower.startLife();
+          this.farm.tiles[x][y] = new TileSeeded(x, y, player, flower);
+          player.removeItem(flower);
+          json = {"reponse": 1, "description" : "La plante a ete plantee"};
         }
         else{
-          json = {"reponse": 0, "description" : "Vous ne possedez pas l objet"};
+          json = {"reponse": 0, "description" : "La plante ne peut pas etre plantee"};
         }
       }
       else{
-        json = {"reponse":0, "description" : "Vous ne possedez pas la case"};
+        json = {"reponse": 0, "description" : "Vous ne possedez pas l objet"};
       }
+    }
+    else{
+      json = {"reponse":0, "description" : "Vous ne possedez pas la case"};
     }
     return json;
   }

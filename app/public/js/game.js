@@ -220,8 +220,25 @@
     handlePlantEvent(e) {
       if(this.player.selectedTile != null && this.player.selectedItem != null) {
         //TODO: Plant a new flower on the selected tile, and ask server
-        this.player.selectedTile = null;
-        this.player.selectedItem = null;
+        this.socket_manager.sendMessage("plant",JSON.stringify(
+          {
+            "description": "buy",
+            "param": {
+              "player": {"id": this.player.id},
+              "tile":{
+                "x": this.player.selectedTile.x,
+                "y": this.player.selectedTile.y
+              },
+              "flower":{
+                "id": this.player.selectedItem.id
+              }
+            }
+          }
+        )).then((res)=>{
+          console.log(res);
+          this.player.selectedTile = null;
+          this.player.selectedItem = null;
+        })
       }
     }
 
