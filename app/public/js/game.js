@@ -45,12 +45,12 @@
       this.socket_manager = new SocketManager(this.server_url);
       this.ui_manager = new UIManager();
       this.initEventListener();
-
-      // AssetLoader.load([ ]);
-  		// ResourcesLoader.onReady(function(){
-  		// 	this.ui_manager.toggleLogin();
-  		// }.bind(this));
-      this.ui_manager.toggleLogin();
+      
+      let src = "public/assets/tile/"
+      window.AssetLoader.load([
+        src + "grass.png",
+        src + "labours.png"
+      ],() => this.ui_manager.toggleLogin());
     }
 
     initEventListener() {
@@ -131,6 +131,7 @@
       this.socket_manager.sendMessage("getFarm", JSON.stringify({"description" : "getFarm"}))
       .then((json)=>{
         this.farm.updateTiles(json.tiles,this);
+        console.log(this.farm.tiles);
         this.farm.draw(this.ctx);
       })
     }
@@ -280,13 +281,13 @@
     handleCanvasClick(e) {
       let pos = this.getMousePosition(e);
       //console.log(pos);
-      let col = Math.floor(pos.x / this.TILE_SIZE);
-      let row = Math.floor(pos.y / this.TILE_SIZE);
+      let row = Math.floor(pos.x / this.TILE_SIZE);
+      let col = Math.floor(pos.y / this.TILE_SIZE);
       //console.log(col, row);
       if(this.farm) {
         //console.log(this.farm.tiles, col, row);
         let tile = this.farm.tiles[col][row];
-        //console.log(tile);
+        console.log(tile);
         this.player.setSelectedTile(tile);
         //console.log(this.player.selectedTile);
         this.ui_manager.updateActions(tile.getAvailableActions());

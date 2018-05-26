@@ -63,13 +63,13 @@ var AssetLoader = window.AssetLoader = (function () {
 
   function load(array, func) {
     onLoad(func);
-
     let asset_list = Array.isArray(array) ? array : [array];
     for (var i = 0; i < asset_list.length; i++) {
       _load(asset_list[i]);
     }
   }
 
+  
   return {
     load: load,
     isReady: isReady,

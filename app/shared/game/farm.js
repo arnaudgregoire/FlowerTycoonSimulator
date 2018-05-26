@@ -58,7 +58,7 @@
       for (var i = 0; i < this.rows; i++) {
         this.tiles[i] = new Array(this.columns);
         for (var j = 0; j < this.columns; j++) {
-          this.tiles[i][j] = new TileEmpty(j, i);
+          this.tiles[i][j] = new TileEmpty(i, j);
         }
       }
     }
@@ -67,17 +67,7 @@
   	 * La méthode toJSON est appelé dès qu'un client envoie une requete getTerrain
   	 */
   	toJSON(){
-      let array = new Array(this.rows);
-      for (var i = 0; i < this.rows; i++) {
-        array[i] = new Array(this.columns);
-        for (var j = 0; j < this.columns; j++) {
-          array[i][j] = this.tiles[i][j];
-        }
-      }
-
-      return {
-        tiles: array
-      };
+      return {tiles: this.tiles};
   	}
   }
 

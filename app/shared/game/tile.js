@@ -36,11 +36,8 @@
     }
 
     draw(ctx) {
-      ctx.fillStyle = "#fff"
-      ctx.strokeStyle = "#000";
-      ctx.lineWidth = 1;
-      ctx.fillRect(this.x*this.size, this.y*this.size, this.size, this.size);
-      ctx.strokeRect(this.x*this.size, this.y*this.size, this.size, this.size);
+      let img = window.AssetLoader.get("public/assets/tile/grass.png")
+      ctx.drawImage(img, 0, 0, 64, 64, this.y * this.size, this.x * this.size, this.size, this.size);
     }
 
     getAvailableActions() {
@@ -65,10 +62,9 @@
     }
 
     draw(ctx) {
-      ctx.strokeStyle = this.owner.color;
-      ctx.fillRect(this.x*this.size, this.y*this.size, this.size, this.size);
-      ctx.fillStyle = "#fff";
-      ctx.fillRect(this.x*this.size+4, this.y*this.size+4, this.size-8, this.size-8);
+      let img = window.AssetLoader.get("public/assets/tile/labours.png");
+      console.log(img);
+      ctx.drawImage(img, 0, 0, 64, 64, this.y * this.size, this.x * this.size, this.size, this.size);
     }
 
     getAvailableActions() {
