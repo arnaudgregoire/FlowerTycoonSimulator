@@ -89,12 +89,9 @@
     }
 
     draw(ctx) {
-      ctx.strokeStyle = this.owner.color;
-      ctx.fillRect(this.x*this.size, this.y*this.size, this.size, this.size);
-      ctx.fillStyle = "#bb8044";
-      ctx.fillRect(this.x*this.size+4, this.y*this.size+4, this.size-8, this.size-8);
-
-      this.flower.draw(ctx, (this.x+0.5)*this.size, (this.y+0.5)*this.size);
+      super.draw(ctx);
+      let img = window.AssetLoader.get(this.flower.assetPath);
+      ctx.drawImage(img, 0, 0, 64, 64, this.y * this.size, this.x * this.size, this.size, this.size);
     }
 
     getAvailableActions() {

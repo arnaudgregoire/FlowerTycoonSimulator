@@ -46,10 +46,12 @@
       this.ui_manager = new UIManager();
       this.initEventListener();
       
-      let src = "public/assets/tile/"
+      let src = "public/assets/"
       window.AssetLoader.load([
-        src + "grass.png",
-        src + "labours.png"
+        src + "tile/grass.png",
+        src + "tile/labours.png",
+        src + "flower/rose.png",
+        src + "flower/tulip.png"
       ],() => this.ui_manager.toggleLogin());
     }
 

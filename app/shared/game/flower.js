@@ -104,6 +104,7 @@
     constructor(id) {
       super(id, "rose");
       this.speed = 1;
+      this.assetPath = "public/assets/flower/rose.png";
     }
 
     draw(ctx, x, y) {
@@ -117,6 +118,7 @@
     constructor(id) {
       super(id, "tulip");
       this.speed = 1.5;
+      this.assetPath = "public/assets/flower/tulip.png";
     }
 
     draw(ctx, x, y) {
