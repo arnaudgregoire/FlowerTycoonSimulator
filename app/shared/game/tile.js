@@ -63,7 +63,7 @@
 
     draw(ctx) {
       let img = window.AssetLoader.get("public/assets/tile/labours.png");
-      console.log(img);
+      //console.log(img);
       ctx.drawImage(img, 0, 0, 64, 64, this.y * this.size, this.x * this.size, this.size, this.size);
     }
 

@@ -133,7 +133,7 @@
       this.socket_manager.sendMessage("getFarm", JSON.stringify({"description" : "getFarm"}))
       .then((json)=>{
         this.farm.updateTiles(json.tiles,this);
-        console.log(this.farm.tiles);
+        //console.log(this.farm.tiles);
         this.farm.draw(this.ctx);
       })
     }
@@ -142,8 +142,9 @@
       this.socket_manager.sendMessage('getPlayers',JSON.stringify({"description" : "getPlayers"}))
       .then((json) =>{
         this.player_list = [];
+        console.log(json);
         for (let i = 0; i < json.players.length; i++) {
-          this.player_list.push(new Player(json.players[i].id, json.players[i].username));
+          this.player_list.push(new Player(json.players[i].id, json.players[i].username, json.players[i].color));
         }
         this.ui_manager.updateBoard(this.player_list);
       })

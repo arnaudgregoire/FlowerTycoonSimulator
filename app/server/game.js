@@ -6,6 +6,7 @@ var TileEmpty = require('../shared/game/tile.js').TileEmpty;
 var TileBought = require('../shared/game/tile.js').TileBought;
 var TileSeeded = require('../shared/game/tile.js').TileSeeded;
 var Player = require('../shared/game/player.js');
+var utils = require('../shared/utils.js');
 
 /**
 * L'instance Game représente la partie en cours :
@@ -169,7 +170,7 @@ class Game{
     }
     else{
       let id = nanoid();
-      let player = new Player(id,req.param.player.username);
+      let player = new Player(id,req.param.player.username,utils.getRandomColor());
       this.addNewPlayer(player);
       json = {"response": 1, "description" : "Votre compte a bien ete cree", "player": {"name": player.name, "id":player.id}};
     }
@@ -195,7 +196,11 @@ class Game{
   getPlayers() {
     let json = {"players": []};
     for (var i = 0; i < this.player_list.length; i++) {
-      json.players.push({"id":this.player_list[i].id, "username": this.player_list[i].name});
+      json.players.push({
+        "id":this.player_list[i].id,
+        "username": this.player_list[i].name,
+        "color": this.player_list[i].color
+      });
     }
     return json;
   }

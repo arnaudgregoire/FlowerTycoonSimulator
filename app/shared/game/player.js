@@ -2,23 +2,21 @@
   "use strict";
   let isNode = (typeof module !== 'undefined' && typeof module.exports !== 'undefined');
 
-	var utils, FlowerFactory;
+var FlowerFactory;
   if(isNode) {
-		utils = require('../utils.js');
 		FlowerFactory = require("./flower.js").FlowerFactory;
   }
 	else {
-		utils = window.Utility;
 		FlowerFactory = window.FlowerFactory;
 	}
 
 	class Player{
-		constructor(id, name) {
+		constructor(id, name, color) {
       this.id = id;
 			this.name = name;
 			this.money = 100;
 			this.score = 0;
-			this.color = utils.getRandomColor();
+			this.color = color;
 			this.inventory = [];
 
       this.selectedTile = null;
