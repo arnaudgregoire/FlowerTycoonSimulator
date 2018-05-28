@@ -20,9 +20,9 @@
 
       this.columns = config.columns || 10;
       this.rows = config.rows || 10;
-      this.TILE_SIZE = 40;
-      this.width = this.TILE_SIZE * this.columns;
-      this.height = this.TILE_SIZE * this.rows;
+
+      this.width = 0;
+      this.height = 0;
 
       this.server_url = config.url || "";
       this.socket_manager = null;
@@ -45,14 +45,15 @@
       this.socket_manager = new SocketManager(this.server_url);
       this.ui_manager = new UIManager();
       this.initEventListener();
-      
-      let src = "public/assets/"
-      window.AssetLoader.load([
-        src + "tile/grass.png",
-        src + "tile/labours.png",
-        src + "flower/rose.png",
-        src + "flower/tulip.png"
-      ],() => this.ui_manager.toggleLogin());
+
+      ImgLoader.setMainDirectory("public/assets/");
+      ImgLoader.load([
+        {"grass": "tile/grass.png"},
+        {"dirt": "tile/dirt.png"},
+        {"plant": "flower/plant.png"},
+        {"rose": "flower/rose.png"},
+        {"tulip": "flower/tulip.png"}],
+        () => this.ui_manager.toggleLogin());
     }
 
     initEventListener() {
@@ -99,7 +100,7 @@
         this.ui_manager.displayInfo(e.detail);
       }.bind(this), false);
     }
-    
+
     checkID(id){
       for (var i = 0; i < this.player_list.length; i++) {
         if (this.player_list[i].id == id) {
@@ -108,7 +109,7 @@
       }
       return false;
     }
-  
+
     /**
     * Renvoie le joeur correspondant au nom compris dans la requete
     * @param {Request body} req
@@ -121,6 +122,7 @@
       }
       return null;
     }
+
     update() {
       if(this.player != null){
         this.getPlayers();
@@ -137,7 +139,7 @@
         this.farm.draw(this.ctx);
       })
     }
-//
+
     getPlayers(){
       this.socket_manager.sendMessage('getPlayers',JSON.stringify({"description" : "getPlayers"}))
       .then((json) =>{
@@ -147,7 +149,7 @@
           this.player_list.push(new Player(json.players[i].id, json.players[i].username, json.players[i].color));
         }
         this.ui_manager.updateBoard(this.player_list);
-      })
+      });
     }
 
     getInventory(){
@@ -165,7 +167,7 @@
         this.player.inventory = json.inventory;
         this.player.money = json.money;
         this.ui_manager.updateInventory(this.player);
-      })
+      });
     }
 
     resizeCanvas() {
@@ -203,10 +205,17 @@
           //console.log(res);
           let success = res.response;
           if(success) {
-            this.width = this.canvas.width = this.TILE_SIZE * this.columns;
-            this.height = this.canvas.height = this.TILE_SIZE * this.rows;
+            // this.width = this.canvas.width = this.TILE_SIZE * this.columns;
+            // this.height = this.canvas.height = this.TILE_SIZE * this.rows;
 
             this.farm = new Farm(this.columns, this.rows);
+            this.farm.setTileDimensions(100, 50);
+
+            this.width = this.canvas.width = this.farm.getWidth() + 25;
+            this.height = this.canvas.height = this.farm.getHeight() + 100;
+            this.farm.setOffset(this.width*0.5, this.height*0.5-this.farm.getHeight()*0.5+30);
+
+
             this.player_list = [];
             this.player = new Player(res.player.id, res.player.name);
             //console.log(this.player);
@@ -297,17 +306,14 @@
 
     handleCanvasClick(e) {
       let pos = this.getMousePosition(e);
-      //console.log(pos);
-      let row = Math.floor(pos.x / this.TILE_SIZE);
-      let col = Math.floor(pos.y / this.TILE_SIZE);
-      //console.log(col, row);
+
       if(this.farm) {
-        //console.log(this.farm.tiles, col, row);
-        let tile = this.farm.tiles[col][row];
-        //console.log(tile);
-        this.player.setSelectedTile(tile);
-        //console.log(this.player.selectedTile);
-        this.ui_manager.updateActions(tile.getAvailableActions());
+        let tile = this.farm.selectTile(pos.x, pos.y);
+        if(tile != null) {
+          this.player.setSelectedTile(tile);
+          this.ui_manager.updateActions(tile.getAvailableActions());
+          this.farm.draw(this.ctx);
+        }
       }
     }
 

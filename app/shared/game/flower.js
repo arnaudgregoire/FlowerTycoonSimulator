@@ -107,10 +107,22 @@
       this.assetPath = "public/assets/flower/rose.png";
     }
 
-    draw(ctx, x, y) {
-      ctx.fillStyle = "#fe6150";
-      ctx.arc(x,y, 15, 0, 2*Math.PI, false);
-      ctx.fill();
+    // draw(ctx, x, y) {
+    //   ctx.fillStyle = "#fe6150";
+    //   ctx.arc(x,y, 15, 0, 2*Math.PI, false);
+    //   ctx.fill();
+    // }
+    getAsset() {
+      if(this.state < 3000) {
+        return ImgLoader.get("plant");
+      }
+      else if(this.state < 5000) {
+        return ImgLoader.get("rose");
+      }
+      else{
+        // maybe this should change for another asset
+        return ImgLoader.get("rose");
+      }
     }
   }
 
@@ -121,10 +133,22 @@
       this.assetPath = "public/assets/flower/tulip.png";
     }
 
-    draw(ctx, x, y) {
-      ctx.fillStyle = "#ff8230";
-      ctx.arc(x,y, 15, 0, 2*Math.PI, false);
-      ctx.fill();
+    // draw(ctx, x, y) {
+    //   ctx.fillStyle = "#ff8230";
+    //   ctx.arc(x,y, 15, 0, 2*Math.PI, false);
+    //   ctx.fill();
+    // }
+    getAsset() {
+      if(this.state < 3000) {
+        return ImgLoader.get("plant");
+      }
+      else if(this.state < 5000) {
+        return ImgLoader.get("tulip");
+      }
+      else{
+        // maybe this should change for another asset
+        return ImgLoader.get("tulip");
+      }
     }
   }
 

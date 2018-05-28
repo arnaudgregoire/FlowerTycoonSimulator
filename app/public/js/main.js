@@ -7,7 +7,7 @@ const JS_FILES = {
     ".": "utils",
     "game/": ["flower", "tile", "farm", "player"]
   },
-  "public/js/": ["asset-loader", "socket-manager", "ui-manager", "game"]
+  "public/js/": ["img-loader", "socket-manager", "ui-manager", "game"]
 };
 
 

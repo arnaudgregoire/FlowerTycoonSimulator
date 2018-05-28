@@ -15,12 +15,28 @@
     constructor(x, y) {
       this.x = x;
       this.y = y;
-      this.size = 40;
       this.type = "";
+      this.img = null;
+      this.offset = 0;
+      this.selected = false;
     }
 
     getType() {
       return this.type;
+    }
+
+    drawSelected(ctx, x, y, width, height) {
+      ctx.strokeStyle = "#333";
+      ctx.fillStyle = "rgba(255,255,255,0.2)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x, y); // top
+      ctx.lineTo(x + width*0.5, y + height*0.5);  // right
+      ctx.lineTo(x, y + height);  // bottom
+      ctx.lineTo(x - width*0.5, y + height*0.5);  // left
+      ctx.lineTo(x, y);
+      ctx.fill();
+      ctx.stroke();
     }
   }
 
@@ -29,15 +45,18 @@
       super(x, y);
       this.type = "empty";
       this.cost = 10;
+      this.offset = 15;
     }
 
     update(dt) {
       //
     }
 
-    draw(ctx) {
-      let img = window.AssetLoader.get("public/assets/tile/grass.png")
-      ctx.drawImage(img, 0, 0, 64, 64, this.y * this.size, this.x * this.size, this.size, this.size);
+    draw(ctx, x, y, width, height) {
+      ctx.drawImage(ImgLoader.get("grass"), x-width*0.5, y-this.offset, width, height+this.offset);
+      if(this.selected) {
+        this.drawSelected(ctx, x, y-this.offset, width, height);
+      }
     }
 
     getAvailableActions() {
@@ -55,16 +74,18 @@
       super(x, y);
       this.type = "bought";
       this.owner = owner;
+      this.offset = 8;
     }
 
     update(dt) {
       //
     }
 
-    draw(ctx) {
-      let img = window.AssetLoader.get("public/assets/tile/labours.png");
-      //console.log(img);
-      ctx.drawImage(img, 0, 0, 64, 64, this.y * this.size, this.x * this.size, this.size, this.size);
+    draw(ctx, x, y, width, height) {
+      ctx.drawImage(ImgLoader.get("dirt"), x-width*0.5, y-this.offset, width, height+this.offset);
+      if(this.selected) {
+        this.drawSelected(ctx, x, y-this.offset, width, height);
+      }
     }
 
     getAvailableActions() {
@@ -88,11 +109,18 @@
       //
     }
 
-    draw(ctx) {
-      super.draw(ctx);
-      let img = window.AssetLoader.get(this.flower.assetPath);
-      ctx.drawImage(img, 0, 0, 64, 64, this.y * this.size, this.x * this.size, this.size, this.size);
+    draw(ctx, x, y, width, height) {
+      super.draw(ctx, x, y, width, height);
+      let img = this.flower.getAsset();
+      let w = img.width, h = img.height;
+      ctx.drawImage(img, x-w*0.5, y+height*0.5-h, w, h);
     }
+
+    // draw(ctx) {
+    //   super.draw(ctx);
+    //   let img = window.AssetLoader.get(this.flower.assetPath);
+    //   ctx.drawImage(img, 0, 0, 64, 64, this.y * this.size, this.x * this.size, this.size, this.size);
+    // }
 
     getAvailableActions() {
       return {
