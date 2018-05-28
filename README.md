@@ -1,7 +1,7 @@
 # FlowerTycoonSimulator
 Un super jeu de navigateur qui supplantera (PLANTE LOL) bientot Ogame FarmVille et autre Clash of Clans
 
-![preview](img/preview.png)
+![preview](img/preview.jpg)
 
 ## Développement
 
@@ -12,10 +12,11 @@ Il y a même un Trello : https://trello.com/b/VOPO9G3D/flowertycoonsimulator
 Prérequis : avoir node/npm
 
  - cloner le dépot
- - npm install dans le dossier serveur
+ - npm install dans le dossier serveur app
  - npm start
 
  Le serveur tourne sur le port 8081.
+ Le client est alros dispo sur http://localhost:8081
 
 ## Principe
 
@@ -27,7 +28,7 @@ Il s'agit de créer un jeu multijoueur de stratégie par navigateur type Ogmae/F
 
 ## But
 
-![preview](img/preview.png)
+![preview](img/preview.jpg)
 
 Une partie dure un temps déterminé (possiblement 1 jour)
 Le but est d'engranger un maximum de points en réalisant des bouquets de fleurs.
