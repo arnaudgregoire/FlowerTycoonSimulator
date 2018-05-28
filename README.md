@@ -12,7 +12,7 @@ Il y a même un Trello : https://trello.com/b/VOPO9G3D/flowertycoonsimulator
 Prérequis : avoir node/npm
 
  - cloner le dépot
- - npm install dans le dossier serveur app
+ - npm install 
  - npm start
 
  Le serveur tourne sur le port 8081.
