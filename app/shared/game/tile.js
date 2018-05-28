@@ -136,8 +136,8 @@
           if(game.checkID(tile_data.owner.id)) {
               player = game.findPlayerById(tile_data.owner.id);
               let plante = FlowerFactory.prototype.createFlowerFromData(tile_data.flower);
-              console.log(plante);
-              console.log(tile_data.flower);
+              //console.log(plante);
+              //console.log(tile_data.flower);
               tile = new TileSeeded(tile_data.x, tile_data.y, player, plante);
           }
           else{

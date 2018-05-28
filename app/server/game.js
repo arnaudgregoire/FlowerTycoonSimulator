@@ -143,6 +143,27 @@ class Game{
     return json;
   }
 
+  harvest(req){
+    let json = {};
+    let player = this.findPlayerById(req.param.player.id);
+    let tile = this.farm.tiles[req.param.tile.x][req.param.tile.y];
+    console.log(tile);
+    if (tile.type == "seeded") {
+      if(tile.owner.id == player.id){
+        player.inventory.push(tile.flower);
+        this.farm.tiles[req.param.tile.x][req.param.tile.y] = new TileBought(tile.x, tile.y, player);
+        json = {"reponse":1, "description": "La plante a été transféré dans l'inventaire"};
+      }
+      else{
+        json = {"reponse":0, "description": "Vous n'êtes pas propriétaire de la case"};
+      }
+    }
+    else{
+      json = {"reponse":0, "description": "Aucune fleur détecté sur la case"};
+    }
+    return json;
+  }
+
   /**
   * Methode appele lorsque que un joueur veut se connecter
   * @param {Request body} req

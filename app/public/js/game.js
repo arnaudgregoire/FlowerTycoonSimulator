@@ -142,7 +142,7 @@
       this.socket_manager.sendMessage('getPlayers',JSON.stringify({"description" : "getPlayers"}))
       .then((json) =>{
         this.player_list = [];
-        console.log(json);
+        //console.log(json);
         for (let i = 0; i < json.players.length; i++) {
           this.player_list.push(new Player(json.players[i].id, json.players[i].username, json.players[i].color));
         }
@@ -209,7 +209,7 @@
             this.farm = new Farm(this.columns, this.rows);
             this.player_list = [];
             this.player = new Player(res.player.id, res.player.name);
-            console.log(this.player);
+            //console.log(this.player);
             this.ui_manager.setInfo(this.player);
 
             this.resizeCanvas();
@@ -247,9 +247,23 @@
     }
 
     handleHarvestEvent(e) {
-      if(this.player.selectedTile != null) {
-        //TODO: Harvest the selected tile, and ask server
-        this.player.selectedTile = null;
+      if(this.player.selectedTile != null && this.player.selectedTile.type == "seeded") {
+        this.socket_manager.sendMessage("harvest",JSON.stringify(
+          {
+            "description": "harvest",
+            "param": {
+              "player": {"id": this.player.id},
+              "tile":{
+                "x": this.player.selectedTile.x,
+                "y": this.player.selectedTile.y
+              }
+            }
+          }
+        )).then(
+          (res)=>{
+            console.log(res);
+          }
+        )
       }
     }
 
@@ -290,7 +304,7 @@
       if(this.farm) {
         //console.log(this.farm.tiles, col, row);
         let tile = this.farm.tiles[col][row];
-        console.log(tile);
+        //console.log(tile);
         this.player.setSelectedTile(tile);
         //console.log(this.player.selectedTile);
         this.ui_manager.updateActions(tile.getAvailableActions());

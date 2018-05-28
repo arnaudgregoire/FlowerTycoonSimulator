@@ -67,6 +67,22 @@ app.post('/buy', function (req, res) {
   requestUpdateClients();
 });
 
+
+/**
+ * Partie du serveur s occupant de la récolte des fleurs
+ */
+app.post('/harvest', function (req, res) {
+  let json = {};
+  if(game.checkID(req.body.param.player.id)){
+    json = game.harvest(req.body);
+  }
+  else{
+    json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN (https://www.youtube.com/watch?v=z9CRvCmJUnI)
+  }
+  res.json(json);
+  requestUpdateClients();
+});
+
 /**
  * Partie du serveur qui s occupe de la connexion de nouveaux joueurs, plus generalement de la connexion des utilisateurs
  */
