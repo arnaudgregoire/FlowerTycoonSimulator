@@ -135,7 +135,7 @@
       this.socket_manager.sendMessage("getFarm", JSON.stringify({"description" : "getFarm"}))
       .then((json)=>{
         this.farm.updateTiles(json.tiles,this);
-        //console.log(this.farm.tiles);
+        console.log(this.farm.tiles);
         this.farm.draw(this.ctx);
       })
     }

@@ -89,11 +89,11 @@ class Game{
     let player = this.findPlayerById(req.param.player.id);
     let x = parseInt(req.param.tile.x);
     let y = parseInt(req.param.tile.y);
-    if (this.farm.tiles[x][y].type == "empty") {
-      if (player.money >= this.farm.tiles[x][y].cost) {
+    if (this.farm.tiles[y][x].type == "empty") {
+      if (player.money >= this.farm.tiles[y][x].cost) {
         //console.log(this.farm.tiles[x][y].cost);
-        player.money -= this.farm.tiles[x][y].cost;
-        this.farm.tiles[x][y] = new TileBought(x, y, player);
+        player.money -= this.farm.tiles[y][x].cost;
+        this.farm.tiles[y][x] = new TileBought(x, y, player);
         json = {"response":1, "description" : "La case a été achetée"};
       }
       else{
@@ -119,13 +119,13 @@ class Game{
     let x = parseInt(req.param.tile.x);
     let y = parseInt(req.param.tile.y);
 
-    if (this.farm.tiles[x][y].owner.id == player.id) {
+    if (this.farm.tiles[y][x].owner.id == player.id) {
       let id = req.param.flower.id;
       if(player.hasItem(id)){
         let flower = player.findItem(id);
         if(flower.plantable){
           flower.startLife();
-          this.farm.tiles[x][y] = new TileSeeded(x, y, player, flower);
+          this.farm.tiles[y][x] = new TileSeeded(x, y, player, flower);
           player.removeItem(flower);
           json = {"reponse": 1, "description" : "La plante a ete plantee"};
         }
@@ -146,12 +146,12 @@ class Game{
   harvest(req){
     let json = {};
     let player = this.findPlayerById(req.param.player.id);
-    let tile = this.farm.tiles[req.param.tile.x][req.param.tile.y];
+    let tile = this.farm.tiles[req.param.tile.y][req.param.tile.x];
     console.log(tile);
     if (tile.type == "seeded") {
       if(tile.owner.id == player.id){
         player.inventory.push(tile.flower);
-        this.farm.tiles[req.param.tile.x][req.param.tile.y] = new TileBought(tile.x, tile.y, player);
+        this.farm.tiles[req.param.tile.y][req.param.tile.x] = new TileBought(tile.x, tile.y, player);
         json = {"reponse":1, "description": "La plante a été transféré dans l'inventaire"};
       }
       else{
