@@ -16,13 +16,9 @@ Prérequis : avoir node/npm
  - npm start
 
  Le serveur tourne sur le port 8081.
- Le client est alros dispo sur http://localhost:8081
+ Le client est alors disponible à cette adresse: http://localhost:8081
 
 ## Principe
-
-Le design était le suivant :
-
-![design](img/design.jpg)
 
 Il s'agit de créer un jeu multijoueur de stratégie par navigateur type Ogmae/Farmville.
 
@@ -45,4 +41,5 @@ Le joueur peut décider de :
  - récolter une graine
  - fertiliser une parcelle
  - Acheter une parcelle
- - utiliser les fleurs/graines dans son inventaire pour faire des trucs
+ - vendre une ou plusieurs fleurs de son inventaire
+ - planter une ou plusieurs graines de son inventaire

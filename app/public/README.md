@@ -10,11 +10,8 @@ The main file is used to describe & load the Javascript dependencies of the game
 
 ## Game Class
 
-The `Game` class is where the main logic is described. It serves as a container for all secondary class (`AssetLoader`, `UIManager`, `Farm`, `Player`, etc) and manage their states.
+The `Game` class is where the main logic is described. It serves as a container for all secondary class (`ImgLoader`, `UIManager`, `Farm`, `Player`, etc) and manage their states.
 It should be used as a global **event listener**: any class can dispatch a `CustomEvent`, and the `Game` will handle the event and
-
-**TODO**
- + Implement the event handler for each event listener
 
 
 ## UIManager Class

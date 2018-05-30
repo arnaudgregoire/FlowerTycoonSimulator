@@ -25,8 +25,6 @@ A `Tile` represent a unitary box in the game. Tiles can be bought to link them t
 The `Farm` is the class that represents the data structure gathering all `Tile` object. It should be unique for every game instance, a single game is linked to a single farm.
 
 The data structure is a 2D Array
-> ? Change this to a 1D Array of size columns * height ?
-
 ### Player
 
 The `Player` class represent any player that is part of a game instance. Its main properties are:

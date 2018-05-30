@@ -26,8 +26,8 @@
     }
 
     drawSelected(ctx, x, y, width, height) {
-      ctx.strokeStyle = "#333";
-      ctx.fillStyle = "rgba(255,255,255,0.2)";
+      // ctx.strokeStyle = "#333";
+      ctx.fillStyle = "rgba(255,255,255,0.25)";
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(x, y); // top
@@ -36,7 +36,7 @@
       ctx.lineTo(x - width*0.5, y + height*0.5);  // left
       ctx.lineTo(x, y);
       ctx.fill();
-      ctx.stroke();
+      // ctx.stroke();
     }
   }
 
@@ -113,7 +113,7 @@
       super.draw(ctx, x, y, width, height);
       let img = this.flower.getAsset();
       let w = img.width, h = img.height;
-      ctx.drawImage(img, x-w*0.5, y+height*0.5-h, w, h);
+      ctx.drawImage(img, x-(w*0.5), y+(height*0.5)-h, w, h);
     }
 
     // draw(ctx) {
