@@ -31,6 +31,8 @@
       this.farm = null;
       this.player_list = null;
       this.player = null;
+
+      this.refresh_rate = 1000; // every refresh_rate second, the canvas is actualised with client data 
     }
 
     init() {
@@ -101,6 +103,8 @@
       }.bind(this), false);
     }
 
+
+
     checkID(id){
       for (var i = 0; i < this.player_list.length; i++) {
         if (this.player_list[i].id == id) {
@@ -129,6 +133,11 @@
         this.getFarm();
         this.getInventory();
       }
+    }
+
+    updateFarm(dt){
+      this.farm.update(dt);
+      this.farm.draw(this.ctx);
     }
 
     getFarm(){
@@ -223,6 +232,7 @@
 
             this.resizeCanvas();
             this.ui_manager.toggleLogin();
+            window.setInterval(function(){this.updateFarm(this.refresh_rate)}.bind(this), this.refresh_rate);
             this.update();
           }
         }
