@@ -117,7 +117,7 @@ function start() {
 
 function update(){
   delay(1000).then(() => {
-    game.update();
+    game.update(1000);
     update();
   });
 }

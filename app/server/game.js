@@ -41,8 +41,8 @@ class Game{
     // Send (encrypted) messages to clients about state changes
   }
 
-  update() {
-    this.farm.update();
+  update(dt) {
+    this.farm.update(dt);
   }
 
   /**

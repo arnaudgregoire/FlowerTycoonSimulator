@@ -106,7 +106,7 @@
     }
 
     update(dt) {
-      //
+      this.flower.update(dt);
     }
 
     draw(ctx, x, y, width, height) {
