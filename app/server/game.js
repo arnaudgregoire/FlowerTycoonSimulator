@@ -57,6 +57,15 @@ class Game{
     return false;
   }
 
+  checkName(name){
+    for (var i = 0; i < this.player_list.length; i++) {
+      if (this.player_list[i].name == name) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /**
   * Renvoie le joeur correspondant au nom compris dans la requete
   * @param {Request body} req
@@ -72,7 +81,7 @@ class Game{
 
   findPlayerByName(username){
     for (var i = 0; i < this.player_list.length; i++) {
-      if (this.player_list[i].id == username) {
+      if (this.player_list[i].name == username) {
         return this.player_list[i];
       }
     }
@@ -173,8 +182,8 @@ class Game{
     let json = {};
     let login = req.param;
     let exist;
-    if (req.param.player.hasOwnProperty("id")){
-      exist = this.checkID(req.param.player.id);
+    if (req.param.player.hasOwnProperty("username")){
+      exist = this.checkName(req.param.player.username);
     }
     else{
       exist = false;

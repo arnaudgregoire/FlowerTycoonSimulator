@@ -22,16 +22,15 @@
 
     toggle() {
       if(this.visible) {
-        this.visible = false;
         this.delete();
       }
       else {
-        this.visible = true;
         this.create();
       }
     }
 
     create() {
+      this.visible = true;
       document.body.appendChild(this.getHTML());
 
       let button = document.querySelector("#login-button");
@@ -42,6 +41,7 @@
     }
 
     delete() {
+      this.visible = false;
       document.querySelector("#wrap").classList.remove("hidden");
       if(document.querySelector("#overlay") != null) {
         document.body.removeChild(document.querySelector("#overlay"));

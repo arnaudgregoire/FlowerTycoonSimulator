@@ -48,6 +48,7 @@
       this.ui_manager = new UIManager();
       this.initEventListener();
 
+
       ImgLoader.setMainDirectory("public/assets/");
       ImgLoader.load([
         {"grass": "tile/grass.png"},
@@ -55,7 +56,19 @@
         {"plant": "flower/plant.png"},
         {"rose": "flower/rose.png"},
         {"tulip": "flower/tulip.png"}],
-        () => this.ui_manager.toggleLogin());
+        function () {
+          if (window.Utility.readCookie("username") != window.Utility.readCookie("password")) {
+            this.handleLogin({
+              player :{
+                "username": window.Utility.readCookie("username"),
+                "password": window.Utility.readCookie("password")
+              }
+            });
+          }
+          else{
+            this.ui_manager.toggleLogin();
+          }
+        }.bind(this))
     }
 
     initEventListener() {
@@ -102,8 +115,6 @@
         this.ui_manager.displayInfo(e.detail);
       }.bind(this), false);
     }
-
-
 
     checkID(id){
       for (var i = 0; i < this.player_list.length; i++) {
@@ -203,6 +214,7 @@
     }
 
     handleLogin(info) {
+      let password = info.player.password;
       //console.log(info);
       this.socket_manager.sendMessage("login",JSON.stringify(
         {
@@ -224,6 +236,14 @@
             this.height = this.canvas.height = this.farm.getHeight() + 100;
             this.farm.setOffset(this.width*0.5, this.height*0.5-this.farm.getHeight()*0.5+30);
 
+            let credentialCached = window.Utility.readCookie("username") != null;
+
+            if (window.Utility.readCookie("username") == null) {
+              window.Utility.createCookie("username", res.player.name, 1)
+            }
+            if (window.Utility.readCookie("password") == null) {
+              window.Utility.createCookie("password", password, 1)
+            }
 
             this.player_list = [];
             this.player = new Player(res.player.id, res.player.name);
@@ -231,7 +251,14 @@
             this.ui_manager.setInfo(this.player);
 
             this.resizeCanvas();
-            this.ui_manager.toggleLogin();
+            console.log(credentialCached);
+            if (!credentialCached) {
+              this.ui_manager.toggleLogin();
+            }
+            else{
+              this.ui_manager.loginManager.delete();
+            }
+            
             window.setInterval(function(){this.updateFarm(this.refresh_rate)}.bind(this), this.refresh_rate);
             this.update();
           }
