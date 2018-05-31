@@ -116,7 +116,7 @@
     selectTile(x, y) {
       let tile = this.getTile(x, y);
       if(tile != null) {
-        console.log(tile);
+        //console.log(tile);
         for (let y = 0; y < this.rows; y++) {
           for (let x = 0; x < this.columns; x++) {
             if(y == tile.y && x == tile.x) {

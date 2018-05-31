@@ -5,7 +5,7 @@
   if (isNode) {
     var nanoid = require("nanoid");
   }
-  class Flower{
+  class Plant{
     constructor(id, name){
       this.id = id;
       this.category = "plant";
@@ -15,7 +15,7 @@
       this.birth = 0;
       this.age = 0;
       this.state = 0;
-      this.nbFlowers = 0;
+      this.nbPlants = 0;
       this.nbSeeds = 0;
       this.bloomed = false;
       this.fruited = false;
@@ -68,7 +68,7 @@
     * une plante peut produire aléatoirement en 1 et 3 fleurs
     */
     bloom(){
-      this.nbFlowers = 1 + Math.floor(Math.random() * 2);
+      this.nbPlants = 1 + Math.floor(Math.random() * 2);
       this.bloomed = true;
     }
     /**
@@ -76,8 +76,8 @@
     * Le nombre de fruits/graines correspond au nombre de fleurs
     */
     fruit(){
-      this.nbSeeds = this.nbFlowers;
-      this.nbFlowers = 0;
+      this.nbSeeds = this.nbPlants;
+      this.nbPlants = 0;
       this.fruited = true;
     }
     /**
@@ -93,18 +93,18 @@
     getSeeds(){
       let seeds = [];
       for (let i = 0; i < this.nbSeeds; i++) {
-        seeds.push(FlowerFactory.createFlower(this.name));
+        seeds.push(PlantFactory.createPlant(this.name));
       }
       this.nbSeeds = 0;
       return seeds;
     }
   }
 
-  class Rose extends Flower {
+  class Rose extends Plant {
     constructor(id) {
       super(id, "rose");
       this.speed = 1;
-      this.assetPath = "public/assets/flower/rose.png";
+      this.assetPath = "public/assets/Plant/rose.png";
     }
 
     // draw(ctx, x, y) {
@@ -126,11 +126,11 @@
     }
   }
 
-  class Tulip extends Flower {
+  class Tulip extends Plant {
     constructor(id) {
       super(id, "tulip");
       this.speed = 1.5;
-      this.assetPath = "public/assets/flower/tulip.png";
+      this.assetPath = "public/assets/Plant/tulip.png";
     }
 
     // draw(ctx, x, y) {
@@ -153,60 +153,60 @@
   }
 
   // Static class style
-  var FlowerFactory = {
-    FLOWERS: ["rose", "tulip"]
+  var PlantFactory = {
+    PlantS: ["rose", "tulip"]
   };
-  FlowerFactory.prototype = {
-    createFlower: function (flower_name, id) {
-      let flower_id = FlowerFactory.FLOWERS.indexOf(flower_name);
-      let flower;
-      if(flower_id == -1) {
+  PlantFactory.prototype = {
+    createPlant: function (Plant_name, id) {
+      let Plant_id = PlantFactory.PlantS.indexOf(Plant_name);
+      let Plant;
+      if(Plant_id == -1) {
         return null;
       }
 
-      switch(flower_id){
+      switch(Plant_id){
           case 0:
-            flower = new Rose(id);
+            Plant = new Rose(id);
             break;
 
           case 1:
-            flower = new Tulip(id);
+            Plant = new Tulip(id);
             break;
       }
-      return flower;
+      return Plant;
     },
 
-    createFlowerFromData: function(flower_data) {
-      let flower = this.createFlower(flower_data.name, flower_data.id);
+    createPlantFromData: function(Plant_data) {
+      let Plant = this.createPlant(Plant_data.name, Plant_data.id);
 
-      if(flower == null) {
+      if(Plant == null) {
         return null;
       }
 
-      flower.age = flower_data.age;
-      flower.state = flower_data.state;
-  		return flower;
+      Plant.age = Plant_data.age;
+      Plant.state = Plant_data.state;
+  		return Plant;
     },
 
-    getRandomFlower: function () {
-      return this.createFlower(FlowerFactory.FLOWERS[Math.floor(Math.random() * FlowerFactory.FLOWERS.length)],nanoid());
+    getRandomPlant: function () {
+      return this.createPlant(PlantFactory.PlantS[Math.floor(Math.random() * PlantFactory.PlantS.length)],nanoid());
     }
   };
 
   // Node export
   if (isNode) {
     module.exports = {
-      Flower: Flower,
+      Plant: Plant,
       Rose: Rose,
       Tulip: Tulip,
-      FlowerFactory: FlowerFactory
+      PlantFactory: PlantFactory
     };
   }
   // Browser export
   else {
-    window.Flower = Flower;
+    window.Plant = Plant;
     window.Rose = Rose;
     window.Tulip = Tulip;
-    window.FlowerFactory = FlowerFactory;
+    window.PlantFactory = PlantFactory;
   }
 })();

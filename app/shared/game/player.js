@@ -2,12 +2,12 @@
   "use strict";
   let isNode = (typeof module !== 'undefined' && typeof module.exports !== 'undefined');
 
-var FlowerFactory;
+var PlantFactory;
   if(isNode) {
-		FlowerFactory = require("./flower.js").FlowerFactory;
+		PlantFactory = require("./plant.js").PlantFactory;
   }
 	else {
-		FlowerFactory = window.FlowerFactory;
+		PlantFactory = window.PlantFactory;
 	}
 
 	class Player{

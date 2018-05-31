@@ -3,7 +3,7 @@
   "author": "@arnaudgregoire @thomasSinno @Ogus",
   "description": "",
   "keywords": [
-    "flower",
+    "Plant",
     "game",
     "tycoon"
   ],
@@ -25,10 +25,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arnaudgregoire/FlowerTycoonSimulator.git"
+    "url": "git+https://github.com/arnaudgregoire/flowertycoonsimulator.git"
   },
   "bugs": {
-    "url": "https://github.com/arnaudgregoire/FlowerTycoonSimulator/issues"
+    "url": "https://github.com/arnaudgregoire/flowertycoonsimulator/issues"
   },
-  "homepage": "https://github.com/arnaudgregoire/FlowerTycoonSimulator#readme"
+  "homepage": "https://github.com/arnaudgregoire/flowertycoonsimulator#readme"
 }

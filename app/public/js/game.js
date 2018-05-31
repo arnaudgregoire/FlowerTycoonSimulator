@@ -144,7 +144,7 @@
       this.socket_manager.sendMessage("getFarm", JSON.stringify({"description" : "getFarm"}))
       .then((json)=>{
         this.farm.updateTiles(json.tiles,this);
-        console.log(this.farm.tiles);
+        //console.log(this.farm.tiles);
         this.farm.draw(this.ctx);
       })
     }
@@ -242,7 +242,7 @@
 
     handlePlantEvent(e) {
       if(this.player.selectedTile != null && this.player.selectedItem != null) {
-        //TODO: Plant a new flower on the selected tile, and ask server
+        //TODO: Plant a new Plant on the selected tile, and ask server
         this.socket_manager.sendMessage("plant",JSON.stringify(
           {
             "description": "buy",
@@ -252,7 +252,7 @@
                 "x": this.player.selectedTile.x,
                 "y": this.player.selectedTile.y
               },
-              "flower":{
+              "Plant":{
                 "id": this.player.selectedItem.id
               }
             }

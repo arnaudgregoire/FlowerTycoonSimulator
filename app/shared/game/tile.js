@@ -2,13 +2,13 @@
   "use strict";
   let isNode = (typeof module !== 'undefined' && typeof module.exports !== 'undefined');
 
-  var FlowerFactory;
+  var PlantFactory;
   if(isNode) {
-    FlowerFactory = require('./flower.js').FlowerFactory;
+    PlantFactory = require('./Plant.js').PlantFactory;
 
   }
   else {
-    FlowerFactory = window.FlowerFactory;
+    PlantFactory = window.PlantFactory;
   }
 
   class Tile {
@@ -99,26 +99,26 @@
   }
 
   class TileSeeded extends TileBought {
-    constructor(x, y, owner, flower) {
+    constructor(x, y, owner, Plant) {
       super(x, y, owner);
       this.type = "seeded";
-      this.flower = flower;
+      this.Plant = Plant;
     }
 
     update(dt) {
-      this.flower.update(dt);
+      this.Plant.update(dt);
     }
 
     draw(ctx, x, y, width, height) {
       super.draw(ctx, x, y, width, height);
-      let img = this.flower.getAsset();
+      let img = this.Plant.getAsset();
       let w = img.width, h = img.height;
       ctx.drawImage(img, x-(w*0.5), y+(height*0.5)-h, w, h);
     }
 
     // draw(ctx) {
     //   super.draw(ctx);
-    //   let img = window.AssetLoader.get(this.flower.assetPath);
+    //   let img = window.AssetLoader.get(this.Plant.assetPath);
     //   ctx.drawImage(img, 0, 0, 64, 64, this.y * this.size, this.x * this.size, this.size, this.size);
     // }
 
@@ -163,9 +163,9 @@
         case 2:
           if(game.checkID(tile_data.owner.id)) {
               player = game.findPlayerById(tile_data.owner.id);
-              let plante = FlowerFactory.prototype.createFlowerFromData(tile_data.flower);
+              let plante = PlantFactory.prototype.createPlantFromData(tile_data.Plant);
               //console.log(plante);
-              //console.log(tile_data.flower);
+              //console.log(tile_data.Plant);
               tile = new TileSeeded(tile_data.x, tile_data.y, player, plante);
           }
           else{

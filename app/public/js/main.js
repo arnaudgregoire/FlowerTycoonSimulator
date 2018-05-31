@@ -1,11 +1,11 @@
 "use strict";
 
 const URL = "localhost:8081/";  // flowertycoonsimulator.herokuapp.com/ ||  localhost:8081/
-// C:Users\msawada\Desktop\flowerTycoonSimulator\app
+// C:Users\msawada\Desktop\flowertycoonsimulator\app
 const JS_FILES = {
   "shared/": {
     ".": "utils",
-    "game/": ["flower", "tile", "farm", "player"]
+    "game/": ["plant", "tile", "farm", "player"]
   },
   "public/js/": ["img-loader", "socket-manager", "ui-manager", "game"]
 };
