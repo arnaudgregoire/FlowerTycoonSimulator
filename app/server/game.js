@@ -1,7 +1,7 @@
 var nanoid = require('nanoid');
 
 var Farm = require('../shared/game/farm.js');
-var PlantFactory = require('../shared/game/Plant.js').PlantFactory;
+var PlantFactory = require('../shared/game/plant.js').PlantFactory;
 var TileEmpty = require('../shared/game/tile.js').TileEmpty;
 var TileBought = require('../shared/game/tile.js').TileBought;
 var TileSeeded = require('../shared/game/tile.js').TileSeeded;
@@ -131,11 +131,11 @@ class Game{
     if (this.farm.tiles[y][x].owner.id == player.id) {
       let id = req.param.Plant.id;
       if(player.hasItem(id)){
-        let Plant = player.findItem(id);
-        if(Plant.plantable){
-          Plant.startLife();
-          this.farm.tiles[y][x] = new TileSeeded(x, y, player, Plant);
-          player.removeItem(Plant);
+        let plant = player.findItem(id);
+        if(plant.plantable){
+          plant.startLife();
+          this.farm.tiles[y][x] = new TileSeeded(x, y, player, plant);
+          player.removeItem(plant);
           json = {"reponse": 1, "description" : "La plante a ete plantee"};
         }
         else{
@@ -159,7 +159,7 @@ class Game{
     console.log(tile);
     if (tile.type == "seeded") {
       if(tile.owner.id == player.id){
-        player.inventory.push(tile.Plant);
+        player.inventory.push(tile.plant);
         this.farm.tiles[req.param.tile.y][req.param.tile.x] = new TileBought(tile.x, tile.y, player);
         json = {"reponse":1, "description": "La plante a été transféré dans l'inventaire"};
       }
@@ -209,6 +209,8 @@ class Game{
 
   addNewPlayer(player){
     this.player_list.push(player);
+    player.inventory.push(PlantFactory.prototype.getRandomPlant());
+    player.inventory.push(PlantFactory.prototype.getRandomPlant());
     player.inventory.push(PlantFactory.prototype.getRandomPlant());
   }
 

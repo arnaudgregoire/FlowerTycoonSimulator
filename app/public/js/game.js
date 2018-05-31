@@ -172,7 +172,10 @@
         }
       )).then((json)=>{
         //console.log(json);
-        this.player.inventory = json.inventory;
+        this.player.inventory = [];
+        for (let i = 0; i < json.inventory.length; i++) {
+          this.player.inventory.push(window.PlantFactory.prototype.createPlantFromData(json.inventory[i]));
+        }
         this.player.money = json.money;
         this.ui_manager.updateInventory(this.player);
       });

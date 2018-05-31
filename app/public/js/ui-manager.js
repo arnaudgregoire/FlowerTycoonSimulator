@@ -160,8 +160,8 @@
     createHTML(item) {
       //console.log(item);
       let div = document.createElement("div");
-      // TODO: put things in the div
       div.appendChild(document.createTextNode(item.name));
+      div.appendChild(item.getAsset());
       div.setAttribute("id",item.id);
       this.setEventListener(div);
       return div;

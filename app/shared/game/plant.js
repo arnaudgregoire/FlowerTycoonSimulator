@@ -104,7 +104,6 @@
     constructor(id) {
       super(id, "rose");
       this.speed = 1;
-      this.assetPath = "public/assets/Plant/rose.png";
     }
 
     // draw(ctx, x, y) {
@@ -130,7 +129,6 @@
     constructor(id) {
       super(id, "tulip");
       this.speed = 1.5;
-      this.assetPath = "public/assets/Plant/tulip.png";
     }
 
     // draw(ctx, x, y) {
@@ -154,42 +152,42 @@
 
   // Static class style
   var PlantFactory = {
-    PlantS: ["rose", "tulip"]
+    plants: ["rose", "tulip"]
   };
   PlantFactory.prototype = {
-    createPlant: function (Plant_name, id) {
-      let Plant_id = PlantFactory.PlantS.indexOf(Plant_name);
-      let Plant;
-      if(Plant_id == -1) {
+    createPlant: function (plant_name, id) {
+      let plant_id = PlantFactory.plants.indexOf(plant_name);
+      let plant;
+      if(plant_id == -1) {
         return null;
       }
 
-      switch(Plant_id){
+      switch(plant_id){
           case 0:
-            Plant = new Rose(id);
+            plant = new Rose(id);
             break;
 
           case 1:
-            Plant = new Tulip(id);
+            plant = new Tulip(id);
             break;
       }
-      return Plant;
+      return plant;
     },
 
-    createPlantFromData: function(Plant_data) {
-      let Plant = this.createPlant(Plant_data.name, Plant_data.id);
+    createPlantFromData: function(plant_data) {
+      let plant = this.createPlant(plant_data.name, plant_data.id);
 
-      if(Plant == null) {
+      if(plant == null) {
         return null;
       }
 
-      Plant.age = Plant_data.age;
-      Plant.state = Plant_data.state;
-  		return Plant;
+      plant.age = plant_data.age;
+      plant.state = plant_data.state;
+  		return plant;
     },
 
     getRandomPlant: function () {
-      return this.createPlant(PlantFactory.PlantS[Math.floor(Math.random() * PlantFactory.PlantS.length)],nanoid());
+      return this.createPlant(PlantFactory.plants[Math.floor(Math.random() * PlantFactory.plants.length)],nanoid());
     }
   };
 

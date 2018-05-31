@@ -4,7 +4,7 @@
 
   var PlantFactory;
   if(isNode) {
-    PlantFactory = require('./Plant.js').PlantFactory;
+    PlantFactory = require('./plant.js').PlantFactory;
 
   }
   else {
@@ -99,19 +99,19 @@
   }
 
   class TileSeeded extends TileBought {
-    constructor(x, y, owner, Plant) {
+    constructor(x, y, owner, plant) {
       super(x, y, owner);
       this.type = "seeded";
-      this.Plant = Plant;
+      this.plant = plant;
     }
 
     update(dt) {
-      this.Plant.update(dt);
+      this.plant.update(dt);
     }
 
     draw(ctx, x, y, width, height) {
       super.draw(ctx, x, y, width, height);
-      let img = this.Plant.getAsset();
+      let img = this.plant.getAsset();
       let w = img.width, h = img.height;
       ctx.drawImage(img, x-(w*0.5), y+(height*0.5)-h, w, h);
     }
@@ -163,8 +163,8 @@
         case 2:
           if(game.checkID(tile_data.owner.id)) {
               player = game.findPlayerById(tile_data.owner.id);
-              let plante = PlantFactory.prototype.createPlantFromData(tile_data.Plant);
-              //console.log(plante);
+              let plante = PlantFactory.prototype.createPlantFromData(tile_data.plant);
+              console.log(plante);     
               //console.log(tile_data.Plant);
               tile = new TileSeeded(tile_data.x, tile_data.y, player, plante);
           }
