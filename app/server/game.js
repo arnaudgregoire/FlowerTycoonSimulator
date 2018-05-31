@@ -57,6 +57,15 @@ class Game{
     return false;
   }
 
+  checkName(name){
+    for (var i = 0; i < this.player_list.length; i++) {
+      if (this.player_list[i].name == name) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /**
   * Renvoie le joeur correspondant au nom compris dans la requete
   * @param {Request body} req
@@ -72,7 +81,7 @@ class Game{
 
   findPlayerByName(username){
     for (var i = 0; i < this.player_list.length; i++) {
-      if (this.player_list[i].id == username) {
+      if (this.player_list[i].name == username) {
         return this.player_list[i];
       }
     }
@@ -169,34 +178,34 @@ class Game{
   * @param {Request body} req
   *  Renvoie un json avec la reponse associe et une petite description de ce qui s est passe
   */
-  login(req) {
-    let json = {};
-    let login = req.param;
-    let exist;
-    if (req.param.player.hasOwnProperty("id")){
-      exist = this.checkID(req.param.player.id);
-    }
-    else{
-      exist = false;
-    }
-    let player; 
-    if (exist) {
-      player = this.findPlayerByName(req.param.player.username);
-      if(this.checkPassword(login.password)) {
-        json = {"response": 1, "description" : "Heureux de vous revoir", "player": {"name": player.name, "id":player.id}};
-      }
-      else{
-        json = {"response": 0, "description" : "Mauvais mot de passe"};
-      }
-    }
-    else{
-      let id = nanoid();
-      let player = new Player(id,req.param.player.username,utils.getRandomColor());
-      this.addNewPlayer(player);
-      json = {"response": 1, "description" : "Votre compte a bien ete cree", "player": {"name": player.name, "id":player.id}};
-    }
-    return json;
+ login(req) {
+  let json = {};
+  let login = req.param;
+  let exist;
+  if (req.param.player.hasOwnProperty("username")){
+    exist = this.checkName(req.param.player.username);
   }
+  else{
+    exist = false;
+  }
+  let player; 
+  if (exist) {
+    player = this.findPlayerByName(req.param.player.username);
+    if(this.checkPassword(login.password)) {
+      json = {"response": 1, "description" : "Heureux de vous revoir", "player": {"name": player.name, "id":player.id}};
+    }
+    else{
+      json = {"response": 0, "description" : "Mauvais mot de passe"};
+    }
+  }
+  else{
+    let id = nanoid();
+    let player = new Player(id,req.param.player.username,utils.getRandomColor());
+    this.addNewPlayer(player);
+    json = {"response": 1, "description" : "Votre compte a bien ete cree", "player": {"name": player.name, "id":player.id}};
+  }
+  return json;
+}
 
   addNewPlayer(player){
     this.player_list.push(player);

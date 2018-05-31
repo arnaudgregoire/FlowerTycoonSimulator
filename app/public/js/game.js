@@ -104,7 +104,6 @@
     }
 
 
-
     checkID(id){
       for (var i = 0; i < this.player_list.length; i++) {
         if (this.player_list[i].id == id) {
