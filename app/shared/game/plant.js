@@ -4,6 +4,7 @@
 
   if (isNode) {
     var nanoid = require("nanoid");
+    var SeedFactory = require('./seed.js').SeedFactory;
   }
   class Plant{
     constructor(id, name){
@@ -61,7 +62,6 @@
       if(this.state > 9000){
         this.die();
       }
-      return this.died;
     }
     /**
     * Méthode simulant la floraison
@@ -93,7 +93,7 @@
     getSeeds(){
       let seeds = [];
       for (let i = 0; i < this.nbSeeds; i++) {
-        seeds.push(PlantFactory.createPlant(this.name));
+        seeds.push(SeedFactory.prototype.createSeed(this.name, nanoid()));
       }
       this.nbSeeds = 0;
       return seeds;
@@ -115,12 +115,12 @@
       if(this.state < 3000) {
         return ImgLoader.get("plant");
       }
-      else if(this.state < 5000) {
+      else if(this.state < 9000) {
         return ImgLoader.get("rose");
       }
-      else{
+      else {
         // maybe this should change for another asset
-        return ImgLoader.get("rose");
+        return ImgLoader.get("plantOld");
       }
     }
   }
@@ -140,12 +140,12 @@
       if(this.state < 3000) {
         return ImgLoader.get("plant");
       }
-      else if(this.state < 5000) {
+      else if(this.state < 9000) {
         return ImgLoader.get("tulip");
       }
       else{
         // maybe this should change for another asset
-        return ImgLoader.get("tulip");
+        return ImgLoader.get("plantOld");
       }
     }
   }

@@ -169,9 +169,20 @@ class Game{
     console.log(tile);
     if (tile.type == "seeded") {
       if(tile.owner.id == player.id){
-        player.inventory.push(tile.plant);
+        console.log(tile.plant);
+        if (tile.plant.died) {
+          let seeds = tile.plant.getSeeds();
+          console.log(seeds);
+          for (let i = 0; i < seeds.length; i++) {
+            player.inventory.push(seeds[i]); 
+          }
+        }
+        else{
+          player.inventory.push(tile.plant);
+          json = {"reponse":1, "description": "La plante a été transféré dans l'inventaire"};
+        }
         this.farm.tiles[req.param.tile.y][req.param.tile.x] = new TileBought(tile.x, tile.y, player);
-        json = {"reponse":1, "description": "La plante a été transféré dans l'inventaire"};
+        
       }
       else{
         json = {"reponse":0, "description": "Vous n'êtes pas propriétaire de la case"};
