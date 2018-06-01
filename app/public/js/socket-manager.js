@@ -25,7 +25,7 @@
     }
 
     sendMessage(msg_type, data) {
-      return fetch("http://" + this.base_url + msg_type, {
+      return fetch("https://" + this.base_url + msg_type, {
         method: "POST",
         headers: {
           'Accept': 'application/json, text/plain, */*',
