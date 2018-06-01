@@ -164,7 +164,7 @@
       miniature.src = item.getAsset().src;
       div.appendChild(miniature);
       let nameContainer = document.createElement("p");
-      nameContainer.innerHTML = item.name;
+      nameContainer.innerHTML = item.category + " " + item.name;
       div.appendChild(nameContainer);
       div.setAttribute("id",item.id);
       div.classList.add("item");

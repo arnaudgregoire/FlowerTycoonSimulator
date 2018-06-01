@@ -54,7 +54,9 @@
         {"dirt": "tile/dirt.png"},
         {"plant": "flower/plant.png"},
         {"rose": "flower/rose.png"},
-        {"tulip": "flower/tulip.png"}],
+        {"tulip": "flower/tulip.png"},
+        {"seed": "seed/seed.png"}
+      ],
         () => this.ui_manager.toggleLogin());
     }
 
@@ -174,7 +176,15 @@
         //console.log(json);
         this.player.inventory = [];
         for (let i = 0; i < json.inventory.length; i++) {
-          this.player.inventory.push(window.PlantFactory.prototype.createPlantFromData(json.inventory[i]));
+          switch(json.inventory[i].category){
+            case "plant":
+              this.player.inventory.push(window.PlantFactory.prototype.createPlantFromData(json.inventory[i]));
+              break;
+            
+            case "seed":
+              this.player.inventory.push(window.SeedFactory.prototype.createSeedFromData(json.inventory[i]));
+              break;
+          }          
         }
         this.player.money = json.money;
         this.ui_manager.updateInventory(this.player);

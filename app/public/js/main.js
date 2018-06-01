@@ -5,7 +5,7 @@ const URL = "localhost:8081/";  // flowertycoonsimulator.herokuapp.com/ ||  loca
 const JS_FILES = {
   "shared/": {
     ".": "utils",
-    "game/": ["plant", "tile", "farm", "player"]
+    "game/": ["plant", "tile", "farm", "player","seed"]
   },
   "public/js/": ["img-loader", "socket-manager", "ui-manager", "game"]
 };

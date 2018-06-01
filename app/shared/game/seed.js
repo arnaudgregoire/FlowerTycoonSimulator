@@ -1,25 +1,97 @@
 (function () {
-	  "use strict";
-	  let isNode = (typeof module !== 'undefined' && typeof module.exports !== 'undefined');
+	"use strict";
+	let isNode = (typeof module !== 'undefined' && typeof module.exports !== 'undefined');
+  
+	if (isNode) {
+	  var nanoid = require("nanoid");
+	}
+	class Seed{
+	  constructor(id, name){
+		this.id = id;
+		this.category = "seed";
+		this.name = name;	
+	}
+  
+	toJson() {
+		// return JSON.stringify(this);
+		return({"name": this.name, "id": this.id});
+	  }
+	}
+  
+	class SeedRose extends Seed {
+	  constructor(id) {
+		super(id, "rose");
+	  }
+  
+	  getAsset() {
+		return ImgLoader.get("seed");
+	  }
+	}
+  
+	class SeedTulip extends Seed {
+	  constructor(id) {
+		super(id, "tulip");
+	  }
+  
+	  getAsset() {
+		return ImgLoader.get("seed");
+	  }
+	}
+  
+	// Static class style
+	var SeedFactory = {
+	  seeds: ["rose", "tulip"]
+	};
+	SeedFactory.prototype = {
+	  createSeed: function (seed_name, id) {
+		let seed_id = SeedFactory.seeds.indexOf(seed_name);
+		let seed;
+		if(seed_id == -1) {
+		  return null;
+		}
+  
+		switch(seed_id){
+			case 0:
+			  seed = new SeedRose(id);
+			  break;
+  
+			case 1:
+			  seed = new SeedTulip(id);
+			  break;
+		}
+		return seed;
+	  },
 
-		class Seed{
-			constructor(name){
-				this.name = name;
-			}
-
-			update(dt) {
-
-			}
-
-			draw(ctx) {
-
-			}
+      createSeedFromData: function(seed_data) {
+		let seed = this.createSeed(seed_data.name, seed_data.id);
+  
+		if(seed == null) {
+		  return null;
 		}
 
-		if (isNode) {
-			module.export = Seed;
-		}
-		else {
-			window.Seed = Seed;
-		}
-})();
+		return seed;
+	  },
+  
+	  getRandomSeed: function () {
+		return this.createSeed(SeedFactory.seeds[Math.floor(Math.random() * SeedFactory.seeds.length)],nanoid());
+	  }
+	};
+  
+	// Node export
+	if (isNode) {
+	  module.exports = {
+		Seed: Seed,
+		SeedRose: SeedRose,
+		SeedTulip: SeedTulip,
+		SeedFactory: SeedFactory
+	  };
+	}
+	// Browser export
+	else {
+	  window.Seed = Seed;
+	  window.SeedRose = SeedRose;
+	  window.SeedTulip = SeedTulip;
+	  window.SeedFactory = SeedFactory;
+	}
+  })();
+  

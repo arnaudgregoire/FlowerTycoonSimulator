@@ -2,6 +2,7 @@ var nanoid = require('nanoid');
 
 var Farm = require('../shared/game/farm.js');
 var PlantFactory = require('../shared/game/plant.js').PlantFactory;
+var SeedFactory = require('../shared/game/seed.js').SeedFactory;
 var TileEmpty = require('../shared/game/tile.js').TileEmpty;
 var TileBought = require('../shared/game/tile.js').TileBought;
 var TileSeeded = require('../shared/game/tile.js').TileSeeded;
@@ -131,16 +132,25 @@ class Game{
     if (this.farm.tiles[y][x].owner.id == player.id) {
       let id = req.param.Plant.id;
       if(player.hasItem(id)){
-        let plant = player.findItem(id);
-        if(plant.plantable){
-          plant.startLife();
-          this.farm.tiles[y][x] = new TileSeeded(x, y, player, plant);
-          player.removeItem(plant);
-          json = {"reponse": 1, "description" : "La plante a ete plantee"};
+        let thing = player.findItem(id);
+        switch (thing.category) {
+          case 'plant':
+            if(thing.plantable){
+              this.farm.tiles[y][x] = new TileSeeded(x, y, player, thing);
+              player.removeItem(thing);
+              json = {"reponse": 1, "description" : "La plante a ete plantee"};
+            }
+            else{
+              json = {"reponse": 0, "description" : "La plante ne peut pas etre plantee"};
+            }
+            break;
+        
+          case 'seed':
+            this.farm.tiles[y][x] = new TileSeeded(x, y, player, PlantFactory.prototype.createPlant(thing.name, thing.id));
+            player.removeItem(thing);
+            json = {"reponse": 1, "description" : "La graine a ete semee"};
         }
-        else{
-          json = {"reponse": 0, "description" : "La plante ne peut pas etre plantee"};
-        }
+
       }
       else{
         json = {"reponse": 0, "description" : "Vous ne possedez pas l objet"};
@@ -209,9 +219,9 @@ class Game{
 
   addNewPlayer(player){
     this.player_list.push(player);
-    player.inventory.push(PlantFactory.prototype.getRandomPlant());
-    player.inventory.push(PlantFactory.prototype.getRandomPlant());
-    player.inventory.push(PlantFactory.prototype.getRandomPlant());
+    player.inventory.push(SeedFactory.prototype.getRandomSeed());
+    player.inventory.push(SeedFactory.prototype.getRandomSeed());
+    player.inventory.push(SeedFactory.prototype.getRandomSeed());
   }
 
   /**
