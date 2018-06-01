@@ -160,9 +160,14 @@
     createHTML(item) {
       //console.log(item);
       let div = document.createElement("div");
-      div.appendChild(document.createTextNode(item.name));
-      div.appendChild(item.getAsset());
+      let miniature = document.createElement("img");
+      miniature.src = item.getAsset().src;
+      div.appendChild(miniature);
+      let nameContainer = document.createElement("p");
+      nameContainer.innerHTML = item.name;
+      div.appendChild(nameContainer);
       div.setAttribute("id",item.id);
+      div.classList.add("item");
       this.setEventListener(div);
       return div;
     }

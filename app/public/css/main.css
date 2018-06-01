@@ -99,12 +99,17 @@ html, body{
   opacity: 1;
   overflow: hidden;
 }
+
 #wrap.hidden{opacity: 0}
 #wrap>div{
   box-sizing: border-box;
   overflow: hidden;
 }
 
+.item{
+  border: 1px solid #31302b;
+  cursor: pointer;
+}
 
 #user-info{
   grid-row: first-row / top-row;
