@@ -26,7 +26,6 @@ html, body{
   background: #aaa;
   cursor: default;
 }
-
 .button p{
   margin: 0;
   padding: 10px 15px;
@@ -36,11 +35,6 @@ html, body{
   font-size: 18px;
 }
 
-.info-text{
-  margin: 5px;
-  padding: 5px 10px;
-  color: #0f0;
-}
 
 
 #overlay{
@@ -89,9 +83,9 @@ html, body{
   position: relative;
   width: 100%;
   height: 100%;
-  display: grid;
+  /* display: grid;
   grid-template: [first-row] 70px 30px [top-row] auto [bottom-row] 80px [last-row] /
-  [first-col] 150px 50px [left-col] auto [right-col] 200px [last-col];
+  [first-col] 150px 50px [left-col] auto [right-col] 200px [last-col]; */
 
   box-sizing: border-box;
   background: #00af6e;
@@ -99,77 +93,122 @@ html, body{
   opacity: 1;
   overflow: hidden;
 }
-
 #wrap.hidden{opacity: 0}
-#wrap>div{
+/* #wrap>div{
   box-sizing: border-box;
   overflow: hidden;
-}
+} */
 
-.item{
-  border: 1px solid #31302b;
-  cursor: pointer;
-}
+
 
 #user-info{
-  grid-row: first-row / top-row;
-  grid-column: first-col / left-col;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 150px;
+  /* height: 70px; */
   display: flex;
   flex-flow: column;
   justify-content: center;
   align-items: flex-start;
-  margin: 5px;
+  margin: 0;
   background: #fafafa;
   border: 3px solid #31302b;
   box-shadow: 3px 2px 4px rgba(0,0,0,0.25);
 }
 #user-info p{
   margin: 0;
-  padding: 10px;
+  padding: 6px;
   font-family: sans-serif;
   font-weight: bold;
-  font-size: 25px;
+  font-size: 20px;
   word-break: break-all;
   overflow-wrap: break-word;
 }
 
 #click-info{
-  grid-row: first-row / 1;
-  grid-column: left-col / right-col;
-  margin: 5px 25px;
-  background: rgba(0,0,0,0.25);
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+.info-text{
+  display: block;
+  margin: 0;
+  padding: 10px 20px;
+  background: #31302b;
+  color: #fff;
+  box-shadow: 3px 2px 4px rgba(0,0,0,0.25);
+}
+
+
+#game-content{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 100px 150px 100px 120px;
+  box-sizing: border-box;
 }
 
 #inventory{
-  grid-row: top-row / last-row;
-  grid-column: first-col / 1;
-  margin: 10px 20px;
+  position: absolute;
+  left: 5px;
+  top: 100px;
+  width: 110px;
+  height: calc(100% - 120px);
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
   background: rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+#inventory p{
+  flex: 0 0 auto;
+  margin: 5px;
+  padding: 10px;
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+#inventory ul{
+  flex: 1 0 auto;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.item{
+  border: 1px solid #31302b;
+  cursor: pointer;
 }
 
-#actions{
-  grid-row: bottom-row / last-row;
-  grid-column: left-col / right-col;
-  margin: 10px 20px;
-  padding: 0 10%;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-around;
-  align-items: center;
-  background: #fafafa;
-  box-shadow: inset 3px 2px 4px rgba(0,0,0,0.25);
+
+canvas{
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
 }
+
 
 #leaderboard{
-  grid-row: first-row / bottom-row;
-  grid-column: right-col / last-col;
-  margin: 5px;
+  position: absolute;
+  right: 5px;
+  top: 100px;
+  height: calc(100% - 200px);
+  width: 150px;
+  box-sizing: border-box;
   background: #fafafa;
   border: 3px solid #31302b;
   box-shadow: 3px 2px 4px rgba(0,0,0,0.25);
+  overflow-x: hidden;
   overflow-y: scroll;
 }
-#leaderboard div{
+#leaderboard>div{
   width: 100%;
   height: auto;
   margin: 10px 0;
@@ -182,18 +221,29 @@ html, body{
   font-weight: normal;
 }
 #leaderboard>div p:first-child{
-  font-family: Verdana;
   font-weight: bold;
 }
 
-#game{
-  grid-row: top-row / bottom-row;
-  grid-column: left-col / right-col;
-  width: 100%;
-  height: 100%;
+
+#actions{
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  margin: 0;
+  padding: 0;
+  width: calc(100% - 270px);
+  height: 80px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  background: transparent;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
-#game canvas{
+#actions>div{
   display: block;
-  margin: 0 auto;
-  cursor: pointer;
+}
+#actions>div.hidden{
+  display: none;
 }
