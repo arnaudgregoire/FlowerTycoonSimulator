@@ -46,7 +46,7 @@ app.post('/plant', function (req, res) {
     json = game.plant(req.body);
   }
   else{
-    json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN (https://www.youtube.com/watch?v=z9CRvCmJUnI)
+    json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN(https://www.youtube.com/watch?v=z9CRvCmJUnI)
   }
   res.json(json);
   requestUpdateClients();

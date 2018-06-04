@@ -294,7 +294,17 @@
     }
   }
 
+class SaleManager extends IManager{
+  constructor(container){
+    super(container);
+    this.sale_button = document.querySelector("#sale");
+    console.log(this.sale_button);
+    this.sale_button.addEventListener("click", function () {
+      this.dispatchUIEvent("saleClick",null);
+    }.bind(this),false);
+  }
 
+}
 
   class UIManager {
     constructor() {
@@ -304,6 +314,7 @@
       this.inventoryManager = null;
       this.actionsManager   = null;
       this.boardManager     = null;
+      this.saleManager      = null;
 
       this.init();
     }
@@ -315,6 +326,7 @@
       this.inventoryManager = new InventoryManager(document.querySelector("#inventory"));
       this.actionsManager   = new ActionsManager(document.querySelector("#actions"));
       this.boardManager     = new BoardManager(document.querySelector("#leaderboard"));
+      this.saleManager      = new SaleManager(document.querySelector("sale"));
     }
 
     updateBoard(player_list) {

@@ -104,6 +104,10 @@
       window.addEventListener("displayInfo", function (e) {
         this.ui_manager.displayInfo(e.detail);
       }.bind(this), false);
+
+      window.addEventListener("saleClick", function (e) {
+        this.handleSaleEvent(e);
+      }.bind(this), false);
     }
 
 
@@ -297,6 +301,11 @@
           }
         )
       }
+    }
+
+    handleSaleEvent(e){
+      console.log(e);
+      console.log("trigger");
     }
 
     handleFertilizeEvent(e) {
