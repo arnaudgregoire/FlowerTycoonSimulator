@@ -89,15 +89,22 @@
     constructor(container) {
       super(container);
       this.usernameHTML = document.createElement("p");
+      this.scoreHTML = document.createElement("p");
       this.container.appendChild(this.usernameHTML);
+      this.container.appendChild(this.scoreHTML);
     }
 
     setPlayerInfo(player) {
       this.setUsername(player.name);
+      this.setPlayerScore(player.score);
     }
 
     setUsername(name) {
       this.usernameHTML.textContent = String(name);
+    }
+
+    setPlayerScore(score) {
+      this.scoreHTML.textContent = "Score: " + String(score);
     }
   }
 
@@ -148,7 +155,7 @@
     }
 
     displayMoney(player) {
-      this.moneyHTML.innerText = String(player.money);
+      this.moneyHTML.innerText = String(player.money) + "G";
     }
 
     clearInventory() {
@@ -273,17 +280,17 @@
     }
 
     setButtonState(actions) {
-      if (!!actions.plant) { this.plant_button.classList.remove("inactive") }
-      else { this.plant_button.classList.add("inactive") }
+      if (!!actions.plant) { this.plant_button.classList.remove("hidden") }
+      else { this.plant_button.classList.add("hidden") }
 
-      if (!!actions.harvest) { this.harvest_button.classList.remove("inactive") }
-      else { this.harvest_button.classList.add("inactive") }
+      if (!!actions.harvest) { this.harvest_button.classList.remove("hidden") }
+      else { this.harvest_button.classList.add("hidden") }
 
-      if (!!actions.fertilize) { this.fertilize_button.classList.remove("inactive") }
-      else { this.fertilize_button.classList.add("inactive") }
+      if (!!actions.fertilize) { this.fertilize_button.classList.remove("hidden") }
+      else { this.fertilize_button.classList.add("hidden") }
 
-      if (!!actions.buy) { this.buy_button.classList.remove("inactive") }
-      else { this.buy_button.classList.add("inactive") }
+      if (!!actions.buy) { this.buy_button.classList.remove("hidden") }
+      else { this.buy_button.classList.add("hidden") }
     }
   }
 
