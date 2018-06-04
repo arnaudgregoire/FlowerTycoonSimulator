@@ -109,6 +109,7 @@ html, body{
 .item{
   border: 1px solid #31302b;
   cursor: pointer;
+  list-style-type: none; 
 }
 
 #user-info{

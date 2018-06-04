@@ -127,10 +127,10 @@
       this.player_id = null // keep track of the player id to avoid recreating the inventory
       this.money = 0;
   		this.inventory = [];
-
       this.moneyHTML = document.createElement("p");
       this.inventoryHTML = document.createElement("ul");
-
+      let sortable = new window.Draggable.Sortable(this.inventoryHTML,{draggable: '.item'});
+      console.log(sortable);
       this.container.appendChild(this.moneyHTML);
       this.container.appendChild(this.inventoryHTML);
     }
@@ -159,7 +159,7 @@
 
     createHTML(item) {
       //console.log(item);
-      let div = document.createElement("div");
+      let div = document.createElement("li");
       let miniature = document.createElement("img");
       miniature.src = item.getAsset().src;
       div.appendChild(miniature);

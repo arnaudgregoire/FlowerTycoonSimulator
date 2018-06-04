@@ -7,7 +7,8 @@ const JS_FILES = {
     ".": "utils",
     "game/": ["plant", "tile", "farm", "player","seed"]
   },
-  "public/js/": ["img-loader", "socket-manager", "ui-manager", "game"]
+  "public/js/": ["img-loader", "socket-manager", "ui-manager", "game"],
+  "https://":"cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.7/lib/draggable.bundle.js"
 };
 
 
