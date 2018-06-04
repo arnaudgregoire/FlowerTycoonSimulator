@@ -137,7 +137,7 @@
       this.moneyHTML = document.createElement("p");
       this.inventoryHTML = document.createElement("ul");
       let sortable = new window.Draggable.Sortable(this.inventoryHTML,{draggable: '.item'});
-      console.log(sortable);
+      //console.log(sortable);
       this.container.appendChild(this.moneyHTML);
       this.container.appendChild(this.inventoryHTML);
     }
@@ -297,9 +297,9 @@
 class SaleManager extends IManager{
   constructor(container){
     super(container);
-    this.sale_button = document.querySelector("#sale");
-    console.log(this.sale_button);
-    this.sale_button.addEventListener("click", function () {
+    console.log(container);
+    container.addEventListener("click", function (){
+      console.log("click");
       this.dispatchUIEvent("saleClick",null);
     }.bind(this),false);
   }
@@ -326,7 +326,7 @@ class SaleManager extends IManager{
       this.inventoryManager = new InventoryManager(document.querySelector("#inventory"));
       this.actionsManager   = new ActionsManager(document.querySelector("#actions"));
       this.boardManager     = new BoardManager(document.querySelector("#leaderboard"));
-      this.saleManager      = new SaleManager(document.querySelector("sale"));
+      this.saleManager      = new SaleManager(document.querySelector("#sale"));
     }
 
     updateBoard(player_list) {
