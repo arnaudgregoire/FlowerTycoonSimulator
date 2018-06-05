@@ -32,7 +32,7 @@
       this.player_list = null;
       this.player = null;
 
-      this.refresh_rate = 1000; // every refresh_rate second, the canvas is actualised with client data 
+      this.refresh_rate = 1000; // every refresh_rate second, the canvas is actualised with client data
     }
 
     init() {
@@ -57,8 +57,7 @@
         {"tulip": "flower/tulip.png"},
         {"seed": "seed/seed.png"},
         {"plantOld": "flower/plantOld.png"}
-      ],
-        () => this.ui_manager.toggleLogin());
+      ], () => this.ui_manager.toggleLogin());
     }
 
     initEventListener() {
@@ -185,11 +184,11 @@
             case "plant":
               this.player.inventory.push(window.PlantFactory.prototype.createPlantFromData(json.inventory[i]));
               break;
-            
+
             case "seed":
               this.player.inventory.push(window.SeedFactory.prototype.createSeedFromData(json.inventory[i]));
               break;
-          }          
+          }
         }
         this.player.money = json.money;
         this.ui_manager.updateInventory(this.player);
