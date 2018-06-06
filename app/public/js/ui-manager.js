@@ -315,7 +315,7 @@ class SaleManager extends IManager{
   }
   create() {
     document.body.appendChild(this.getHTML());
-    document.querySelector('.item').style.zIndex = '3';
+    document.getElementById('inventory').style.zIndex = '3';
   }
 
   delete() {
@@ -323,7 +323,7 @@ class SaleManager extends IManager{
     if(document.querySelector("#sale-overlay") != null) {
       document.body.removeChild(document.querySelector("#sale-overlay"));
     }
-    document.querySelector('.item').style.removeProperty('zIndex');
+    document.getElementById('inventory').style.removeProperty('zIndex');
   }
 
   getHTML() {

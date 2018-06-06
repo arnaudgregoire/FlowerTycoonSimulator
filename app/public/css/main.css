@@ -84,7 +84,7 @@ html, body{
   width: 70%;
   height: 70%;
   padding: 20px 30px;
-  background: #fff;
+  background: rgb(161, 161, 161);
   border: 3px solid #31302b;
   box-shadow: 3px 2px 4px rgba(0,0,0,0.3);
 }
@@ -149,10 +149,6 @@ html, body{
   font-size: 20px;
   word-break: break-all;
   overflow-wrap: break-word;
-}
-
-#sale{
-  cursor: pointer;
 }
 
 
