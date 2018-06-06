@@ -303,8 +303,7 @@
     }
 
     handleSaleEvent(e){
-      console.log(e);
-      console.log("trigger");
+      this.ui_manager.toggleSale();
     }
 
     handleFertilizeEvent(e) {

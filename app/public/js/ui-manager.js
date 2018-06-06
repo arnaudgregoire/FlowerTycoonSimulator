@@ -297,13 +297,48 @@
 class SaleManager extends IManager{
   constructor(container){
     super(container);
-    console.log(container);
+    this.visible = false;
     container.addEventListener("click", function (){
-      console.log("click");
-      this.dispatchUIEvent("saleClick",null);
-    }.bind(this),false);
+      this.dispatchUIEvent("saleClick", null);
+    }.bind(this), false);
   }
 
+  toggle() {
+    if(this.visible) {
+      this.visible = false;
+      this.delete();
+    }
+    else {
+      this.visible = true;
+      this.create();
+    }
+  }
+  create() {
+    document.body.appendChild(this.getHTML());
+  }
+
+  delete() {
+    document.querySelector("#wrap").classList.remove("hidden");
+    if(document.querySelector("#overlay") != null) {
+      document.body.removeChild(document.querySelector("#overlay"));
+    }
+  }
+
+  getHTML() {
+    let overlay = document.createElement("div");
+    overlay.id = "overlay";
+    let saleBox = document.createElement("div");
+    saleBox.id = "sale-box";
+    let closeButton = document.createElement("div");
+    closeButton.classList.add("button");
+    closeButton.appendChild(document.createElement('p').appendChild(document.createTextNode("Fermer")));
+    closeButton.addEventListener('click', function (){
+      this.toggle();
+    }.bind(this), false)
+    saleBox.appendChild(closeButton);
+    overlay.appendChild(saleBox);
+    return overlay;
+  }
 }
 
   class UIManager {
@@ -352,6 +387,10 @@ class SaleManager extends IManager{
     */
     toggleLogin() {
       this.loginManager.toggle();
+    }
+
+    toggleSale(){
+      this.saleManager.toggle();
     }
 
     setInfo(player) {

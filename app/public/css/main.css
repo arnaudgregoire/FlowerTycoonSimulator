@@ -63,6 +63,19 @@ html, body{
   box-shadow: 3px 2px 4px rgba(0,0,0,0.3);
 }
 
+#sale-box{
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  height: 70%;
+  padding: 20px 30px;
+  background: #fff;
+  border: 3px solid #31302b;
+  box-shadow: 3px 2px 4px rgba(0,0,0,0.3);
+}
+
 #login-box>div{
   display: inline;
   margin: 15px 0;
@@ -126,31 +139,9 @@ html, body{
 }
 
 #sale{
-  position: absolute;
-  top: 5px;
-  left: 200px;
-  width: 150px;
-  /* height: 70px; */
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: flex-start;
-  margin: 0;
-  background: #fafafa;
-  border: 3px solid #31302b;
-  box-shadow: 3px 2px 4px rgba(0,0,0,0.25);
   cursor: pointer;
 }
 
-#sale p{
-  margin: 0;
-  padding: 6px;
-  font-family: sans-serif;
-  font-weight: bold;
-  font-size: 20px;
-  word-break: break-all;
-  overflow-wrap: break-word;
-}
 
 #click-info{
   position: absolute;
