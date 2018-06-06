@@ -315,18 +315,20 @@ class SaleManager extends IManager{
   }
   create() {
     document.body.appendChild(this.getHTML());
+    document.querySelector('.item').style.zIndex = '3';
   }
 
   delete() {
     document.querySelector("#wrap").classList.remove("hidden");
-    if(document.querySelector("#overlay") != null) {
-      document.body.removeChild(document.querySelector("#overlay"));
+    if(document.querySelector("#sale-overlay") != null) {
+      document.body.removeChild(document.querySelector("#sale-overlay"));
     }
+    document.querySelector('.item').style.removeProperty('zIndex');
   }
 
   getHTML() {
     let overlay = document.createElement("div");
-    overlay.id = "overlay";
+    overlay.id = "sale-overlay";
     let saleBox = document.createElement("div");
     saleBox.id = "sale-box";
     let closeButton = document.createElement("div");
