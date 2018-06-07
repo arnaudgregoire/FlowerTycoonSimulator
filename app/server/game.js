@@ -6,6 +6,7 @@ var SeedFactory = require('../shared/game/seed.js').SeedFactory;
 var TileEmpty = require('../shared/game/tile.js').TileEmpty;
 var TileBought = require('../shared/game/tile.js').TileBought;
 var TileSeeded = require('../shared/game/tile.js').TileSeeded;
+var Bouquet = require('../shared/game/bouquet.js').Bouquet;
 var Player = require('../shared/game/player.js');
 var utils = require('../shared/utils.js');
 
@@ -28,7 +29,10 @@ class Game{
 
     this.then = 0;
     this.now = 0;
-
+    this.bouquets = [
+      new Bouquet(["rose","rose","rose","rose"]),
+      new Bouquet(["tulip","tulip","tulip","tulip"])
+    ];
     this.loop();
   }
 

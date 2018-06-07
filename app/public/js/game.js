@@ -46,6 +46,7 @@
       this.player_list = [];
       this.socket_manager = new SocketManager(this.server_url);
       this.ui_manager = new UIManager();
+      this.bouquets = [];
       this.initEventListener();
 
       ImgLoader.setMainDirectory("public/assets/");
@@ -137,6 +138,7 @@
         this.getPlayers();
         this.getFarm();
         this.getInventory();
+        this.getBouquets();
       }
     }
 
@@ -151,6 +153,16 @@
         this.farm.updateTiles(json.tiles,this);
         //console.log(this.farm.tiles);
         this.farm.draw(this.ctx);
+      })
+    }
+
+    getBouquets(){
+      this.socket_manager.sendMessage("getBouquets", JSON.stringify({"description" : "getBouquets"}))
+      .then((json)=>{
+        this.bouquets = [];
+        for (let i = 0; i < json.length; i++) {
+          this.bouquets.push(new Bouquet(json[i]));
+        }
       })
     }
 

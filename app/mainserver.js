@@ -106,7 +106,9 @@ app.post('/getFarm', function (req, res) {
   res.json(game.farm.toJSON());
 });
 
-
+app.post('/getBouquets', function (req, res) {
+  res.json(game.bouquets);
+});
 /**
  * Methode pour commencer une partie appele juste au dessus a la creation du serveur
  */
