@@ -11,7 +11,7 @@
     }
 
     init() {
-      this.socket = new WebSocket("ws://" + this.base_url); //wss for heroku
+      this.socket = new WebSocket("wss://" + this.base_url); //wss for heroku
     }
 
     initEventListener() {
@@ -25,7 +25,7 @@
     }
 
     sendMessage(msg_type, data) {
-      return fetch("http://" + this.base_url + msg_type, { //https for heroku
+      return fetch("https://" + this.base_url + msg_type, { //https for heroku
         method: "POST",
         headers: {
           'Accept': 'application/json, text/plain, */*',

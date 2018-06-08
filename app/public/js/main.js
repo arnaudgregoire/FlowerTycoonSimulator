@@ -1,6 +1,6 @@
 "use strict";
 
-const URL = "localhost:8081/";  // flowertycoonsimulator.herokuapp.com/ ||  localhost:8081/
+const URL = "flowertycoonsimulator.herokuapp.com/";  // flowertycoonsimulator.herokuapp.com/ ||  localhost:8081/
 // C:Users\msawada\Desktop\flowertycoonsimulator\app
 const JS_FILES = {
   "shared/": {
