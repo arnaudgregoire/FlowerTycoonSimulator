@@ -161,7 +161,11 @@
       .then((json)=>{
         this.bouquets = [];
         for (let i = 0; i < json.length; i++) {
-          this.bouquets.push(new Bouquet(json[i]));
+          let arrayFlower = [];
+          for (let j = 0; j < json[i].arrayFlower.length; j++) {
+            arrayFlower.push(PlantFactory.prototype.createPlantFromData(json[i].arrayFlower[j]));
+          }
+          this.bouquets.push(new Bouquet(arrayFlower));
         }
       })
     }
@@ -315,7 +319,7 @@
     }
 
     handleSaleEvent(e){
-      this.ui_manager.toggleSale();
+      this.ui_manager.toggleSale(this.bouquets);
     }
 
     handleFertilizeEvent(e) {

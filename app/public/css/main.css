@@ -59,7 +59,7 @@ html, body{
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0, 0, 0, 0.8);
   z-index: 2;
 }
 
@@ -84,7 +84,7 @@ html, body{
   width: 70%;
   height: 70%;
   padding: 20px 30px;
-  background: rgb(161, 161, 161);
+  background: #00af6e;
   border: 3px solid #31302b;
   box-shadow: 3px 2px 4px rgba(0,0,0,0.3);
 }

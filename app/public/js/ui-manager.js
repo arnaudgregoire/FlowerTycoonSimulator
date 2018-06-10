@@ -303,18 +303,18 @@ class SaleManager extends IManager{
     }.bind(this), false);
   }
 
-  toggle() {
+  toggle(bouquets) {
     if(this.visible) {
       this.visible = false;
       this.delete();
     }
     else {
       this.visible = true;
-      this.create();
+      this.create(bouquets);
     }
   }
-  create() {
-    document.body.appendChild(this.getHTML());
+  create(bouquets) {
+    document.body.appendChild(this.getHTML(bouquets));
     document.getElementById('inventory').style.zIndex = '3';
   }
 
@@ -326,11 +326,15 @@ class SaleManager extends IManager{
     document.getElementById('inventory').style.removeProperty('zIndex');
   }
 
-  getHTML() {
+  getHTML(bouquets) {
     let overlay = document.createElement("div");
     overlay.id = "sale-overlay";
     let saleBox = document.createElement("div");
     saleBox.id = "sale-box";
+
+    for (let i = 0; i < bouquets.length; i++) {
+      saleBox.appendChild(this.getBouquetHTML(bouquets[i])); 
+    }
     let closeButton = document.createElement("div");
     closeButton.classList.add("button");
     closeButton.appendChild(document.createElement('p').appendChild(document.createTextNode("Fermer")));
@@ -340,6 +344,31 @@ class SaleManager extends IManager{
     saleBox.appendChild(closeButton);
     overlay.appendChild(saleBox);
     return overlay;
+  }
+
+  getBouquetHTML(bouquet){
+    let bouquetContainer = this.getBouquetContainerHTML();
+    for (let i = 0; i < bouquet.arrayFlower.length; i++) {
+      let flower = document.createElement("li");
+      let miniature = document.createElement("img");
+      miniature.src = bouquet.arrayFlower[i].getAsset().src;
+      flower.appendChild(miniature);
+      flower.appendChild(
+        document.createElement("p").appendChild(
+          document.createTextNode(
+            bouquet.arrayFlower[i].name
+          )
+        )
+      );
+      bouquetContainer.appendChild(flower);
+    }
+    return bouquetContainer;
+  }
+  
+  getBouquetContainerHTML(){
+    let bouquetContainer = document.createElement("ul");
+    bouquetContainer.classList.add("bouquet");
+    return bouquetContainer;
   }
 }
 
@@ -391,8 +420,8 @@ class SaleManager extends IManager{
       this.loginManager.toggle();
     }
 
-    toggleSale(){
-      this.saleManager.toggle();
+    toggleSale(bouquets){
+      this.saleManager.toggle(bouquets);
     }
 
     setInfo(player) {

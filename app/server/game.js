@@ -30,8 +30,16 @@ class Game{
     this.then = 0;
     this.now = 0;
     this.bouquets = [
-      new Bouquet(["rose","rose","rose","rose"]),
-      new Bouquet(["tulip","tulip","tulip","tulip"])
+      new Bouquet([
+        PlantFactory.prototype.createPlant("rose",0),
+        PlantFactory.prototype.createPlant("rose",0),
+        PlantFactory.prototype.createPlant("rose",0),
+        PlantFactory.prototype.createPlant("rose",0)]),
+        new Bouquet([
+          PlantFactory.prototype.createPlant("tulip",0),
+          PlantFactory.prototype.createPlant("tulip",0),
+          PlantFactory.prototype.createPlant("tulip",0),
+          PlantFactory.prototype.createPlant("tulip",0)])
     ];
     this.loop();
   }
