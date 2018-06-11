@@ -167,6 +167,7 @@
           }
           this.bouquets.push(new Bouquet(arrayFlower));
         }
+        console.log(this.bouquets);
       })
     }
 

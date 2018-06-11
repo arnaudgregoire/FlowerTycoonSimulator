@@ -31,15 +31,15 @@ class Game{
     this.now = 0;
     this.bouquets = [
       new Bouquet([
-        PlantFactory.prototype.createPlant("rose",0),
-        PlantFactory.prototype.createPlant("rose",0),
-        PlantFactory.prototype.createPlant("rose",0),
-        PlantFactory.prototype.createPlant("rose",0)]),
+        PlantFactory.prototype.createPlantFromData({"name":"rose", "state":5000}),
+        PlantFactory.prototype.createPlantFromData({"name":"rose", "state":5000}),
+        PlantFactory.prototype.createPlantFromData({"name":"rose", "state":5000}),
+        PlantFactory.prototype.createPlantFromData({"name":"rose", "state":5000})]),
         new Bouquet([
-          PlantFactory.prototype.createPlant("tulip",0),
-          PlantFactory.prototype.createPlant("tulip",0),
-          PlantFactory.prototype.createPlant("tulip",0),
-          PlantFactory.prototype.createPlant("tulip",0)])
+          PlantFactory.prototype.createPlantFromData({"name":"tulip", "state":5000}),
+          PlantFactory.prototype.createPlantFromData({"name":"tulip", "state":5000}),
+          PlantFactory.prototype.createPlantFromData({"name":"tulip", "state":5000}),
+          PlantFactory.prototype.createPlantFromData({"name":"tulip", "state":5000})])
     ];
     this.loop();
   }

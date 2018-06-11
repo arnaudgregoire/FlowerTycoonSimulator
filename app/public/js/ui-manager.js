@@ -331,9 +331,12 @@ class SaleManager extends IManager{
     overlay.id = "sale-overlay";
     let saleBox = document.createElement("div");
     saleBox.id = "sale-box";
-
+    let choiceBouqets = document.createElement("div");
+    choiceBouqets.id = "choiceBouquets";
+    let placeHolder = document.createElement("div");
+    placeHolder.id = "placeHolder";
     for (let i = 0; i < bouquets.length; i++) {
-      saleBox.appendChild(this.getBouquetHTML(bouquets[i])); 
+      choiceBouqets.appendChild(this.getBouquetHTML(bouquets[i])); 
     }
     let closeButton = document.createElement("div");
     closeButton.classList.add("button");
@@ -341,6 +344,8 @@ class SaleManager extends IManager{
     closeButton.addEventListener('click', function (){
       this.toggle();
     }.bind(this), false)
+    saleBox.appendChild(placeHolder);
+    saleBox.appendChild(choiceBouqets);
     saleBox.appendChild(closeButton);
     overlay.appendChild(saleBox);
     return overlay;
@@ -353,13 +358,9 @@ class SaleManager extends IManager{
       let miniature = document.createElement("img");
       miniature.src = bouquet.arrayFlower[i].getAsset().src;
       flower.appendChild(miniature);
-      flower.appendChild(
-        document.createElement("p").appendChild(
-          document.createTextNode(
-            bouquet.arrayFlower[i].name
-          )
-        )
-      );
+      let name = document.createElement("p");
+      name.appendChild(document.createTextNode(bouquet.arrayFlower[i].name));
+      flower.appendChild(name);
       bouquetContainer.appendChild(flower);
     }
     return bouquetContainer;

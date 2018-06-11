@@ -273,3 +273,40 @@ canvas{
 #actions>div.hidden{
   display: none;
 }
+
+#choiceBouquets{
+  display: flex;
+  justify-content: space-evenly;
+  border: 3px solid #31302b;
+  height:60%;
+  margin: 5px;
+  width: 100%;
+}
+
+#placeHolder{
+  display: flex;
+  border: 3px solid #31302b;
+  height:40%;
+  margin: 5px;
+  width: 100%;
+}
+
+.bouquet{
+  display: flex;
+  list-style-type: none;
+}
+
+.bouquet li{
+  border: 3px solid #31302b;
+  height: 30%;
+}
+
+.bouquet li p{
+  flex: 0 0 auto;
+  margin: 5px;
+  padding: 10px;
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
