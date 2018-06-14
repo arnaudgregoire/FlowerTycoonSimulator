@@ -310,3 +310,7 @@ canvas{
   font-size: 18px;
   font-weight: bold;
 }
+
+ #dropzone{
+   width: 100%;
+ }

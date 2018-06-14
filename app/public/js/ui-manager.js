@@ -136,8 +136,7 @@
   		this.inventory = [];
       this.moneyHTML = document.createElement("p");
       this.inventoryHTML = document.createElement("ul");
-      let sortable = new window.Draggable.Sortable(this.inventoryHTML,{draggable: '.item'});
-      //console.log(sortable);
+      this.inventoryHTML.id = "arrayInventory";
       this.container.appendChild(this.moneyHTML);
       this.container.appendChild(this.inventoryHTML);
     }
@@ -316,6 +315,11 @@ class SaleManager extends IManager{
   create(bouquets) {
     document.body.appendChild(this.getHTML(bouquets));
     document.getElementById('inventory').style.zIndex = '3';
+    const droppable = new Draggable.Droppable(document.querySelectorAll("ul"), {
+      draggable: ".item",
+      droppable: "#dropzone"
+    });
+    console.log(droppable);
   }
 
   delete() {
@@ -335,6 +339,9 @@ class SaleManager extends IManager{
     choiceBouqets.id = "choiceBouquets";
     let placeHolder = document.createElement("div");
     placeHolder.id = "placeHolder";
+    let dropzone = document.createElement("ul");
+    dropzone.id = "dropzone";
+    placeHolder.appendChild(dropzone);
     for (let i = 0; i < bouquets.length; i++) {
       choiceBouqets.appendChild(this.getBouquetHTML(bouquets[i])); 
     }
