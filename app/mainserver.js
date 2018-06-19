@@ -86,10 +86,19 @@ app.post('/harvest', function (req, res) {
 /**
  * Partie du serveur qui s occupe de la connexion de nouveaux joueurs, plus generalement de la connexion des utilisateurs
  */
-app.post('/login', function (req, res) {
-  res.json(game.login(req.body));
-  requestUpdateClients();
+app.post('/login', function (req,res) {
+  game.login(req.body).then((rep)=>{
+    res.json(rep);
+    requestUpdateClients();
+  })
 });
+
+app.post('/register', function(req,res){
+  game.register(req.body).then((rep)=>{
+    res.json(rep);
+    requestUpdateClients();
+  })
+})
 
 /**
  * Partie du serveur repondant aux demandes d informations du client

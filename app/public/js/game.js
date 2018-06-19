@@ -70,6 +70,10 @@
         this.handleLogin(e.detail);
       }.bind(this), false);
 
+      window.addEventListener("sendRegistration", function(e){
+        this.handleRegistration(e.detail);
+      }.bind(this),false);
+
       this.canvas.addEventListener("click", function (e) {
         this.handleCanvasClick(e);
       }.bind(this), false);
@@ -203,7 +207,7 @@
       let screenHeight, screenWidth;
       if((w/h) > (this.width/this.height)) {   // get the best game ratio
         screenHeight = h;
-        screenWidth = screenHeight * this.width/this.height;
+        screenWidth = screenHeight * this.width/this.height;1111111111111111111
       }
       else {
         screenWidth = w;
@@ -215,8 +219,28 @@
       this.canvas.style.marginTop = String(0.5 * (h - screenHeight))+"px";
     }
 
+    handleRegistration(info){
+      console.log(info);
+      this.socket_manager.sendMessage("register",JSON.stringify(
+        {
+          "description": "register",
+          "param": info
+        }
+        ))
+        .then((res)=>{
+          console.log("info registration");
+          let success = res.response;
+          console.log(res);
+          if(success) {
+            console.log("registration successful")
+          }
+        }
+      );
+    }
+
+
     handleLogin(info) {
-      //console.log(info);
+      console.log(info);
       this.socket_manager.sendMessage("login",JSON.stringify(
         {
           "description": "login",
@@ -224,8 +248,10 @@
         }
         ))
         .then((res)=>{
-          //console.log(res);
+          console.log("infoooooooooooooooooooo222222222222222222222222");
           let success = res.response;
+          console.log(res);
+          console.log("info3")
           if(success) {
             // this.width = this.canvas.width = this.TILE_SIZE * this.columns;
             // this.height = this.canvas.height = this.TILE_SIZE * this.rows;
@@ -251,6 +277,8 @@
         }
       );
     }
+
+
 
 
     handlePlantEvent(e) {

@@ -1,4 +1,7 @@
 var nanoid = require('nanoid');
+var pg = require('pg');
+var connectionString = process.env.DATABASE_URL || 'postgres://thomas@localhost:5432/flowertycoonsimulator';
+
 
 var Farm = require('../shared/game/farm.js');
 var PlantFactory = require('../shared/game/plant.js').PlantFactory;
@@ -8,6 +11,7 @@ var TileBought = require('../shared/game/tile.js').TileBought;
 var TileSeeded = require('../shared/game/tile.js').TileSeeded;
 var Player = require('../shared/game/player.js');
 var utils = require('../shared/utils.js');
+
 
 /**
 * L'instance Game représente la partie en cours :
@@ -67,6 +71,8 @@ class Game{
     return false;
   }
 
+
+
   /**
   * Renvoie le joeur correspondant au nom compris dans la requete
   * @param {Request body} req
@@ -89,6 +95,33 @@ class Game{
     return null;
   }
 
+  checkLogin(req){
+    const results = [];
+    let username = req.param.player.username;
+    let password = req.param.player.password;
+    let client = new pg.Client(connectionString);
+    client.connect();
+
+    const qry = 'SELECT * FROM login WHERE name=\''+username+'\' AND password=\''+password+'\';';
+    console.log(qry);
+    const result = client.query(qry);
+    return result;
+    
+  }
+
+  addUser(req){
+    const results = [];
+    let username = req.param.player.username;
+    let password = req.param.player.password;
+    let client = new pg.Client(connectionString);
+    client.connect();
+
+    const qry = 'INSERT INTO login(name,password) VALUES (\''+username+'\',\''+password+'\');'
+    console.log(qry);
+    const result = client.query(qry);
+    return result;
+
+  }
   /**
   * Methode appele lorsque que un joueur veut acheter une case
   * @param {Request body} req
@@ -199,34 +232,42 @@ class Game{
   * @param {Request body} req
   *  Renvoie un json avec la reponse associe et une petite description de ce qui s est passe
   */
- login(req) {
-  let json = {};
-  let login = req.param;
-  let exist;
-  if (req.param.player.hasOwnProperty("username")){
-    exist = this.checkName(req.param.player.username);
-  }
-  else{
-    exist = false;
-  }
-  let player; 
-  if (exist) {
-    player = this.findPlayerByName(req.param.player.username);
-    if(this.checkPassword(login.password)) {
-      json = {"response": 1, "description" : "Heureux de vous revoir", "player": {"name": player.name, "id":player.id}};
+
+
+async login(req) {
+  let json = await this.checkLogin(req).then((results) => {
+    if(results.rows[0]){
+      console.log("hey");
+      console.log(results.rows[0]);
+      console.log("hi");
+      console.log(results.rows[0].name);
+      console.log(this);
+      let json = {"response": 1, "description" : "Heureux de vous revoir", "player": {"name": results.rows[0].name, "id":results.rows[0].id}};
+      let player = new Player(results.rows[0].id,results.rows[0].name,utils.getRandomColor());
+      this.addNewPlayer(player);
+      console.log(this);
+      return json;
+    }else{
+      console.log("bad credentials");
+      let json = {"response": 0, "description" : "Wrong username or password"};
+      return json;
     }
-    else{
-      json = {"response": 0, "description" : "Mauvais mot de passe"};
-    }
-  }
-  else{
-    let id = nanoid();
-    let player = new Player(id,req.param.player.username,utils.getRandomColor());
-    this.addNewPlayer(player);
-    json = {"response": 1, "description" : "Votre compte a bien ete cree", "player": {"name": player.name, "id":player.id}};
-  }
+  });
+  //let player = new Player(res.id,res.name,utils.getRandomColor());
+  //this.addNewPlayer(player);
   return json;
 }
+
+async register(req){
+  console.log("hello");
+  let json = await this.addUser(req).then((results)=>{
+    console.log(results);
+    let json = {"response": 1, "description" : "compte cree avec succes"};
+    return json;
+  });
+  return json;
+}
+
 
   addNewPlayer(player){
     this.player_list.push(player);
