@@ -1,6 +1,6 @@
 var nanoid = require('nanoid');
 var pg = require('pg');
-var connectionString = process.env.DATABASE_URL || 'postgres://thomas@localhost:5432/flowertycoonsimulator';
+var connectionString = process.env.DATABASE_URL || 'postgres://thomas@localhost:5432/flowertycoonsimulator'; //
 
 
 var Farm = require('../shared/game/farm.js');
