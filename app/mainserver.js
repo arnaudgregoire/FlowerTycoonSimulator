@@ -46,7 +46,7 @@ app.post('/plant', function (req, res) {
     json = game.plant(req.body);
   }
   else{
-    json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN (https://www.youtube.com/watch?v=z9CRvCmJUnI)
+    json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN(https://www.youtube.com/watch?v=z9CRvCmJUnI)
   }
   res.json(json);
   requestUpdateClients();
@@ -115,7 +115,9 @@ app.post('/getFarm', function (req, res) {
   res.json(game.farm.toJSON());
 });
 
-
+app.post('/getBouquets', function (req, res) {
+  res.json(game.bouquets);
+});
 /**
  * Methode pour commencer une partie appele juste au dessus a la creation du serveur
  */

@@ -163,10 +163,9 @@
       this.player_id = null // keep track of the player id to avoid recreating the inventory
       this.money = 0;
   		this.inventory = [];
-
       this.moneyHTML = document.createElement("p");
       this.inventoryHTML = document.createElement("ul");
-
+      this.inventoryHTML.id = "arrayInventory";
       this.container.appendChild(this.moneyHTML);
       this.container.appendChild(this.inventoryHTML);
     }
@@ -195,7 +194,7 @@
 
     createHTML(item) {
       //console.log(item);
-      let div = document.createElement("div");
+      let div = document.createElement("li");
       let miniature = document.createElement("img");
       miniature.src = item.getAsset().src;
       div.appendChild(miniature);
@@ -323,7 +322,92 @@
     }
   }
 
+class SaleManager extends IManager{
+  constructor(container){
+    super(container);
+    this.visible = false;
+    container.addEventListener("click", function (){
+      this.dispatchUIEvent("saleClick", null);
+    }.bind(this), false);
+  }
 
+  toggle(bouquets) {
+    if(this.visible) {
+      this.visible = false;
+      this.delete();
+    }
+    else {
+      this.visible = true;
+      this.create(bouquets);
+    }
+  }
+  create(bouquets) {
+    document.body.appendChild(this.getHTML(bouquets));
+    document.getElementById('inventory').style.zIndex = '3';
+    const droppable = new Draggable.Droppable(document.querySelectorAll("ul"), {
+      draggable: ".item",
+      droppable: "#dropzone"
+    });
+    console.log(droppable);
+  }
+
+  delete() {
+    document.querySelector("#wrap").classList.remove("hidden");
+    if(document.querySelector("#sale-overlay") != null) {
+      document.body.removeChild(document.querySelector("#sale-overlay"));
+    }
+    document.getElementById('inventory').style.removeProperty('zIndex');
+  }
+
+  getHTML(bouquets) {
+    let overlay = document.createElement("div");
+    overlay.id = "sale-overlay";
+    let saleBox = document.createElement("div");
+    saleBox.id = "sale-box";
+    let choiceBouqets = document.createElement("div");
+    choiceBouqets.id = "choiceBouquets";
+    let placeHolder = document.createElement("div");
+    placeHolder.id = "placeHolder";
+    let dropzone = document.createElement("ul");
+    dropzone.id = "dropzone";
+    placeHolder.appendChild(dropzone);
+    for (let i = 0; i < bouquets.length; i++) {
+      choiceBouqets.appendChild(this.getBouquetHTML(bouquets[i])); 
+    }
+    let closeButton = document.createElement("div");
+    closeButton.classList.add("button");
+    closeButton.appendChild(document.createElement('p').appendChild(document.createTextNode("Fermer")));
+    closeButton.addEventListener('click', function (){
+      this.toggle();
+    }.bind(this), false)
+    saleBox.appendChild(placeHolder);
+    saleBox.appendChild(choiceBouqets);
+    saleBox.appendChild(closeButton);
+    overlay.appendChild(saleBox);
+    return overlay;
+  }
+
+  getBouquetHTML(bouquet){
+    let bouquetContainer = this.getBouquetContainerHTML();
+    for (let i = 0; i < bouquet.arrayFlower.length; i++) {
+      let flower = document.createElement("li");
+      let miniature = document.createElement("img");
+      miniature.src = bouquet.arrayFlower[i].getAsset().src;
+      flower.appendChild(miniature);
+      let name = document.createElement("p");
+      name.appendChild(document.createTextNode(bouquet.arrayFlower[i].name));
+      flower.appendChild(name);
+      bouquetContainer.appendChild(flower);
+    }
+    return bouquetContainer;
+  }
+  
+  getBouquetContainerHTML(){
+    let bouquetContainer = document.createElement("ul");
+    bouquetContainer.classList.add("bouquet");
+    return bouquetContainer;
+  }
+}
 
   class UIManager {
     constructor() {
@@ -333,6 +417,7 @@
       this.inventoryManager = null;
       this.actionsManager   = null;
       this.boardManager     = null;
+      this.saleManager      = null;
 
       this.init();
     }
@@ -344,6 +429,7 @@
       this.inventoryManager = new InventoryManager(document.querySelector("#inventory"));
       this.actionsManager   = new ActionsManager(document.querySelector("#actions"));
       this.boardManager     = new BoardManager(document.querySelector("#leaderboard"));
+      this.saleManager      = new SaleManager(document.querySelector("#sale"));
     }
 
     updateBoard(player_list) {
@@ -369,6 +455,10 @@
     */
     toggleLogin() {
       this.loginManager.toggle();
+    }
+
+    toggleSale(bouquets){
+      this.saleManager.toggle(bouquets);
     }
 
     setInfo(player) {

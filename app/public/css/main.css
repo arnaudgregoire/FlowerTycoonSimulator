@@ -50,6 +50,19 @@ html, body{
   z-index: 9999;
 }
 
+#sale-overlay{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 110px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 2;
+}
+
 #login-box{
   display: flex;
   flex-flow: column;
@@ -59,6 +72,19 @@ html, body{
   height: auto;
   padding: 20px 30px;
   background: #fff;
+  border: 3px solid #31302b;
+  box-shadow: 3px 2px 4px rgba(0,0,0,0.3);
+}
+
+#sale-box{
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  height: 70%;
+  padding: 20px 30px;
+  background: #00af6e;
   border: 3px solid #31302b;
   box-shadow: 3px 2px 4px rgba(0,0,0,0.3);
 }
@@ -100,7 +126,6 @@ html, body{
 } */
 
 
-
 #user-info{
   position: absolute;
   top: 5px;
@@ -125,6 +150,7 @@ html, body{
   word-break: break-all;
   overflow-wrap: break-word;
 }
+
 
 #click-info{
   position: absolute;
@@ -185,8 +211,8 @@ html, body{
 .item{
   border: 1px solid #31302b;
   cursor: pointer;
+  list-style-type: none; 
 }
-
 
 canvas{
   display: block;
@@ -247,3 +273,44 @@ canvas{
 #actions>div.hidden{
   display: none;
 }
+
+#choiceBouquets{
+  display: flex;
+  justify-content: space-evenly;
+  border: 3px solid #31302b;
+  height:60%;
+  margin: 5px;
+  width: 100%;
+}
+
+#placeHolder{
+  display: flex;
+  border: 3px solid #31302b;
+  height:40%;
+  margin: 5px;
+  width: 100%;
+}
+
+.bouquet{
+  display: flex;
+  list-style-type: none;
+}
+
+.bouquet li{
+  border: 3px solid #31302b;
+  height: 30%;
+}
+
+.bouquet li p{
+  flex: 0 0 auto;
+  margin: 5px;
+  padding: 10px;
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+ #dropzone{
+   width: 100%;
+ }

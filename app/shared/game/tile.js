@@ -26,7 +26,6 @@
     }
 
     drawSelected(ctx, x, y, width, height) {
-      // ctx.strokeStyle = "#333";
       ctx.fillStyle = "rgba(255,255,255,0.25)";
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -36,7 +35,6 @@
       ctx.lineTo(x - width*0.5, y + height*0.5);  // left
       ctx.lineTo(x, y);
       ctx.fill();
-      // ctx.stroke();
     }
   }
 
@@ -86,6 +84,20 @@
       if(this.selected) {
         this.drawSelected(ctx, x, y-this.offset, width, height);
       }
+      this.drawBorder(ctx, x, y-this.offset, width, height, this.owner.color);
+    }
+
+    drawBorder(ctx, x, y, width, height, color) {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 4;
+      ctx.lineCap = "square";
+      ctx.beginPath();
+      ctx.moveTo(x, y+ctx.lineWidth*0.5); // top
+      ctx.lineTo(x + width*0.5-ctx.lineWidth, y + height*0.5);  // right
+      ctx.lineTo(x, y + height-ctx.lineWidth*0.5);  // bottom
+      ctx.lineTo(x - width*0.5+ctx.lineWidth, y + height*0.5);  // left
+      ctx.lineTo(x, y+ctx.lineWidth*0.5);
+      ctx.stroke();
     }
 
     getAvailableActions() {
@@ -113,14 +125,8 @@
       super.draw(ctx, x, y, width, height);
       let img = this.plant.getAsset();
       let w = img.width, h = img.height;
-      ctx.drawImage(img, x-(w*0.5), y+(height*0.5)-h, w, h);
+      ctx.drawImage(img, x-(w*0.5), y-this.offset+(height-h)*0.5, w, h);
     }
-
-    // draw(ctx) {
-    //   super.draw(ctx);
-    //   let img = window.AssetLoader.get(this.Plant.assetPath);
-    //   ctx.drawImage(img, 0, 0, 64, 64, this.y * this.size, this.x * this.size, this.size, this.size);
-    // }
 
     getAvailableActions() {
       return {
@@ -164,7 +170,7 @@
           if(game.checkID(tile_data.owner.id)) {
               player = game.findPlayerById(tile_data.owner.id);
               let plante = PlantFactory.prototype.createPlantFromData(tile_data.plant);
-              console.log(plante);     
+              //console.log(plante);
               //console.log(tile_data.Plant);
               tile = new TileSeeded(tile_data.x, tile_data.y, player, plante);
           }

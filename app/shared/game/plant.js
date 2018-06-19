@@ -2,9 +2,18 @@
   "use strict";
   let isNode = (typeof module !== 'undefined' && typeof module.exports !== 'undefined');
 
+  var nanoid;
+  var SeedFactory;
+  var PlantSpecies;
+
   if (isNode) {
-    var nanoid = require("nanoid");
-    var SeedFactory = require('./seed.js').SeedFactory;
+    nanoid = require("nanoid");
+    SeedFactory = require('./seed.js').SeedFactory;
+    PlantSpecies = require('./plantSpecies.js').PlantSpecies;
+  }
+  else{
+    PlantSpecies = window.PlantSpecies;
+    SeedFactory = window.SeedFactory;
   }
   class Plant{
     constructor(id, name){
@@ -22,6 +31,10 @@
       this.fruited = false;
       this.plantable = true;
       this.died = false;
+    }
+
+    static getSpecies(){
+      return ["rose", "tulip"]
     }
 
     update(dt) {
@@ -152,7 +165,7 @@
 
   // Static class style
   var PlantFactory = {
-    plants: ["rose", "tulip"]
+    plants: PlantSpecies.getSpecies()
   };
   PlantFactory.prototype = {
     createPlant: function (plant_name, id) {

@@ -32,7 +32,7 @@
       this.player_list = null;
       this.player = null;
 
-      this.refresh_rate = 1000; // every refresh_rate second, the canvas is actualised with client data 
+      this.refresh_rate = 1000; // every refresh_rate second, the canvas is actualised with client data
     }
 
     init() {
@@ -46,6 +46,7 @@
       this.player_list = [];
       this.socket_manager = new SocketManager(this.server_url);
       this.ui_manager = new UIManager();
+      this.bouquets = [];
       this.initEventListener();
 
       ImgLoader.setMainDirectory("public/assets/");
@@ -57,8 +58,7 @@
         {"tulip": "flower/tulip.png"},
         {"seed": "seed/seed.png"},
         {"plantOld": "flower/plantOld.png"}
-      ],
-        () => this.ui_manager.toggleLogin());
+      ], () => this.ui_manager.toggleLogin());
     }
 
     initEventListener() {
@@ -108,6 +108,10 @@
       window.addEventListener("displayInfo", function (e) {
         this.ui_manager.displayInfo(e.detail);
       }.bind(this), false);
+
+      window.addEventListener("saleClick", function (e) {
+        this.handleSaleEvent(e);
+      }.bind(this), false);
     }
 
 
@@ -138,6 +142,7 @@
         this.getPlayers();
         this.getFarm();
         this.getInventory();
+        this.getBouquets();
       }
     }
 
@@ -152,6 +157,20 @@
         this.farm.updateTiles(json.tiles,this);
         //console.log(this.farm.tiles);
         this.farm.draw(this.ctx);
+      })
+    }
+
+    getBouquets(){
+      this.socket_manager.sendMessage("getBouquets", JSON.stringify({"description" : "getBouquets"}))
+      .then((json)=>{
+        this.bouquets = [];
+        for (let i = 0; i < json.length; i++) {
+          let arrayFlower = [];
+          for (let j = 0; j < json[i].arrayFlower.length; j++) {
+            arrayFlower.push(PlantFactory.prototype.createPlantFromData(json[i].arrayFlower[j]));
+          }
+          this.bouquets.push(new Bouquet(arrayFlower));
+        }
       })
     }
 
@@ -185,11 +204,11 @@
             case "plant":
               this.player.inventory.push(window.PlantFactory.prototype.createPlantFromData(json.inventory[i]));
               break;
-            
+
             case "seed":
               this.player.inventory.push(window.SeedFactory.prototype.createSeedFromData(json.inventory[i]));
               break;
-          }          
+          }
         }
         this.player.money = json.money;
         this.ui_manager.updateInventory(this.player);
@@ -325,6 +344,10 @@
           }
         )
       }
+    }
+
+    handleSaleEvent(e){
+      this.ui_manager.toggleSale(this.bouquets);
     }
 
     handleFertilizeEvent(e) {

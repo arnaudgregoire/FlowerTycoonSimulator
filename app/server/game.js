@@ -9,6 +9,7 @@ var SeedFactory = require('../shared/game/seed.js').SeedFactory;
 var TileEmpty = require('../shared/game/tile.js').TileEmpty;
 var TileBought = require('../shared/game/tile.js').TileBought;
 var TileSeeded = require('../shared/game/tile.js').TileSeeded;
+var Bouquet = require('../shared/game/bouquet.js').Bouquet;
 var Player = require('../shared/game/player.js');
 var utils = require('../shared/utils.js');
 
@@ -32,7 +33,18 @@ class Game{
 
     this.then = 0;
     this.now = 0;
-
+    this.bouquets = [
+      new Bouquet([
+        PlantFactory.prototype.createPlantFromData({"name":"rose", "state":5000}),
+        PlantFactory.prototype.createPlantFromData({"name":"rose", "state":5000}),
+        PlantFactory.prototype.createPlantFromData({"name":"rose", "state":5000}),
+        PlantFactory.prototype.createPlantFromData({"name":"rose", "state":5000})]),
+        new Bouquet([
+          PlantFactory.prototype.createPlantFromData({"name":"tulip", "state":5000}),
+          PlantFactory.prototype.createPlantFromData({"name":"tulip", "state":5000}),
+          PlantFactory.prototype.createPlantFromData({"name":"tulip", "state":5000}),
+          PlantFactory.prototype.createPlantFromData({"name":"tulip", "state":5000})])
+    ];
     this.loop();
   }
 

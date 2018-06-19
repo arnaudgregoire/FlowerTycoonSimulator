@@ -1,17 +1,25 @@
 (function () {
 	"use strict";
 	let isNode = (typeof module !== 'undefined' && typeof module.exports !== 'undefined');
-  
+	
+	var nanoid;
+	var PlantSpecies;
+
 	if (isNode) {
-	  var nanoid = require("nanoid");
+		 nanoid = require("nanoid");
+		 PlantSpecies = require('./plantSpecies.js').PlantSpecies;
 	}
+	else {
+    PlantSpecies = window.PlantSpecies;
+	}
+	
 	class Seed{
 	  constructor(id, name){
-		this.id = id;
-		this.category = "seed";
-		this.name = name;	
-	}
-  
+			this.id = id;
+			this.category = "seed";
+			this.name = name;
+		}
+
 	toJson() {
 		// return JSON.stringify(this);
 		return({"name": this.name, "id": this.id});
@@ -40,7 +48,7 @@
   
 	// Static class style
 	var SeedFactory = {
-	  seeds: ["rose", "tulip"]
+	  seeds: PlantSpecies.getSpecies()
 	};
 	SeedFactory.prototype = {
 	  createSeed: function (seed_name, id) {
