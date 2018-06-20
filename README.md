@@ -13,10 +13,36 @@ Prérequis : avoir node/npm
 
  - cloner le dépot
  - npm install 
- - npm start
+
+### Initialisation de la bdd
+
+Sur Widows :
+
+Télécharger  et installer postgres : https://www.postgresql.org/download/windows/
+
+Sur Linux :
+
+sudo apt-get install postgresql
+
+Pour l'instant on créé un utlisateur 
+
+user: postgres
+mdp: postgres
+
+et on créé une bdd flowertycoonsimulator (en ligne de commande ou avec pgadmin)
+
+On éxécute ensuite le script testdb.js (à la racine)
+
+Note : Si votre username/password n'est pas postgres/postgres il vous suffit de changer les connectionsString
+('postgres://postgres:postgres@localhost:5432/flowertycoonsimulator')
+dans testdb.js L2 et dans server/game.js L3
+
+On peut ensuite faire npm start
 
  Le serveur tourne sur le port 8081.
  Le client est alors disponible à cette adresse: http://localhost:8081
+
+
 
 ## Principe
 
