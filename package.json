@@ -24,6 +24,7 @@
     "nodemon": "^1.17.3",
     "passport": "^0.4.0",
     "passport-auth0": "^0.6.1",
+    "pg": "^7.4.3",
     "ws": "^5.1.1"
   },
   "repository": {
