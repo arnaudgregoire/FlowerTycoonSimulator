@@ -3,9 +3,8 @@ const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/
 
 const client = new pg.Client(connectionString);
 client.connect();
-const query = client.query(
+const result = client.query(
   'CREATE TABLE login(id SERIAL PRIMARY KEY, name VARCHAR(40) not null, active BOOLEAN, password VARCHAR(40) not null)');
-query.on('end', () => { client.end(); });
 
 /*
 await client.connect();
