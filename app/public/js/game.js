@@ -99,6 +99,24 @@
         if(this.player.hasItem(item_id)) {
           this.player.setSelectedItem(item_id);
         }
+        
+        if(this.ui_manager.saleManager.visible && document.getElementById('dropzone').childNodes.length < 4 && this.player.selectedItem.category == "plant"){
+          if(this.player.selectedItem.bloomed){
+            this.player.removeItem(this.player.selectedItem);
+            let itemHTML = this.ui_manager.saleManager.createItemHTML(this.player.selectedItem);
+            this.player.saleInventory.push(this.player.selectedItem);
+            document.getElementById("dropzone").appendChild(itemHTML);
+            this.ui_manager.inventoryManager.displayInventory(this.player);
+          }
+        }
+      }.bind(this), false);
+
+      window.addEventListener("inventorySaleClick", function (e) {
+        this.handleInventorySaleClick(e);
+      }.bind(this), false);
+
+      window.addEventListener("closeSaleClick", function (e) {
+        this.handlecloseSaleClick(e);
       }.bind(this), false);
 
       window.addEventListener("updateGame", function () {
@@ -267,7 +285,7 @@
         }
         ))
         .then((res)=>{
-          console.log("infoooooooooooooooooooo222222222222222222222222");
+          console.log("info2");
           let success = res.response;
           console.log(res);
           console.log("info3")
@@ -389,6 +407,30 @@
           this.farm.draw(this.ctx);
         }
       }
+    }
+
+    handleInventorySaleClick(e){
+      let item_id = e.detail.id;
+      if(this.player.hasItemInSaleInventory(item_id)) {
+        this.player.selectedItem = this.player.findItemInSaleInventory(item_id);
+      }
+      this.player.inventory.push(this.player.selectedItem);
+      this.player.removeItemFromSaleInventory(this.player.selectedItem);
+      console.log(e.detail);
+      document.getElementById("dropzone").removeChild(e.detail);
+      this.ui_manager.inventoryManager.displayInventory(this.player);
+    }
+
+    handlecloseSaleClick(e){
+      for (let i = 0; i < this.player.saleInventory.length; i++) {
+        this.player.inventory.push(this.player.saleInventory[i]);
+      }
+      while (document.getElementById('dropzone').firstChild) {
+        document.getElementById('dropzone').removeChild(document.getElementById('dropzone').firstChild);
+      }
+      this.player.saleInventory= [];
+      this.ui_manager.inventoryManager.displayInventory(this.player);
+      this.ui_manager.saleManager.toggle();
     }
 
     setPlayerList(player_list) {

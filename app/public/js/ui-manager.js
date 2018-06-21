@@ -344,11 +344,6 @@ class SaleManager extends IManager{
   create(bouquets) {
     document.body.appendChild(this.getHTML(bouquets));
     document.getElementById('inventory').style.zIndex = '3';
-    const droppable = new Draggable.Droppable(document.querySelectorAll("ul"), {
-      draggable: ".item",
-      droppable: "#dropzone"
-    });
-    console.log(droppable);
   }
 
   delete() {
@@ -378,11 +373,18 @@ class SaleManager extends IManager{
     closeButton.classList.add("button");
     closeButton.appendChild(document.createElement('p').appendChild(document.createTextNode("Fermer")));
     closeButton.addEventListener('click', function (){
-      this.toggle();
+      this.dispatchUIEvent("closeSaleClick",closeButton);
     }.bind(this), false)
+    let saleButton = document.createElement("div");
+    saleButton.classList.add("button");
+    saleButton.appendChild(document.createElement('p').appendChild(document.createTextNode("Vendre")));
     saleBox.appendChild(placeHolder);
     saleBox.appendChild(choiceBouqets);
-    saleBox.appendChild(closeButton);
+    let buttonList = document.createElement("div");
+    buttonList.id = "buttonList";
+    buttonList.appendChild(closeButton);
+    buttonList.appendChild(saleButton);
+    saleBox.appendChild(buttonList);
     overlay.appendChild(saleBox);
     return overlay;
   }
@@ -406,6 +408,27 @@ class SaleManager extends IManager{
     let bouquetContainer = document.createElement("ul");
     bouquetContainer.classList.add("bouquet");
     return bouquetContainer;
+  }
+
+  createItemHTML(item) {
+    //console.log(item);
+    let div = document.createElement("li");
+    let miniature = document.createElement("img");
+    miniature.src = item.getAsset().src;
+    div.appendChild(miniature);
+    let nameContainer = document.createElement("p");
+    nameContainer.innerHTML = item.category + " " + item.name;
+    div.appendChild(nameContainer);
+    div.setAttribute("id",item.id);
+    div.classList.add("item");
+    this.setEventListener(div);
+    return div;
+  }
+
+  setEventListener(div) {
+    div.addEventListener("click", function () {
+      this.dispatchUIEvent("inventorySaleClick", div);
+    }.bind(this))
   }
 }
 

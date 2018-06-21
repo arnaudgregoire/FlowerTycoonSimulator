@@ -18,6 +18,7 @@ var PlantFactory;
 			this.score = 0;
 			this.color = color;
 			this.inventory = [];
+			this.saleInventory = [];
 
       this.selectedTile = null;
       this.selectedItem = null;
@@ -39,6 +40,15 @@ var PlantFactory;
 			}
 			return false;
 		}
+		
+		hasItemInSaleInventory(item_id){
+			for (let i = 0; i < this.saleInventory.length; i++) {
+				if (this.saleInventory[i].id == item_id) {
+					return true;
+				}
+			}
+			return false;
+		}
 
 		findItem(item_id) {
 			let object;
@@ -50,9 +60,23 @@ var PlantFactory;
 			return null;
 		}
 
+		findItemInSaleInventory(item_id){
+			let object;
+			for (let i = 0; i < this.saleInventory.length; i++) {
+				if (this.saleInventory[i].id == item_id) {
+					return this.saleInventory[i];
+				}
+			}
+			return null;
+		}
+
     removeItem(item) {
       this.inventory.splice(this.inventory.indexOf(item), 1);
-    }
+		}
+		
+		removeItemFromSaleInventory(item){
+			this.saleInventory.splice(this.saleInventory.indexOf(item), 1);
+		}
 	}
 
   if (isNode) {

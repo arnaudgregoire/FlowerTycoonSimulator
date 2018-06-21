@@ -313,4 +313,12 @@ canvas{
 
  #dropzone{
    width: 100%;
+   display:flex;
+   justify-content: space-around;
+ }
+ 
+ #buttonList{
+   display: flex;
+   width:60%;
+   justify-content: space-between;
  }

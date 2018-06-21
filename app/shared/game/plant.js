@@ -25,10 +25,8 @@
       this.birth = 0;
       this.age = 0;
       this.state = 0;
-      this.nbPlants = 0;
       this.nbSeeds = 0;
       this.bloomed = false;
-      this.fruited = false;
       this.plantable = true;
       this.died = false;
     }
@@ -69,9 +67,6 @@
       if (this.state >= 3000 && !this.bloomed) {
         this.bloom();
       }
-      if(this.state >= 5000 && !this.fruited){
-        this.fruit();
-      }
       if(this.state > 9000){
         this.die();
       }
@@ -81,22 +76,14 @@
     * une plante peut produire aléatoirement en 1 et 3 fleurs
     */
     bloom(){
-      this.nbPlants = 1 + Math.floor(Math.random() * 2);
+      console.log("bloom");
       this.bloomed = true;
-    }
-    /**
-    * Méthode simulant la fructification
-    * Le nombre de fruits/graines correspond au nombre de fleurs
-    */
-    fruit(){
-      this.nbSeeds = this.nbPlants;
-      this.nbPlants = 0;
-      this.fruited = true;
     }
     /**
     * Méthode correpsondant à a fin de la vie de la plante
     */
     die(){
+      this.nbSeeds = 1 + Math.floor(Math.random() * 2);
       this.died = true;
       this.plantable = false;
     }
@@ -196,6 +183,8 @@
 
       plant.age = plant_data.age;
       plant.state = plant_data.state;
+      plant.bloomed = plant_data.bloomed;
+      plant.nbSeeds = plant_data.nbSeeds;
   		return plant;
     },
 
