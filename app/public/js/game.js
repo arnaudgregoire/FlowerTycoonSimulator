@@ -119,6 +119,10 @@
         this.handlecloseSaleClick(e);
       }.bind(this), false);
 
+      window.addEventListener("saleBouquetClick", function (e) {
+        this.handlesaleBouquetClick(e);
+      }.bind(this), false);
+
       window.addEventListener("updateGame", function () {
         this.update();
       }.bind(this), false);
@@ -131,7 +135,7 @@
         this.handleSaleEvent(e);
       }.bind(this), false);
     }
-
+    
 
     checkID(id){
       for (var i = 0; i < this.player_list.length; i++) {
@@ -416,7 +420,7 @@
       }
       this.player.inventory.push(this.player.selectedItem);
       this.player.removeItemFromSaleInventory(this.player.selectedItem);
-      console.log(e.detail);
+
       document.getElementById("dropzone").removeChild(e.detail);
       this.ui_manager.inventoryManager.displayInventory(this.player);
     }
@@ -431,6 +435,34 @@
       this.player.saleInventory= [];
       this.ui_manager.inventoryManager.displayInventory(this.player);
       this.ui_manager.saleManager.toggle();
+    }
+
+    handlesaleBouquetClick(e){
+      if(this.player.saleInventory.length == 4){
+        let bouquet = new Bouquet(this.player.saleInventory);
+        if(bouquet.isValid(this.bouquets)){
+          
+          this.socket_manager.sendMessage("sell",JSON.stringify(
+            {
+              "description": "sell",
+              "param": {
+                "player": {"id": this.player.id},
+                "bouquet":{"arrayFlower": bouquet.arrayFlower}
+              }
+            }
+          )).then((res)=>{
+            console.log(res);
+            if(res.response == 1){
+              this.getInventory();
+              while (document.getElementById('dropzone').firstChild) {
+                document.getElementById('dropzone').removeChild(document.getElementById('dropzone').firstChild);
+              }
+              this.player.saleInventory= [];
+            }
+            this.player.selectedTile = null;
+          })
+        }
+      }
     }
 
     setPlayerList(player_list) {

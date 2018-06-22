@@ -134,6 +134,40 @@ class Game{
     return result;
 
   }
+
+  sell(req){
+    let json = {};
+    let player = this.findPlayerById(req.param.player.id);
+    let bouquet = new Bouquet(req.param.bouquet.arrayFlower);
+    if(bouquet.arrayFlower.length == 4){
+      if(bouquet.isValid(this.bouquets)){
+        let hasFlowers = true;
+        for (let i = 0; i < bouquet.arrayFlower.length; i++) {
+          if (!player.hasItem(bouquet.arrayFlower[i].id)) {
+            hasFlowers = false;
+          }
+        }
+        if (hasFlowers) {
+          for (let i = 0; i < bouquet.arrayFlower.length; i++) {
+            let fleur = player.findItem(bouquet.arrayFlower[i].id);
+            player.removeItem(fleur);
+          }
+          player.money += 100;
+          json = {"response":1, "description" : "Bouquet vendu"};
+        }
+        else{
+          json = {"response":0, "description" : "Vous ne possédez pas les fleurs du bouquet"};
+        }
+      }
+      else{
+        json = {"response":0, "description" : "Bouquet invalide"};
+      }
+    }
+    else{
+      json = {"response":0, "description" : "Il n'y a pas 4 fleurs dans le bouquet"};
+    }
+    return json;
+  }
   /**
   * Methode appele lorsque que un joueur veut acheter une case
   * @param {Request body} req
@@ -211,13 +245,13 @@ class Game{
     let json = {};
     let player = this.findPlayerById(req.param.player.id);
     let tile = this.farm.tiles[req.param.tile.y][req.param.tile.x];
-    console.log(tile);
+   // console.log(tile);
     if (tile.type == "seeded") {
       if(tile.owner.id == player.id){
-        console.log(tile.plant);
+        //console.log(tile.plant);
         if (tile.plant.died) {
           let seeds = tile.plant.getSeeds();
-          console.log(seeds);
+          //console.log(seeds);
           for (let i = 0; i < seeds.length; i++) {
             player.inventory.push(seeds[i]); 
           }
@@ -283,6 +317,9 @@ async register(req){
 
   addNewPlayer(player){
     this.player_list.push(player);
+    player.inventory.push(SeedFactory.prototype.getRandomSeed());
+    player.inventory.push(SeedFactory.prototype.getRandomSeed());
+    player.inventory.push(SeedFactory.prototype.getRandomSeed());
     player.inventory.push(SeedFactory.prototype.getRandomSeed());
     player.inventory.push(SeedFactory.prototype.getRandomSeed());
     player.inventory.push(SeedFactory.prototype.getRandomSeed());

@@ -378,6 +378,9 @@ class SaleManager extends IManager{
     let saleButton = document.createElement("div");
     saleButton.classList.add("button");
     saleButton.appendChild(document.createElement('p').appendChild(document.createTextNode("Vendre")));
+    saleButton.addEventListener('click', function (){
+      this.dispatchUIEvent("saleBouquetClick",saleButton);
+    }.bind(this), false)
     saleBox.appendChild(placeHolder);
     saleBox.appendChild(choiceBouqets);
     let buttonList = document.createElement("div");

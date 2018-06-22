@@ -76,7 +76,7 @@
     * une plante peut produire aléatoirement en 1 et 3 fleurs
     */
     bloom(){
-      console.log("bloom");
+      //console.log("bloom");
       this.bloomed = true;
     }
     /**
