@@ -200,11 +200,13 @@
       this.socket_manager.sendMessage('getPlayers',JSON.stringify({"description" : "getPlayers"}))
       .then((json) =>{
         this.player_list = [];
-        //console.log(json);
+        console.log(json);
         for (let i = 0; i < json.players.length; i++) {
-          this.player_list.push(new Player(json.players[i].id, json.players[i].username, json.players[i].color));
+          this.player_list.push(new Player(json.players[i].id, json.players[i].username, json.players[i].color, json.players[i].score));
         }
         this.ui_manager.updateBoard(this.player_list);
+        this.player = this.findPlayerById(this.player.id);
+        this.ui_manager.setInfo(this.player);
       });
     }
 
@@ -248,7 +250,7 @@
       let screenHeight, screenWidth;
       if((w/h) > (this.width/this.height)) {   // get the best game ratio
         screenHeight = h;
-        screenWidth = screenHeight * this.width/this.height;1111111111111111111
+        screenWidth = screenHeight * this.width/this.height;
       }
       else {
         screenWidth = w;
@@ -306,7 +308,7 @@
 
 
             this.player_list = [];
-            this.player = new Player(res.player.id, res.player.name);
+            this.player = new Player(res.player.id, res.player.name,0);
             //console.log(this.player);
             this.ui_manager.setInfo(this.player);
 

@@ -153,6 +153,7 @@ class Game{
             player.removeItem(fleur);
           }
           player.money += 100;
+          player.score += 1;
           json = {"response":1, "description" : "Bouquet vendu"};
         }
         else{
@@ -289,7 +290,7 @@ async login(req) {
       console.log(results.rows[0].name);
       console.log(this);
       let json = {"response": 1, "description" : "Heureux de vous revoir", "player": {"name": results.rows[0].name, "id":results.rows[0].id}};
-      let player = new Player(results.rows[0].id,results.rows[0].name,utils.getRandomColor());
+      let player = new Player(results.rows[0].id,results.rows[0].name,utils.getRandomColor(), 0);
       this.addNewPlayer(player);
       console.log(this);
       return json;
@@ -342,7 +343,8 @@ async register(req){
       json.players.push({
         "id":this.player_list[i].id,
         "username": this.player_list[i].name,
-        "color": this.player_list[i].color
+        "color": this.player_list[i].color,
+        "score": this.player_list[i].score
       });
     }
     return json;

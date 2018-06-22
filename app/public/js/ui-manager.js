@@ -273,7 +273,7 @@
       let div = document.createElement("div");
       div.dataset.name = player.name;
       let p = document.createElement("p");
-      p.innerText =  player.name;
+      p.innerText =  player.name + " " + player.score;
       p.style.color = player.color;
       div.appendChild(p);
       return div;
