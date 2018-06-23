@@ -45,6 +45,16 @@
 		return ImgLoader.get("seed");
 	  }
 	}
+
+	class SeedPoppy extends Seed {
+	  constructor(id) {
+		super(id, "poppy");
+	  }
+  
+	  getAsset() {
+		return ImgLoader.get("seed");
+	  }
+	}
   
 	// Static class style
 	var SeedFactory = {
@@ -65,7 +75,11 @@
   
 			case 1:
 			  seed = new SeedTulip(id);
-			  break;
+				break;
+			
+			case 2:
+				seed = new SeedPoppy(id);
+				break;
 		}
 		return seed;
 	  },

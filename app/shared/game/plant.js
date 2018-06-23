@@ -105,12 +105,6 @@
       super(id, "rose");
       this.speed = 1;
     }
-
-    // draw(ctx, x, y) {
-    //   ctx.fillStyle = "#fe6150";
-    //   ctx.arc(x,y, 15, 0, 2*Math.PI, false);
-    //   ctx.fill();
-    // }
     getAsset() {
       if(this.state < 3000) {
         return ImgLoader.get("plant");
@@ -130,12 +124,6 @@
       super(id, "tulip");
       this.speed = 1.5;
     }
-
-    // draw(ctx, x, y) {
-    //   ctx.fillStyle = "#ff8230";
-    //   ctx.arc(x,y, 15, 0, 2*Math.PI, false);
-    //   ctx.fill();
-    // }
     getAsset() {
       if(this.state < 3000) {
         return ImgLoader.get("plant");
@@ -150,6 +138,25 @@
     }
   }
 
+  class Poppy extends Plant {
+    constructor(id) {
+      super(id, "poppy");
+      this.speed = 1.3;
+    }
+    getAsset() {
+      if(this.state < 3000) {
+        return ImgLoader.get("plant");
+      }
+      else if(this.state < 9000) {
+        return ImgLoader.get("poppy");
+      }
+      else{
+        // maybe this should change for another asset
+        return ImgLoader.get("plantOld");
+      }
+    }
+  }
+  
   // Static class style
   var PlantFactory = {
     plants: PlantSpecies.getSpecies()
@@ -169,6 +176,10 @@
 
           case 1:
             plant = new Tulip(id);
+            break;
+          
+          case 2:
+            plant = new Poppy(id);
             break;
       }
       return plant;

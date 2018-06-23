@@ -56,6 +56,7 @@
         {"plant": "flower/plant.png"},
         {"rose": "flower/rose.png"},
         {"tulip": "flower/tulip.png"},
+        {"poppy": "flower/poppy.png"},
         {"seed": "seed/seed.png"},
         {"plantOld": "flower/plantOld.png"}
       ], () => this.ui_manager.toggleLogin());
