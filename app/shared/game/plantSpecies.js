@@ -5,7 +5,7 @@
     class PlantSpecies{
   
       static getSpecies(){
-        return ["rose", "tulip", "poppy"]
+        return ["rose", "tulip", "poppy", "iris"]
       }
 
       static getRandomSpecies(){

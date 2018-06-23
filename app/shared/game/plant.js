@@ -156,6 +156,25 @@
       }
     }
   }
+
+  class Iris extends Plant {
+    constructor(id) {
+      super(id, "iris");
+      this.speed = 2;
+    }
+    getAsset() {
+      if(this.state < 3000) {
+        return ImgLoader.get("plant");
+      }
+      else if(this.state < 9000) {
+        return ImgLoader.get("iris");
+      }
+      else{
+        // maybe this should change for another asset
+        return ImgLoader.get("plantOld");
+      }
+    }
+  }
   
   // Static class style
   var PlantFactory = {
@@ -180,6 +199,10 @@
           
           case 2:
             plant = new Poppy(id);
+            break;
+
+          case 3:
+            plant = new Iris(id);
             break;
       }
       return plant;
