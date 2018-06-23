@@ -34,16 +34,8 @@ class Game{
     this.then = 0;
     this.now = 0;
     this.bouquets = [
-      new Bouquet([
-        PlantFactory.prototype.createPlantFromData({"name":"rose", "state":5000}),
-        PlantFactory.prototype.createPlantFromData({"name":"rose", "state":5000}),
-        PlantFactory.prototype.createPlantFromData({"name":"rose", "state":5000}),
-        PlantFactory.prototype.createPlantFromData({"name":"rose", "state":5000})]),
-        new Bouquet([
-          PlantFactory.prototype.createPlantFromData({"name":"tulip", "state":5000}),
-          PlantFactory.prototype.createPlantFromData({"name":"tulip", "state":5000}),
-          PlantFactory.prototype.createPlantFromData({"name":"tulip", "state":5000}),
-          PlantFactory.prototype.createPlantFromData({"name":"tulip", "state":5000})])
+      Bouquet.getRandomBouqet(),
+      Bouquet.getRandomBouqet()
     ];
     this.loop();
   }

@@ -2,13 +2,16 @@
     "use strict";
     let isNode = (typeof module !== 'undefined' && typeof module.exports !== 'undefined');
     var PlantSpecies;
+    var PlantFactory;
 
     if (isNode){
-        PlantSpecies = require("./plantSpecies");
+        PlantSpecies = require("./plantSpecies").PlantSpecies;
+        PlantFactory = require("./plant.js").PlantFactory;
     }
 
     else{
         PlantSpecies = window.PlantSpecies;
+        PlantFactory = window.PlantFactory;
     }
 
     class Bouquet{
@@ -30,6 +33,15 @@
                 }
             }
             return valid;
+        }
+
+        static getRandomBouqet(){
+            return new Bouquet([
+                PlantFactory.prototype.createPlantFromData({"name":PlantSpecies.getRandomSpecies(), "state":5000}),
+                PlantFactory.prototype.createPlantFromData({"name":PlantSpecies.getRandomSpecies(), "state":5000}),
+                PlantFactory.prototype.createPlantFromData({"name":PlantSpecies.getRandomSpecies(), "state":5000}),
+                PlantFactory.prototype.createPlantFromData({"name":PlantSpecies.getRandomSpecies(), "state":5000})
+            ]);
         }
     }
 
