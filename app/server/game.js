@@ -35,6 +35,8 @@ class Game{
     this.now = 0;
     this.bouquets = [
       Bouquet.getRandomBouqet(),
+      Bouquet.getRandomBouqet(),
+      Bouquet.getRandomBouqet(),
       Bouquet.getRandomBouqet()
     ];
     this.loop();
@@ -276,15 +278,19 @@ class Game{
 async login(req) {
   let json = await this.checkLogin(req).then((results) => {
     if(results.rows[0]){
+      /*
       console.log("hey");
       console.log(results.rows[0]);
       console.log("hi");
       console.log(results.rows[0].name);
       console.log(this);
+      */
       let json = {"response": 1, "description" : "Heureux de vous revoir", "player": {"name": results.rows[0].name, "id":results.rows[0].id}};
       let player = new Player(results.rows[0].id,results.rows[0].name,utils.getRandomColor(), 0);
-      this.addNewPlayer(player);
-      console.log(this);
+      if(!this.checkID(player.id)){
+        this.addNewPlayer(player);
+      }
+      //console.log(this);
       return json;
     }else{
       console.log("bad credentials");
