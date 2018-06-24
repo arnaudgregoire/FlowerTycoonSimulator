@@ -49,6 +49,17 @@ app.post('/sell', function (req, res) {
   requestUpdateClients();
 });
 
+app.post('/purchase', function (req, res) {
+  let json = {};
+  if(game.checkID(req.body.param.player.id)){
+    json = game.purchase(req.body);
+  }
+  else{
+    json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN(https://www.youtube.com/watch?v=z9CRvCmJUnI)
+  }
+  res.json(json);
+});
+
 /**
  * Partie du serveur qui repond au demande de plantation de vegetation sur une case
  */

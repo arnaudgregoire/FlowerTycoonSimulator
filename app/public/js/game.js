@@ -136,9 +136,20 @@
       window.addEventListener("saleClick", function (e) {
         this.handleSaleEvent(e);
       }.bind(this), false);
+
+      window.addEventListener("storeClick", function (e) {
+        this.handleStoreEvent(e);
+      }.bind(this), false);
+      
+      window.addEventListener("closeStore", function (e) {
+        this.handleCloseStoreEvent(e);
+      }.bind(this), false);
+
+      window.addEventListener("purchaseButtonClick", function (e) {
+        this.handlePurchaseButttonClickEvent(e);
+      }.bind(this), false);
     }
     
-
     checkID(id){
       for (var i = 0; i < this.player_list.length; i++) {
         if (this.player_list[i].id == id) {
@@ -441,6 +452,30 @@
       this.ui_manager.saleManager.toggle();
     }
 
+    handleCloseStoreEvent(e){
+      this.ui_manager.toggleStore();
+    }
+
+    handlePurchaseButttonClickEvent(e){
+      let data = e.detail;
+      console.log(data);
+      if(this.player.money >= data.cost){
+        this.socket_manager.sendMessage("purchase",JSON.stringify(
+          {
+            "description": "purchase",
+            "param": {
+              "player": {"id": this.player.id},
+              "item_data": data
+            }
+          }
+        )).then((res)=>{
+          console.log(res);
+          this.getInventory();
+          this.player.selectedTile = null;
+        })
+      }
+    }
+
     handlesaleBouquetClick(e){
       if(this.player.saleInventory.length == 4){
         let bouquet = new Bouquet(this.player.saleInventory);
@@ -467,6 +502,10 @@
           })
         }
       }
+    }
+
+    handleStoreEvent(){
+      this.ui_manager.toggleStore();
     }
 
     setPlayerList(player_list) {

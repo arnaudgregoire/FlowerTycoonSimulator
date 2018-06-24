@@ -10,6 +10,7 @@
       this.actionsManager   = null;
       this.boardManager     = null;
       this.saleManager      = null;
+      this.storeManager     = null;
 
       this.init();
     }
@@ -22,6 +23,7 @@
       this.actionsManager   = new ActionsManager(document.querySelector("#actions"));
       this.boardManager     = new BoardManager(document.querySelector("#leaderboard"));
       this.saleManager      = new SaleManager(document.querySelector("#sale"));
+      this.storeManager     = new StoreManager(document.querySelector("#store"));
     }
 
     updateBoard(player_list) {
@@ -51,6 +53,10 @@
 
     toggleSale(bouquets){
       this.saleManager.toggle(bouquets);
+    }
+
+    toggleStore(){
+      this.storeManager.toggle();
     }
 
     setInfo(player) {

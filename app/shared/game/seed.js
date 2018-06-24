@@ -18,6 +18,7 @@
 			this.id = id;
 			this.category = "seed";
 			this.name = name;
+			this.cost = 10;
 		}
 
 	toJson() {

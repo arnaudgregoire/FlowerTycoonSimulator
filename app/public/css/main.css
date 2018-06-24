@@ -63,6 +63,19 @@ html, body{
   z-index: 2;
 }
 
+#store-overlay{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 110px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 2;
+}
+
 #login-box{
   display: flex;
   flex-flow: column;
@@ -84,6 +97,18 @@ html, body{
   width: 70%;
   height: 70%;
   padding: 20px 30px;
+  background: #00af6e;
+  border: 3px solid #31302b;
+  box-shadow: 3px 2px 4px rgba(0,0,0,0.3);
+}
+
+#store-box{
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  padding: 30px 30px;
   background: #00af6e;
   border: 3px solid #31302b;
   box-shadow: 3px 2px 4px rgba(0,0,0,0.3);
@@ -211,7 +236,10 @@ html, body{
 .item{
   border: 1px solid #31302b;
   cursor: pointer;
-  list-style-type: none; 
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  padding:5px; 
 }
 
 canvas{
@@ -284,6 +312,16 @@ canvas{
   width: 100%;
 }
 
+#purchase-box{
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  border: 3px solid #31302b;
+  margin: 5px;
+  padding: 20px;
+  width: 100%;
+}
+
 #placeHolder{
   display: flex;
   border: 3px solid #31302b;
@@ -318,8 +356,8 @@ canvas{
    justify-content: space-around;
  }
  
- #buttonList{
+ .buttonList{
    display: flex;
    width:60%;
-   justify-content: space-between;
+   justify-content: space-around;
  }

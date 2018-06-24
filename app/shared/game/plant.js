@@ -26,6 +26,7 @@
       this.age = 0;
       this.state = 0;
       this.nbSeeds = 0;
+      this.cost = 50;
       this.bloomed = false;
       this.plantable = true;
       this.died = false;

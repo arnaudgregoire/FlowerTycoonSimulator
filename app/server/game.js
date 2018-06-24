@@ -129,6 +129,34 @@ class Game{
 
   }
 
+  purchase(req){
+    let json = {};
+    let player = this.findPlayerById(req.param.player.id);
+    let data = req.param.item_data;
+    if(player.money >= data.cost){
+      player.money -= data.cost;
+      switch (data.category) {
+        case "seed":
+          player.inventory.push(SeedFactory.prototype.createSeed(data.name, nanoid()));
+          json = {"response":1, "description" : "La graine a été acheté"};
+          break;
+      
+        case "plant":
+          player.inventory.push(PlantFactory.prototype.createPlant(data.name,nanoid()));
+          json = {"response":1, "description" : "La plante a été acheté"};
+          break;
+
+        default:
+          json = {"response":0, "description" : "Item non reconnu"};
+          break;
+      }
+    }
+    else{
+      json = {"response":0, "description" : "Pas assez d'argent"};
+    }
+    return json;
+  }
+
   sell(req){
     let json = {};
     let player = this.findPlayerById(req.param.player.id);
@@ -316,10 +344,6 @@ async register(req){
 
   addNewPlayer(player){
     this.player_list.push(player);
-    player.inventory.push(SeedFactory.prototype.getRandomSeed());
-    player.inventory.push(SeedFactory.prototype.getRandomSeed());
-    player.inventory.push(SeedFactory.prototype.getRandomSeed());
-    player.inventory.push(SeedFactory.prototype.getRandomSeed());
     player.inventory.push(SeedFactory.prototype.getRandomSeed());
     player.inventory.push(SeedFactory.prototype.getRandomSeed());
   }

@@ -64,7 +64,7 @@
           saleBox.appendChild(placeHolder);
           saleBox.appendChild(choiceBouqets);
           let buttonList = document.createElement("div");
-          buttonList.id = "buttonList";
+          buttonList.classList.add("buttonList");
           buttonList.appendChild(closeButton);
           buttonList.appendChild(saleButton);
           saleBox.appendChild(buttonList);

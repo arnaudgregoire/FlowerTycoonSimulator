@@ -17,7 +17,8 @@ const JS_FILES = {
                   "inventoryManager.js",
                   "boardManager.js",
                   "actionsManager.js",
-                  "saleManager.js"
+                  "saleManager.js",
+                  "storeManager.js"
                 ],
     ".": ["img-loader", "socket-manager", "ui-manager", "game"]
   } 
