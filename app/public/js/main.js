@@ -7,7 +7,20 @@ const JS_FILES = {
     ".": "utils",
     "game/": ["plantSpecies", "plant", "tile", "farm", "player", "seed", "bouquet"]
   },
-  "public/js/": ["img-loader", "socket-manager", "ui-manager", "game"]
+  "public/js/":{
+    "ui-manager/":
+                [
+                  "iManager.js",
+                  "loginManager.js",
+                  "userManager.js",
+                  "infoManager.js",
+                  "inventoryManager.js",
+                  "boardManager.js",
+                  "actionsManager.js",
+                  "saleManager.js"
+                ],
+    ".": ["img-loader", "socket-manager", "ui-manager", "game"]
+  } 
 };
 
 
