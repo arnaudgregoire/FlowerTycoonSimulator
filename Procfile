@@ -1,1 +1,1 @@
-web: node app/mainserver.js
+web: node testdb.js && node app/mainserver.js
