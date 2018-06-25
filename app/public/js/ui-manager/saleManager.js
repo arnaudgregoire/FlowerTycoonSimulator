@@ -61,7 +61,13 @@
           saleButton.addEventListener('click', function (){
             this.dispatchUIEvent("saleBouquetClick",saleButton);
           }.bind(this), false)
+          let titre = document.createElement("h2");
+          titre.appendChild(document.createTextNode("Votre Boutique :"));
+          saleBox.appendChild(titre);
           saleBox.appendChild(placeHolder);
+          let sousTitre = document.createElement("h3");
+          sousTitre.appendChild(document.createTextNode("Composez un des bouquets ci dessous en cliquant sur les fleurs de votre inventaire"));
+          saleBox.appendChild(sousTitre);
           saleBox.appendChild(choiceBouqets);
           let buttonList = document.createElement("div");
           buttonList.classList.add("buttonList");

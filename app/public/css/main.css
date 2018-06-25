@@ -95,7 +95,7 @@ html, body{
   justify-content: center;
   align-items: center;
   width: 70%;
-  height: 70%;
+  height: 90%;
   padding: 20px 30px;
   background: #00af6e;
   border: 3px solid #31302b;
@@ -227,6 +227,16 @@ html, body{
   margin: 0;
   padding: 0;
 }
+
+h2{
+  color: #fff;
+  font-weight: bold;
+}
+
+h3{
+  color:#fff;
+}
+
 .item{
   border: 1px solid #31302b;
   cursor: pointer;
@@ -352,4 +362,14 @@ canvas{
    display: flex;
    width:60%;
    justify-content: space-around;
+ }
+
+ .storeItemContainer{
+   display: flex;
+   justify-content: space-between;
+   flex-direction: column;
+ }
+
+ .storeButton{
+   margin-top: 5px;
  }
