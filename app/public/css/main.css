@@ -215,23 +215,17 @@ html, body{
   justify-content: flex-start;
   align-items: center;
   background: rgba(0,0,0,0.25);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 #inventory p{
   flex: 0 0 auto;
   margin: 5px;
-  padding: 10px;
-  color: #fff;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
 }
 #inventory ul{
   flex: 1 0 auto;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  overflow-y: scroll;
 }
 .item{
   border: 1px solid #31302b;
@@ -239,7 +233,20 @@ html, body{
   list-style-type: none;
   display: flex;
   flex-direction: column;
-  padding:5px; 
+  justify-content: space-between;
+  padding:5px;
+  color: #fff;
+  text-align: center;
+  font-size: 13px;
+  height:100px;
+  width:75px;
+  font-weight: bold;
+}
+
+.item img{
+  width: 20px;
+  height:40px;
+  align-self: center;
 }
 
 canvas{
@@ -333,21 +340,6 @@ canvas{
 .bouquet{
   display: flex;
   list-style-type: none;
-}
-
-.bouquet li{
-  border: 3px solid #31302b;
-  height: 100px;
-}
-
-.bouquet li p{
-  flex: 0 0 auto;
-  margin: 5px;
-  padding: 5px;
-  color: #fff;
-  text-align: center;
-  font-size: 15px;
-  font-weight: bold;
 }
 
  #dropzone{

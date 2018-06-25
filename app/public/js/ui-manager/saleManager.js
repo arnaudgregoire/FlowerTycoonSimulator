@@ -82,6 +82,7 @@
             let name = document.createElement("p");
             name.appendChild(document.createTextNode(bouquet.arrayFlower[i].name));
             flower.appendChild(name);
+            flower.classList.add("item");
             bouquetContainer.appendChild(flower);
           }
           return bouquetContainer;
