@@ -33,7 +33,7 @@
 	  }
   
 	  getAsset() {
-		return ImgLoader.get("seed");
+		return ImgLoader.get("seedRose");
 	  }
 	}
   
@@ -43,7 +43,7 @@
 	  }
   
 	  getAsset() {
-		return ImgLoader.get("seed");
+		return ImgLoader.get("seedTulip");
 	  }
 	}
 
@@ -53,7 +53,7 @@
 	  }
   
 	  getAsset() {
-		return ImgLoader.get("seed");
+		return ImgLoader.get("seedPoppy");
 	  }
 	}
 
@@ -63,7 +63,7 @@
 	  }
   
 	  getAsset() {
-		return ImgLoader.get("seed");
+		return ImgLoader.get("seedIris");
 	  }
 	}
   

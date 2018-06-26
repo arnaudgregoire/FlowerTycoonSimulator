@@ -254,8 +254,7 @@ h3{
 }
 
 .item img{
-  width: 20px;
-  height:40px;
+  flex-grow: 4;
   align-self: center;
 }
 

@@ -58,7 +58,10 @@
         {"tulip": "flower/tulip.png"},
         {"poppy": "flower/poppy.png"},
         {"iris": "flower/iris.png"},
-        {"seed": "seed/seed.png"},
+        {"seedRose": "seed/seedRose.png"},
+        {"seedTulip": "seed/seedTulip.png"},
+        {"seedPoppy": "seed/seedPoppy.png"},
+        {"seedIris": "seed/seedIris.png"},
         {"plantOld": "flower/plantOld.png"}
       ], () => this.ui_manager.toggleLogin());
     }
