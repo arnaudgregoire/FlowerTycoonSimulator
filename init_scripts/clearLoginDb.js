@@ -5,4 +5,4 @@ const client = new pg.Client(connectionString);
 client.connect();
 const result = client.query(
   'DELETE FROM login');
-
+client.end();
