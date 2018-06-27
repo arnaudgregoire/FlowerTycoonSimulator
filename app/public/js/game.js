@@ -221,8 +221,8 @@
           this.player_list.push(new Player(json.players[i].id, json.players[i].username, json.players[i].color, json.players[i].score));
         }
         this.ui_manager.updateBoard(this.player_list);
-        this.player = this.findPlayerById(this.player.id);
-        this.ui_manager.setInfo(this.player);
+        let player = this.findPlayerById(this.player.id);
+        this.ui_manager.setInfo(player);
       });
     }
 
