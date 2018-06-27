@@ -37,10 +37,10 @@
 
         static getRandomBouqet(){
             return new Bouquet([
-                PlantFactory.prototype.createPlantFromData({"name":PlantSpecies.getRandomSpecies(), "state":5000}),
-                PlantFactory.prototype.createPlantFromData({"name":PlantSpecies.getRandomSpecies(), "state":5000}),
-                PlantFactory.prototype.createPlantFromData({"name":PlantSpecies.getRandomSpecies(), "state":5000}),
-                PlantFactory.prototype.createPlantFromData({"name":PlantSpecies.getRandomSpecies(), "state":5000})
+                PlantFactory.prototype.createPlantFromData({"name":PlantSpecies.getRandomSpecies(), "state":200000}),
+                PlantFactory.prototype.createPlantFromData({"name":PlantSpecies.getRandomSpecies(), "state":200000}),
+                PlantFactory.prototype.createPlantFromData({"name":PlantSpecies.getRandomSpecies(), "state":200000}),
+                PlantFactory.prototype.createPlantFromData({"name":PlantSpecies.getRandomSpecies(), "state":200000})
             ]);
         }
     }
