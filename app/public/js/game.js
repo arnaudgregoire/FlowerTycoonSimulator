@@ -359,6 +359,7 @@
           }
         )).then((res)=>{
           console.log(res);
+          this.getFarm();
           this.player.selectedTile = null;
           this.player.selectedItem = null;
         })
@@ -380,6 +381,7 @@
           }
         )).then(
           (res)=>{
+            this.getFarm();
             console.log(res);
           }
         )
@@ -412,6 +414,7 @@
             }
           }
         )).then((res)=>{
+          this.getFarm();
           console.log(res);
           this.player.selectedTile = null;
         })
