@@ -65,10 +65,10 @@
       // this.age = Date.now() - this.birth;
       this.age += dt;
       this.state = Math.floor(this.age/this.speed);
-      if (this.state >= 3000 && !this.bloomed) {
+      if (this.state >= 120000 && !this.bloomed) {
         this.bloom();
       }
-      if(this.state > 9000){
+      if(this.state > 300000){
         this.die();
       }
     }
@@ -107,10 +107,10 @@
       this.speed = 1;
     }
     getAsset() {
-      if(this.state < 3000) {
+      if(this.state < 120000) {
         return ImgLoader.get("plant");
       }
-      else if(this.state < 9000) {
+      else if(this.state < 300000) {
         return ImgLoader.get("rose");
       }
       else {
@@ -126,10 +126,10 @@
       this.speed = 1.5;
     }
     getAsset() {
-      if(this.state < 3000) {
+      if(this.state < 120000) {
         return ImgLoader.get("plant");
       }
-      else if(this.state < 9000) {
+      else if(this.state < 300000) {
         return ImgLoader.get("tulip");
       }
       else{
@@ -145,10 +145,10 @@
       this.speed = 1.3;
     }
     getAsset() {
-      if(this.state < 3000) {
+      if(this.state < 120000) {
         return ImgLoader.get("plant");
       }
-      else if(this.state < 9000) {
+      else if(this.state < 300000) {
         return ImgLoader.get("poppy");
       }
       else{
@@ -164,10 +164,10 @@
       this.speed = 2;
     }
     getAsset() {
-      if(this.state < 3000) {
+      if(this.state < 120000) {
         return ImgLoader.get("plant");
       }
-      else if(this.state < 9000) {
+      else if(this.state < 300000) {
         return ImgLoader.get("iris");
       }
       else{
