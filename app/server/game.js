@@ -1,6 +1,6 @@
 var nanoid = require('nanoid');
 var pg = require('pg');
-var connectionString = process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/flowertycoonsimulator'; //
+var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/flowertycoonsimulator'; //
 
 
 var Farm = require('../shared/game/farm.js');
@@ -332,12 +332,18 @@ async login(req) {
 }
 
 async register(req){
-  console.log("hello");
-  let json = await this.addUser(req).then((results)=>{
+  console.log("register");
+  let json;
+  if(utils.isCorrectUsername(req.param.player.username) && utils.isCorrectPassword(req.param.player.password)){
+    json = await this.addUser(req).then((results)=>{
     console.log(results);
     let json = {"response": 1, "description" : "compte cree avec succes"};
     return json;
-  });
+    });
+  } else {
+    json = {"response": 0, "description" : "nom d'utilisateur ou mot de passe invalide"}
+  }
+  
   return json;
 }
 

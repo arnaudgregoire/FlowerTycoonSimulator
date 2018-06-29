@@ -21,12 +21,14 @@
       id += letters.charAt(Math.floor(Math.random() * letters.length));
     }
     return id;
-  }
+    }
 
   if (isNode) {
     module.exports = {
       getRandomColor: getRandomColor,
-      generateID: generateID
+      generateID: generateID,
+      isCorrectUsername: isCorrectUsername,
+      isCorrectPassword: isCorrectPassword
     };
   }
   else {
@@ -34,6 +36,22 @@
       getRandomColor: getRandomColor,
       generateID: generateID
     };
+  }
+
+  function isCorrectUsername(name){
+    if(((typeof name != "undefined") && (typeof name.valueOf() == "string")) && (name.length > 3)){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function isCorrectPassword(pass){
+    if(((typeof pass != "undefined") && (typeof pass.valueOf() == "string")) && (pass.length > 3)){
+      return true;
+    } else {
+      return false;
+    }
   }
 })();
 
