@@ -101,7 +101,7 @@ class Game{
     return null;
   }
 
-  checkLogin(req){
+  async checkLogin(req){
     const results = [];
     let username = req.param.player.username;
     let password = req.param.player.password;
@@ -110,13 +110,14 @@ class Game{
 
     const qry = 'SELECT * FROM login WHERE name=\''+username+'\' AND password=\''+password+'\';';
     console.log(qry);
-    const result = client.query(qry);
+    const result = await client.query(qry);
     client.end();
     return result;
     
+    
   }
 
-  addUser(req){
+  async addUser(req){
     const results = [];
     let username = req.param.player.username;
     let password = req.param.player.password;
@@ -125,7 +126,7 @@ class Game{
 
     const qry = 'INSERT INTO login(name,password) VALUES (\''+username+'\',\''+password+'\');'
     console.log(qry);
-    const result = client.query(qry);
+    const result = await client.query(qry);
     client.end();
     return result;
 
