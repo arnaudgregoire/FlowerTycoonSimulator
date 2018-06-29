@@ -111,6 +111,7 @@ class Game{
     const qry = 'SELECT * FROM login WHERE name=\''+username+'\' AND password=\''+password+'\';';
     console.log(qry);
     const result = client.query(qry);
+    client.end();
     return result;
     
   }
@@ -125,6 +126,7 @@ class Game{
     const qry = 'INSERT INTO login(name,password) VALUES (\''+username+'\',\''+password+'\');'
     console.log(qry);
     const result = client.query(qry);
+    client.end();
     return result;
 
   }
