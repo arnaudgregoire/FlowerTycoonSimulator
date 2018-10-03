@@ -20,7 +20,7 @@
           }.bind(this), false);
     
           this.fertilize_button.addEventListener("click", function(){
-            this.dispatchUIEvent("fertilizeClickt", null);
+            this.dispatchUIEvent("fertilizeClick", null);
           }.bind(this), false);
     
           this.buy_button.addEventListener("click", function(){

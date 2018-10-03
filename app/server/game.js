@@ -39,18 +39,8 @@ class Game{
       Bouquet.getRandomBouqet(),
       Bouquet.getRandomBouqet()
     ];
-    this.loop();
   }
 
-  loop() {
-    // Handle client connection/disconnection
-
-    // Decode (encrypted) network messagesd
-
-    // Perform players actions && update game objects
-
-    // Send (encrypted) messages to clients about state changes
-  }
 
   update(dt) {
     this.farm.update(dt);
@@ -194,6 +184,27 @@ class Game{
     }
     return json;
   }
+  fertilize(req){
+    let json = {};
+    let player = this.findPlayerById(req.param.player.id);
+    let x = parseInt(req.param.tile.x);
+    let y = parseInt(req.param.tile.y);
+    if(this.farm.tiles[y][x].owner.id == player.id){
+
+      if (this.farm.tiles[y][x].type == "seeded") {
+        this.farm.tiles[y][x].plant.grow(60000);
+        json = {"response":1, "description" : "Fertilisation réussi"};
+      }
+      else{
+        json = {"response":0, "description" : "La case n'est pas plantée"};
+      }
+    }
+    else{
+      json = {"response":0, "description" : "La case ne vous apparatient pas"};
+    } 
+
+    return json;
+  } 
   /**
   * Methode appele lorsque que un joueur veut acheter une case
   * @param {Request body} req

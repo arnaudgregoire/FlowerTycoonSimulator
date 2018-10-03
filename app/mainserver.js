@@ -116,6 +116,22 @@ app.post('/login', function (req,res) {
   })
 });
 
+/**
+ * Partie du serveur qui s'occupe de la fertilisation des cases
+ */
+app.post('/fertilize', function (req,res) {
+  let json = {};
+  if(game.checkID(req.body.param.player.id)){
+    json = game.fertilize(req.body);
+  }
+  else{
+    json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN (https://www.youtube.com/watch?v=z9CRvCmJUnI)
+  }
+  res.json(json);
+  requestUpdateClients();
+});
+
+
 app.post('/register', function(req,res){
   game.register(req.body).then((rep)=>{
     res.json(rep);

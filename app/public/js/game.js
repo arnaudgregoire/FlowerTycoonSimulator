@@ -393,9 +393,25 @@
     }
 
     handleFertilizeEvent(e) {
-      if(this.player.selectedTile != null) {
-        //TODO: Fertilize the  selected tile, and ask server
-        this.player.selectedTile = null;
+      //console.log("fertilize event")
+      if(this.player.selectedTile != null && this.player.selectedTile.type == "seeded") {
+        this.socket_manager.sendMessage("fertilize",JSON.stringify(
+          {
+            "description": "fertilize",
+            "param": {
+              "player": {"id": this.player.id},
+              "tile":{
+                "x": this.player.selectedTile.x,
+                "y": this.player.selectedTile.y
+              }
+            }
+          }
+        )).then(
+          (res)=>{
+            this.getFarm();
+            console.log(res);
+          }
+        )
       }
     }
 
