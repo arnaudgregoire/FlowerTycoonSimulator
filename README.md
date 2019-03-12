@@ -16,6 +16,8 @@ Prérequis : avoir node/npm
 
 ### Initialisation de la bdd
 
+___________________________________________ deprecated
+
 Sur Widows :
 
 Télécharger  et installer postgres : https://www.postgresql.org/download/windows/
@@ -41,6 +43,16 @@ On peut ensuite faire npm start
 
  Le serveur tourne sur le port 8081.
  Le client est alors disponible à cette adresse: http://localhost:8081
+
+____________________________________________________ end deprecated
+
+
+passage à mongodb :
+
+installer mongodb et mongo shell ( voir google )
+lancer le service mongodb : "sudo service mongod start" ( c'est bien "mongod" et non mongodb )
+
+exécuter le script new_mongodb.js avec node
 
 
 
