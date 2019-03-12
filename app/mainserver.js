@@ -7,7 +7,12 @@ var delay      = require('delay');
 
 var Terrain    = require('./shared/game/farm.js');
 var Game       = require('./server/game.js');
+var DbManager  = require('./server/dbManager.js');
+var Player     = require('./shared/game/player.js');
+var utils      = require('./shared/utils.js');
+
 var game;
+var dbManager;
 
 const PORT     = process.env.PORT || 8081;
 
@@ -110,7 +115,14 @@ app.post('/harvest', function (req, res) {
  * Partie du serveur qui s occupe de la connexion de nouveaux joueurs, plus generalement de la connexion des utilisateurs
  */
 app.post('/login', function (req,res) {
-  game.login(req.body).then((rep)=>{
+  dbManager.login(req.body).then((rep)=>{
+    console.log(rep);
+    if(rep.response == 1){
+      let player = new Player(rep.player.id,rep.player.name,utils.getRandomColor(), 0);
+      if(!game.checkID(player.id)){
+      game.addNewPlayer(player);
+      }
+    }
     res.json(rep);
     requestUpdateClients();
   })
@@ -133,7 +145,7 @@ app.post('/fertilize', function (req,res) {
 
 
 app.post('/register', function(req,res){
-  game.register(req.body).then((rep)=>{
+  dbManager.register(req.body).then((rep)=>{
     res.json(rep);
     requestUpdateClients();
   })
@@ -162,6 +174,7 @@ app.post('/getBouquets', function (req, res) {
  */
 function start() {
   game = new Game(24,5,10);
+  dbManager = new DbManager();
   update();
 }
 
