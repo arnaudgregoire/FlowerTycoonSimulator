@@ -328,7 +328,7 @@ class Game{
   * Methode appele quand le serveur ne connait pas le login ou que le login est manquant
   */
   destinationUnknown(){
-    return {"reponse":0, "description" : "Please login first"};
+    return {"reponse":0, "description" : "Please login first"}; // DESTINATION UNKNOOWN KNOWWN KNWOOWNN (https://www.youtube.com/watch?v=z9CRvCmJUnI)
   }
 
 }

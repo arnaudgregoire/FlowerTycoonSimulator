@@ -5,7 +5,6 @@ var WebSocket  = require('ws');
 var bodyParser = require("body-parser");
 var delay      = require('delay');
 
-var Terrain    = require('./shared/game/farm.js');
 var Game       = require('./server/game.js');
 var DbManager  = require('./server/dbManager.js');
 var Player     = require('./shared/game/player.js');
@@ -48,7 +47,7 @@ app.post('/sell', function (req, res) {
     json = game.sell(req.body);
   }
   else{
-    json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN(https://www.youtube.com/watch?v=z9CRvCmJUnI)
+    json = game.destinationUnknown(); 
   }
   res.json(json);
   requestUpdateClients();
@@ -60,7 +59,7 @@ app.post('/purchase', function (req, res) {
     json = game.purchase(req.body);
   }
   else{
-    json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN(https://www.youtube.com/watch?v=z9CRvCmJUnI)
+    json = game.destinationUnknown(); 
   }
   res.json(json);
 });
@@ -74,7 +73,7 @@ app.post('/plant', function (req, res) {
     json = game.plant(req.body);
   }
   else{
-    json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN(https://www.youtube.com/watch?v=z9CRvCmJUnI)
+    json = game.destinationUnknown(); 
   }
   res.json(json);
   requestUpdateClients();
@@ -89,7 +88,7 @@ app.post('/buy', function (req, res) {
     json = game.buy(req.body);
   }
   else{
-    json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN (https://www.youtube.com/watch?v=z9CRvCmJUnI)
+    json = game.destinationUnknown(); 
   }
   res.json(json);
   requestUpdateClients();
@@ -105,7 +104,7 @@ app.post('/harvest', function (req, res) {
     json = game.harvest(req.body);
   }
   else{
-    json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN (https://www.youtube.com/watch?v=z9CRvCmJUnI)
+    json = game.destinationUnknown(); 
   }
   res.json(json);
   requestUpdateClients();
@@ -137,7 +136,7 @@ app.post('/fertilize', function (req,res) {
     json = game.fertilize(req.body);
   }
   else{
-    json = game.destinationUnknown(); // DESTINATION UNKNOOWN KNOWWN KNWOOWNN (https://www.youtube.com/watch?v=z9CRvCmJUnI)
+    json = game.destinationUnknown(); 
   }
   res.json(json);
   requestUpdateClients();
