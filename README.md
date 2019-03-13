@@ -1,11 +1,12 @@
-# PlantTycoonSimulator
-Un super jeu de navigateur qui supplantera (PLANTE LOL) bientot Ogame FarmVille et autre Clash of Clans
+# FlowerTycoonSimulator
+
+FlowerTycoonSimulator est un jeu de stratégie en ligne dont le but est de vendre un maximum de fleurs. Développé par @arnaudgregoire, @ogus et @ThomasSINNO, Le jeu s'appuie sur une architecture HTML5, NodeJS et PostGreSQL.
 
 ![preview](img/preview.jpg)
 
 ## Développement
 
-Il y a même un Trello : https://trello.com/b/VOPO9G3D/Planttycoonsimulator
+Trello : https://trello.com/b/VOPO9G3D/Planttycoonsimulator
 
 ## Dev Get started
 
