@@ -41,6 +41,14 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + '/public/index.html');
 });
 
+app.get('/loginPage', function(req, res) {
+  res.sendFile(__dirname + '/public/game.html');
+});
+
+app.get('/registerPage', function(req, res) {
+  res.sendFile(__dirname + '/public/game.html');
+});
+
 app.post('/sell', function (req, res) {
   let json = {};
   if(game.checkID(req.body.param.player.id)){
