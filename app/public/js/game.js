@@ -11,6 +11,7 @@
 
   class Game {
     constructor(user_config) {
+
       let config = user_config || {};
 
       this.container = null;
@@ -63,21 +64,33 @@
         {"seedPoppy": "seed/seedPoppy.png"},
         {"seedIris": "seed/seedIris.png"},
         {"plantOld": "flower/plantOld.png"}
-      ], () => this.ui_manager.toggleLogin());
+      ],() => this.startGame());
+    }
+
+    startGame(){
+      this.socket_manager.sendMessage("whoAmI", JSON.stringify({"description" : "whoAmI"}))
+      .then((json)=>{
+        this.farm = new Farm(this.columns, this.rows);
+        this.farm.setTileDimensions(100, 50);
+  
+        this.width = this.canvas.width = this.farm.getWidth() + 25;
+        this.height = this.canvas.height = this.farm.getHeight() + 100;
+        this.farm.setOffset(this.width*0.5, this.height*0.5-this.farm.getHeight()*0.5+30);
+  
+        this.player_list = [];
+        this.player = new Player(json.player.id, json.player.name,0,0);
+        this.ui_manager.setInfo(this.player);
+  
+        this.resizeCanvas();
+        window.setInterval(function(){this.updateFarm(this.refresh_rate)}.bind(this), this.refresh_rate);
+        this.update();
+      })
     }
 
     initEventListener() {
       window.addEventListener("resize", function () {
   			this.resizeCanvas();
   		}.bind(this), false);
-
-      window.addEventListener("sendLogin", function (e) {
-        this.handleLogin(e.detail);
-      }.bind(this), false);
-
-      window.addEventListener("sendRegistration", function(e){
-        this.handleRegistration(e.detail);
-      }.bind(this),false);
 
       this.canvas.addEventListener("click", function (e) {
         this.handleCanvasClick(e);
@@ -277,66 +290,6 @@
       this.canvas.style.width = String(screenWidth)+"px";
       this.canvas.style.marginTop = String(0.5 * (h - screenHeight))+"px";
     }
-
-    handleRegistration(info){
-      console.log(info);
-      this.socket_manager.sendMessage("register",JSON.stringify(
-        {
-          "description": "register",
-          "param": info
-        }
-        ))
-        .then((res)=>{
-          console.log("info registration");
-          let success = res.response;
-          console.log(res);
-          if(success) {
-            console.log("registration successful")
-          }
-        }
-      );
-    }
-
-
-    handleLogin(info) {
-      console.log(info);
-      this.socket_manager.sendMessage("login",JSON.stringify(
-        {
-          "description": "login",
-          "param": info
-        }
-        ))
-        .then((res)=>{
-          console.log("info2");
-          let success = res.response;
-          console.log(res);
-          console.log("info3")
-          if(success) {
-            // this.width = this.canvas.width = this.TILE_SIZE * this.columns;
-            // this.height = this.canvas.height = this.TILE_SIZE * this.rows;
-
-            this.farm = new Farm(this.columns, this.rows);
-            this.farm.setTileDimensions(100, 50);
-
-            this.width = this.canvas.width = this.farm.getWidth() + 25;
-            this.height = this.canvas.height = this.farm.getHeight() + 100;
-            this.farm.setOffset(this.width*0.5, this.height*0.5-this.farm.getHeight()*0.5+30);
-
-
-            this.player_list = [];
-            this.player = new Player(res.player.id, res.player.name,0);
-            //console.log(this.player);
-            this.ui_manager.setInfo(this.player);
-
-            this.resizeCanvas();
-            this.ui_manager.toggleLogin();
-            window.setInterval(function(){this.updateFarm(this.refresh_rate)}.bind(this), this.refresh_rate);
-            this.update();
-          }
-        }
-      );
-    }
-
 
 
 

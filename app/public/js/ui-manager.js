@@ -3,7 +3,6 @@
 
   class UIManager {
     constructor() {
-      this.loginManager     = null;
       this.userManager      = null;
       this.infoManager      = null;
       this.inventoryManager = null;
@@ -16,7 +15,6 @@
     }
 
     init() {
-      this.loginManager     = new LoginManager(null);
       this.userManager      = new UserManager(document.querySelector("#user-info"));
       this.infoManager      = new InfoManager(document.querySelector("#click-info"));
       this.inventoryManager = new InventoryManager(document.querySelector("#inventory"));
@@ -27,7 +25,6 @@
     }
 
     updateBoard(player_list) {
-      //this.boardManager.displayBoard(player_list);
       this.boardManager.displayBoardTemp(player_list);
     }
 
@@ -43,12 +40,6 @@
     displayInfo(msg){
       this.infoManager.clearInfo();
       this.infoManager.displayInfo(msg);
-    }
-    /**
-    * Wrap common child method for a quicker access
-    */
-    toggleLogin() {
-      this.loginManager.toggle();
     }
 
     toggleSale(bouquets){

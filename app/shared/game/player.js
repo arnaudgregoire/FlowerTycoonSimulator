@@ -12,7 +12,7 @@ var PlantFactory;
 
 	class Player{
 		
-		constructor(id, name, color, score) {
+		constructor(id, name, color, score, ip) {
       this.id = id;
 			this.name = name;
 			this.money = 100;
@@ -20,6 +20,7 @@ var PlantFactory;
 			this.color = color;
 			this.inventory = [];
 			this.saleInventory = [];
+			this.ip = ip;
 
       this.selectedTile = null;
       this.selectedItem = null;

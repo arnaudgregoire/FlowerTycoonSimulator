@@ -25,6 +25,8 @@ app.use('/shared',express.static(__dirname + '/shared'));
 
 app.use(function bodyLog(req, res, next) {
   console.log(req.body);
+  var ip = req.ip;
+  console.log(ip);
   next();
 });
 
@@ -42,11 +44,29 @@ app.get('/', function(req, res) {
 });
 
 app.get('/loginPage', function(req, res) {
-  res.sendFile(__dirname + '/public/game.html');
+  res.sendFile(__dirname + '/public/login.html');
 });
 
 app.get('/registerPage', function(req, res) {
+  res.sendFile(__dirname + '/public/register.html');
+});
+
+app.get('/game', function(req, res) {
   res.sendFile(__dirname + '/public/game.html');
+});
+
+app.post('/whoAmI', function (req, res) {
+  let json = {};
+  let playerFound = game.findPlayerByIp(req.ip);
+  json = {
+          player:
+            {
+              "id":playerFound.id,
+             "name":playerFound.name
+            }
+          }
+  res.json(json);
+
 });
 
 app.post('/sell', function (req, res) {
@@ -125,7 +145,7 @@ app.post('/login', function (req,res) {
   dbManager.login(req.body).then((rep)=>{
     console.log(rep);
     if(rep.response == 1){
-      let player = new Player(rep.player.id,rep.player.name,utils.getRandomColor(), 0);
+      let player = new Player(rep.player.id,rep.player.name,utils.getRandomColor(), 0, req.ip);
       if(!game.checkID(player.id)){
       game.addNewPlayer(player);
       }

@@ -88,6 +88,16 @@ class Game{
     return null;
   }
 
+  
+  findPlayerByIp(ip){
+    for (var i = 0; i < this.player_list.length; i++) {
+      if (this.player_list[i].ip == ip) {
+        return this.player_list[i];
+      }
+    }
+    return null;
+  }
+
 
 
   purchase(req){
