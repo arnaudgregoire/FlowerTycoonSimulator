@@ -58,6 +58,8 @@ app.get('/game', function(req, res) {
 app.post('/whoAmI', function (req, res) {
   let json = {};
   let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  console.log(ip);
+  console.log(game.player_list);
   let playerFound = game.findPlayerByIp(ip);
   json = {
           player:
