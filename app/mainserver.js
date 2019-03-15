@@ -25,7 +25,7 @@ app.use('/shared',express.static(__dirname + '/shared'));
 
 app.use(function bodyLog(req, res, next) {
   console.log(req.body);
-  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   console.log(ip);
   next();
 });
@@ -57,7 +57,8 @@ app.get('/game', function(req, res) {
 
 app.post('/whoAmI', function (req, res) {
   let json = {};
-  let playerFound = game.findPlayerByIp(req.ip);
+  let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  let playerFound = game.findPlayerByIp(ip);
   json = {
           player:
             {
@@ -144,8 +145,10 @@ app.post('/harvest', function (req, res) {
 app.post('/login', function (req,res) {
   dbManager.login(req.body).then((rep)=>{
     console.log(rep);
+    let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    console.log(game.player_list);
     if(rep.response == 1){
-      let player = new Player(rep.player.id,rep.player.name,utils.getRandomColor(), 0, req.ip);
+      let player = new Player(rep.player.id,rep.player.name,utils.getRandomColor(), 0, ip);
       if(!game.checkID(player.id)){
       game.addNewPlayer(player);
       }
