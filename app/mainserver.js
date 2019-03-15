@@ -25,7 +25,7 @@ app.use('/shared',express.static(__dirname + '/shared'));
 
 app.use(function bodyLog(req, res, next) {
   console.log(req.body);
-  var ip = req.ip;
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   console.log(ip);
   next();
 });
